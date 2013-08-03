@@ -13,15 +13,27 @@
 		DF1E94B517ACAF5C0090E6BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94B317ACAF5C0090E6BD /* InfoPlist.strings */; };
 		DF1E94B717ACAF5C0090E6BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94B617ACAF5C0090E6BD /* main.m */; };
 		DF1E94BB17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94BA17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m */; };
-		DF1E94BE17ACAF5C0090E6BD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94BC17ACAF5C0090E6BD /* Main_iPhone.storyboard */; };
 		DF1E94C117ACAF5C0090E6BD /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94BF17ACAF5C0090E6BD /* Main_iPad.storyboard */; };
-		DF1E94C417ACAF5C0090E6BD /* TheVergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94C317ACAF5C0090E6BD /* TheVergenizerViewController.m */; };
 		DF1E94C617ACAF5C0090E6BD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94C517ACAF5C0090E6BD /* Images.xcassets */; };
 		DF1E94CD17ACAF5D0090E6BD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94CC17ACAF5D0090E6BD /* XCTest.framework */; };
 		DF1E94CE17ACAF5D0090E6BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94AA17ACAF5C0090E6BD /* Foundation.framework */; };
 		DF1E94CF17ACAF5D0090E6BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94AE17ACAF5C0090E6BD /* UIKit.framework */; };
 		DF1E94D717ACAF5D0090E6BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94D517ACAF5D0090E6BD /* InfoPlist.strings */; };
 		DF1E94D917ACAF5D0090E6BD /* The_Vergenizer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94D817ACAF5D0090E6BD /* The_Vergenizer_Tests.m */; };
+		DF1E94FD17ACAFAB0090E6BD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF1E94E217ACAFAB0090E6BD /* Main_iPhone.storyboard */; };
+		DF1E94FE17ACAFAB0090E6BD /* VergenizerCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */; };
+		DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */; };
+		DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */; };
+		DF1E950117ACAFAB0090E6BD /* AssetView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EA17ACAFAB0090E6BD /* AssetView.m */; };
+		DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */; };
+		DF1E950317ACAFAB0090E6BD /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EE17ACAFAB0090E6BD /* DetailView.m */; };
+		DF1E950417ACAFAB0090E6BD /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */; };
+		DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */; };
+		DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */; };
+		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
+		DF1E950817ACAFAB0090E6BD /* WatermarkHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */; };
+		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
+		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,16 +57,40 @@
 		DF1E94B817ACAF5C0090E6BD /* The Vergenizer™-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "The Vergenizer™-Prefix.pch"; sourceTree = "<group>"; };
 		DF1E94B917ACAF5C0090E6BD /* TheVergenizerAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TheVergenizerAppDelegate.h; sourceTree = "<group>"; };
 		DF1E94BA17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheVergenizerAppDelegate.m; sourceTree = "<group>"; };
-		DF1E94BD17ACAF5C0090E6BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		DF1E94C017ACAF5C0090E6BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		DF1E94C217ACAF5C0090E6BD /* TheVergenizerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TheVergenizerViewController.h; sourceTree = "<group>"; };
-		DF1E94C317ACAF5C0090E6BD /* TheVergenizerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TheVergenizerViewController.m; sourceTree = "<group>"; };
 		DF1E94C517ACAF5C0090E6BD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DF1E94CB17ACAF5D0090E6BD /* The Vergenizer™Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "The Vergenizer™Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF1E94CC17ACAF5D0090E6BD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DF1E94D417ACAF5D0090E6BD /* The Vergenizer™Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "The Vergenizer™Tests-Info.plist"; sourceTree = "<group>"; };
 		DF1E94D617ACAF5D0090E6BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DF1E94D817ACAF5D0090E6BD /* The_Vergenizer_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = The_Vergenizer_Tests.m; sourceTree = "<group>"; };
+		DF1E94E217ACAFAB0090E6BD /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPhone.storyboard; sourceTree = "<group>"; };
+		DF1E94E317ACAFAB0090E6BD /* VergenizerCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VergenizerCVC.h; sourceTree = "<group>"; };
+		DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VergenizerCVC.m; sourceTree = "<group>"; };
+		DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumCVC.h; sourceTree = "<group>"; };
+		DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCVC.m; sourceTree = "<group>"; };
+		DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VergenizerImageView.h; sourceTree = "<group>"; };
+		DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VergenizerImageView.m; sourceTree = "<group>"; };
+		DF1E94E917ACAFAB0090E6BD /* AssetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetView.h; sourceTree = "<group>"; };
+		DF1E94EA17ACAFAB0090E6BD /* AssetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetView.m; sourceTree = "<group>"; };
+		DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vergenizerDetailViewController.h; sourceTree = "<group>"; };
+		DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vergenizerDetailViewController.m; sourceTree = "<group>"; };
+		DF1E94ED17ACAFAB0090E6BD /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		DF1E94EE17ACAFAB0090E6BD /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
+		DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
+		DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumViewController.m; sourceTree = "<group>"; };
+		DF1E94F317ACAFAB0090E6BD /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
+		DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
+		DF1E94F517ACAFAB0090E6BD /* VergenizerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VergenizerViewController.h; sourceTree = "<group>"; };
+		DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VergenizerViewController.m; sourceTree = "<group>"; };
+		DF1E94F717ACAFAB0090E6BD /* WatermarkHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkHandler.h; sourceTree = "<group>"; };
+		DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatermarkHandler.m; sourceTree = "<group>"; };
+		DF1E94F917ACAFAB0090E6BD /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
+		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
+		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
+		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,13 +150,28 @@
 		DF1E94B017ACAF5C0090E6BD /* The Vergenizer™ */ = {
 			isa = PBXGroup;
 			children = (
-				DF1E94B917ACAF5C0090E6BD /* TheVergenizerAppDelegate.h */,
-				DF1E94BA17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m */,
-				DF1E94BC17ACAF5C0090E6BD /* Main_iPhone.storyboard */,
-				DF1E94BF17ACAF5C0090E6BD /* Main_iPad.storyboard */,
-				DF1E94C217ACAF5C0090E6BD /* TheVergenizerViewController.h */,
-				DF1E94C317ACAF5C0090E6BD /* TheVergenizerViewController.m */,
-				DF1E94C517ACAF5C0090E6BD /* Images.xcassets */,
+				DF1E94E217ACAFAB0090E6BD /* Main_iPhone.storyboard */,
+				DF1E94E317ACAFAB0090E6BD /* VergenizerCVC.h */,
+				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
+				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
+				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
+				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
+				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
+				DF1E94E917ACAFAB0090E6BD /* AssetView.h */,
+				DF1E94EA17ACAFAB0090E6BD /* AssetView.m */,
+				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
+				DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */,
+				DF1E94ED17ACAFAB0090E6BD /* DetailView.h */,
+				DF1E94EE17ACAFAB0090E6BD /* DetailView.m */,
+				DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */,
+				DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */,
+				DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */,
+				DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */,
+				DF1E94F317ACAFAB0090E6BD /* PickerViewController.h */,
+				DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */,
+				DF1E94F517ACAFAB0090E6BD /* VergenizerViewController.h */,
+				DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */,
+				DF1E950B17ACAFB70090E6BD /* Model */,
 				DF1E94B117ACAF5C0090E6BD /* Supporting Files */,
 			);
 			path = "The Vergenizer™";
@@ -129,6 +180,10 @@
 		DF1E94B117ACAF5C0090E6BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DF1E94B917ACAF5C0090E6BD /* TheVergenizerAppDelegate.h */,
+				DF1E94BA17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m */,
+				DF1E94BF17ACAF5C0090E6BD /* Main_iPad.storyboard */,
+				DF1E94C517ACAF5C0090E6BD /* Images.xcassets */,
 				DF1E94B217ACAF5C0090E6BD /* The Vergenizer™-Info.plist */,
 				DF1E94B317ACAF5C0090E6BD /* InfoPlist.strings */,
 				DF1E94B617ACAF5C0090E6BD /* main.m */,
@@ -153,6 +208,19 @@
 				DF1E94D517ACAF5D0090E6BD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DF1E950B17ACAFB70090E6BD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DF1E94F717ACAFAB0090E6BD /* WatermarkHandler.h */,
+				DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */,
+				DF1E94F917ACAFAB0090E6BD /* AssetObject.h */,
+				DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */,
+				DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */,
+				DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,7 +302,7 @@
 			files = (
 				DF1E94C117ACAF5C0090E6BD /* Main_iPad.storyboard in Resources */,
 				DF1E94C617ACAF5C0090E6BD /* Images.xcassets in Resources */,
-				DF1E94BE17ACAF5C0090E6BD /* Main_iPhone.storyboard in Resources */,
+				DF1E94FD17ACAFAB0090E6BD /* Main_iPhone.storyboard in Resources */,
 				DF1E94B517ACAF5C0090E6BD /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,9 +322,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF1E950417ACAFAB0090E6BD /* ImageViewController.m in Sources */,
+				DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */,
 				DF1E94B717ACAF5C0090E6BD /* main.m in Sources */,
-				DF1E94C417ACAF5C0090E6BD /* TheVergenizerViewController.m in Sources */,
+				DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */,
+				DF1E950317ACAFAB0090E6BD /* DetailView.m in Sources */,
+				DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */,
 				DF1E94BB17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m in Sources */,
+				DF1E950117ACAFAB0090E6BD /* AssetView.m in Sources */,
+				DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */,
+				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
+				DF1E950817ACAFAB0090E6BD /* WatermarkHandler.m in Sources */,
+				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
+				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,
+				DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */,
+				DF1E94FE17ACAFAB0090E6BD /* VergenizerCVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,14 +365,6 @@
 				DF1E94B417ACAF5C0090E6BD /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		DF1E94BC17ACAF5C0090E6BD /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DF1E94BD17ACAF5C0090E6BD /* Base */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		DF1E94BF17ACAF5C0090E6BD /* Main_iPad.storyboard */ = {
