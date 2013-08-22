@@ -14,7 +14,8 @@
 
 //Need a mutable dictionary of images and their watermark details: sizes, watermarks
 @property (strong, nonatomic) NSMutableDictionary *details;
-- (void)addNewObjectWithString:(NSString *)URLString andAsset:(ALAsset *)asset;
--(AssetObject *)assetObjectForString:(NSString *)URLString;
+- (void)addNewObjectWithAsset:(ALAsset *)asset;
+-(AssetObject *)assetObjectForURLString:(NSString *)URLString;
+-(void)watermarkAssetObjectsInDictionary:(NSDictionary *)dictionary intoGroup:(ALAssetsGroup *)group;
 
 @end

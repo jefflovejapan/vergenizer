@@ -13,9 +13,9 @@
 #import "DetailView.h"
 
 @interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
-@property (strong, nonatomic) ALAsset *asset;
+@property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) WatermarkHandler *handler;
--(void)updateWM:(NSInteger)wmInt;
+//-(void)updateWM:(NSInteger)wmInt;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) DetailView *detailView;
@@ -25,5 +25,6 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sizeControlOutlet;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *wmControlOutlet;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
 
 @end

@@ -18,13 +18,14 @@
     return _details;
 }
 
-- (void)addNewObjectWithString:(NSString *)URLString andAsset:(ALAsset *)asset{
-    AssetObject *newObject = [[AssetObject alloc]initWithURLString:URLString andAsset:asset];
+- (void)addNewObjectWithAsset:(ALAsset *)asset{
+    AssetObject *newObject = [[AssetObject alloc]initWithAsset:asset];
+    NSString *URLString = [asset valueForProperty:ALAssetPropertyAssetURL];
     [self.details setObject:newObject forKey:URLString];
     NSLog(@"Just added a new object to dictionary inside wmHandler");
 }
 
--(AssetObject *)assetObjectForString:(NSString *)URLString{
+-(AssetObject *)assetObjectForURLString:(NSString *)URLString{
     AssetObject *returnObject = [self.details objectForKey:URLString];
     if (returnObject) {
         return returnObject;
@@ -33,6 +34,24 @@
         return nil;
     }
     
+}
+
+-(void)watermarkAssetObjectsInDictionary:(NSDictionary *)dictionary intoGroup:(ALAssetsGroup *)group{
+//    NSArray *keys = [dictionary allKeys];
+//    for (int i = 0; i<keys.count; i++) {
+//        if (![[dictionary objectForKey:keys[i]] isKindOfClass:[AssetObject class]]) {
+//            [NSException raise:@"Object isn't an Asset Object" format:@"Object in provided dictionary isn't of class AssetObject"];
+//        } else {
+//            ALAsset *asset = [dictionary objectForKey:keys[i]];
+//            ALAssetRepresentation *assetRep = [asset defaultRepresentation];
+//            CGImageRef thisImage = [assetRep fullResolutionImage];
+//            ALAssetOrientation assetOrientation = [assetRep orientation];
+//            CGContextRef thisContext;
+//            myLayerContext = CGLayerCreateWithContext(thisContext, thisImage.size, )
+//
+//            CGImageRef *cgRef = [assetRep CGImageWithOptions:@{]
+//        }
+//    }
 }
 
 @end

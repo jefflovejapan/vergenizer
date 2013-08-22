@@ -31,7 +31,6 @@
 		DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */; };
 		DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */; };
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
-		DF1E950817ACAFAB0090E6BD /* WatermarkHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
 /* End PBXBuildFile section */
@@ -85,8 +84,6 @@
 		DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
 		DF1E94F517ACAFAB0090E6BD /* VergenizerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VergenizerViewController.h; sourceTree = "<group>"; };
 		DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VergenizerViewController.m; sourceTree = "<group>"; };
-		DF1E94F717ACAFAB0090E6BD /* WatermarkHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatermarkHandler.h; sourceTree = "<group>"; };
-		DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatermarkHandler.m; sourceTree = "<group>"; };
 		DF1E94F917ACAFAB0090E6BD /* AssetObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetObject.h; sourceTree = "<group>"; };
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
@@ -213,8 +210,6 @@
 		DF1E950B17ACAFB70090E6BD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DF1E94F717ACAFAB0090E6BD /* WatermarkHandler.h */,
-				DF1E94F817ACAFAB0090E6BD /* WatermarkHandler.m */,
 				DF1E94F917ACAFAB0090E6BD /* AssetObject.h */,
 				DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */,
 				DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */,
@@ -332,7 +327,6 @@
 				DF1E950117ACAFAB0090E6BD /* AssetView.m in Sources */,
 				DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */,
 				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
-				DF1E950817ACAFAB0090E6BD /* WatermarkHandler.m in Sources */,
 				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
 				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,
 				DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */,
@@ -541,6 +535,7 @@
 				DF1E94DE17ACAF5D0090E6BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DF1E94DF17ACAF5D0090E6BD /* Build configuration list for PBXNativeTarget "The Vergenizer™Tests" */ = {
 			isa = XCConfigurationList;
@@ -549,6 +544,7 @@
 				DF1E94E117ACAF5D0090E6BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

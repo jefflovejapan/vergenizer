@@ -19,9 +19,13 @@ typedef NS_ENUM(NSInteger, WatermarkTypes) {
 
 @interface AssetObject : NSObject
 @property (nonatomic) NSString *URLString;
-@property (nonatomic) NSInteger watermarkSize;
+@property (strong, nonatomic) NSURL *assetURL;
+@property (nonatomic) NSInteger outputSize;
+@property (strong, nonatomic) NSString *watermarkShape;
+@property (strong, nonatomic) NSString *watermarkColor;
 @property (nonatomic) NSString *watermarkString;
 @property (strong, nonatomic) ALAsset *asset;
-- (AssetObject *)initWithURLString:(NSString *)URLString andAsset:(ALAsset *)asset;
-
+@property (nonatomic) BOOL checkmarkHidden;
+- (AssetObject *)initWithAsset:(ALAsset *)asset;
+- (BOOL)isEqual:(id)object;
 @end

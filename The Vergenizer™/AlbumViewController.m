@@ -16,7 +16,11 @@
 @property (strong, nonatomic) ALAsset *segueAsset;
 
 //Used rather than array to check for dupes. Gets new photos unioned into set via 
-@property (strong, nonatomic) NSMutableSet *URLSet;
+@property (strong, nonatomic) NSMutableSet *assetObjectSet;
+
+
+
+
 @end
 
 @implementation AlbumViewController
@@ -37,9 +41,11 @@
 - (IBAction)addSelectedButton:(id)sender {
     NSArray *controllers = [self.navigationController viewControllers];
     if ([controllers[0] conformsToProtocol:@protocol(VergenizerDelegate)]) {
-        self.VergenizerDelegate = controllers[0];
-        [self.vergenizerDelegate addURLSet:self.URLSet];
+        self.vergenizerDelegate = controllers[0];
+        [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
+        NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
     }
+    NSLog(@"Popping to root");
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -68,7 +74,7 @@
     UICollectionViewCell *cell = [self.albumCollectionView cellForItemAtIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        self.segueAsset = albumCVC.asset;
+        self.segueAsset = albumCVC.assetObject.asset;
         [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
     }
 }
@@ -86,44 +92,44 @@
 
 - (void) flipCheckmarkAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell = [self.albumCollectionView cellForItemAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[AlbumCVC class]]) {
+    if (cell && [cell isKindOfClass:[AlbumCVC class]]) {
+        NSLog(@"cell exists and is albumCVC class");
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        if (albumCVC) {
-            BOOL thisCheckmark = albumCVC.checkmark;
-            
-            //Can't compare isEqual with ALAssets, so use URLs instead
-            NSURL *assetURL = [albumCVC.asset valueForProperty:ALAssetPropertyAssetURL];
-            
-            //If checkmark is set to NO in the albumCVC
-            if (!thisCheckmark) {
-                //A tap means we should add this asset to our URLSet
-                [self.URLSet addObject:assetURL];
-                albumCVC.checkmark = YES;
-                [albumCVC syncCheckmark];
-            } else if(thisCheckmark) {
-                [self.URLSet removeObject:assetURL];
-                albumCVC.checkmark = NO;
-                [albumCVC syncCheckmark];
-            }
-            self.countLabel.text = [NSString stringWithFormat:@"%d", self.URLSet.count];
-            [self.countLabel setNeedsDisplay];
+        
+        NSLog(@"checkmarkHidden: %d", albumCVC.assetObject.checkmarkHidden);
+        NSString *URLString = albumCVC.assetObject.URLString;
+        NSLog(@"albumCVC.assetObject exists? %d", (albumCVC.assetObject) ? 1:0);
+        NSLog(@"Just got assetURL. It's %@", URLString);
+        if (albumCVC.assetObject.checkmarkHidden) {
+            //This URLSet is used to keep track of which images to send back to VergenizerViewController for watermarking
+            [self.assetObjectSet addObject:albumCVC.assetObject];
+            albumCVC.assetObject.checkmarkHidden = !albumCVC.assetObject.checkmarkHidden;
+            [albumCVC syncCheckmark];
+        } else if (!albumCVC.assetObject.checkmarkHidden) {
+            //A tap means we should add this asset to our URLSet
+            [self.assetObjectSet removeObject:albumCVC.assetObject];
+            albumCVC.assetObject.checkmarkHidden = !albumCVC.assetObject.checkmarkHidden;
+            [albumCVC syncCheckmark];
+        } else {
+            [NSException raise:@"Invalid checkmark state" format:@"Value for boolean checkmarkIsHidden neither YES nor NO"];
         }
+        
     }
     
 }
 
 -(void)enterSelectionMode{
     self.selectionMode = YES;
-    self.addSelectedButtonView.hidden = YES;
+    self.addSelectedButton.hidden = YES;
     self.selectButton.title = @"Done";
-    [self.addSelectedButtonView setNeedsDisplay];
+    [self.addSelectedButton setNeedsDisplay];
 }
 
 -(void)exitSelectionMode{
     self.selectionMode = NO;
-    self.addSelectedButtonView.hidden = NO;
+    self.addSelectedButton.hidden = NO;
     self.selectButton.title = @"Select";
-    [self.addSelectedButtonView setNeedsDisplay];
+    [self.addSelectedButton setNeedsDisplay];
 }
 
 #pragma constants
@@ -135,8 +141,9 @@ const int IPHONE_WIDTH = 320;
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section{
     
-    // Get the count of photos in album at index albumIndex in the PhotoHandler
-    NSInteger numCells = [self.group numberOfAssets];
+    // Get the count of assets in the albumPhotos array
+    NSInteger numCells = self.albumPhotos.count;
+    NSLog(@"There are %d cells", numCells);
     return numCells;
     
 }
@@ -146,36 +153,33 @@ const int IPHONE_WIDTH = 320;
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     UICollectionViewCell *cell;
-    
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
-    if ([cell isKindOfClass:[AlbumCVC class]]){
+    if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        ALAsset *thisImage = [self.albumPhotos objectAtIndex:indexPath.item];
-        
-        albumCVC.asset = thisImage;
-        
-        // Adding a subview to the cell - create a new UIImageView from the thumbnail of thisImage
-        [albumCVC addImageViewFromAsset];
+        albumCVC.aView.imageView.image = [UIImage imageWithCGImage:[[self.albumPhotos[indexPath.item] asset]thumbnail]];
+        if (self.albumPhotos[indexPath.item]) {
+            albumCVC.assetObject = self.albumPhotos[indexPath.item];
+        } else {
+            NSLog(@"something wrong with albumPhotos array");
+        }
     }
-    
     return cell;
+   
 }
+
 
 
 #pragma lifecycle methods
 
-- (void)viewWillAppear:(BOOL)animated{
-    [self.albumPhotos removeAllObjects];
-    self.group = self.albumDelegate.handler.groups[self.albumIndex];
-    [self.group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-        if (result) {
-            ALAsset *asset = [[ALAsset alloc]init];
-            asset = result;
-            [self.albumPhotos addObject:asset];
-        }
-    }];
+-(void)viewWillAppear:(BOOL)animated{
+    
+    //For debugging, just checking that all the URLs are unique
+    for (int i=0; i<self.albumPhotos.count; i++) {
+        AssetObject *object = self.albumPhotos[i];
+        NSString *urlstring = [[object.asset valueForProperty:ALAssetPropertyAssetURL] absoluteString];
+        NSLog(@"%@", urlstring);
+    }
 }
-
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
@@ -184,7 +188,6 @@ const int IPHONE_WIDTH = 320;
         ALAssetOrientation orientation = [thisRepresentation orientation];
 
         UIImage *bigImage = [UIImage imageWithCGImage:[thisRepresentation fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
-        NSLog(@"bigImage is %f by %f", bigImage.size.width, bigImage.size.height);
         UIImageView *imageView = [[UIImageView alloc]initWithImage:bigImage];
         self.bigImageDelegate.imageView = imageView;
 
@@ -198,13 +201,8 @@ const int IPHONE_WIDTH = 320;
 
 #pragma instantiation
 
-- (ALAssetsGroup *)group{
-    if (!_group) {
-        _group = [[ALAssetsGroup alloc]init];
-    }
-    return _group;
-}
 
+//This array holds assetObjects, not ALAssets.
 - (NSMutableArray *)albumPhotos{
     if (!_albumPhotos) {
         _albumPhotos = [[NSMutableArray alloc]init];
@@ -212,11 +210,11 @@ const int IPHONE_WIDTH = 320;
     return _albumPhotos;
 }
 
-- (NSMutableSet *)URLSet{
-    if (!_URLSet) {
-        _URLSet = [[NSMutableSet alloc]init];
+- (NSMutableSet *)assetObjectSet{
+    if (!_assetObjectSet) {
+        _assetObjectSet = [[NSMutableSet alloc]init];
     }
-    return _URLSet;
+    return _assetObjectSet;
 }
 
 

@@ -15,7 +15,7 @@
 @interface VergenizerViewController ()
 
 //Used in segue to detai view for setting watermark params
-@property (strong, nonatomic) ALAsset *segueAsset;
+@property (strong, nonatomic) AssetObject *segueAssetObject;
 
 //An array, used like a queue, to manage which index paths to reload when the model gets new images
 @property (strong, nonatomic) NSMutableArray *indexPathstoReload;
@@ -33,7 +33,7 @@
             //Say we tap on the image with index.item == 1. We want the asset at the URL in index 1.
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
 
-            self.segueAsset = vergenizerCVC.asset;
+            self.segueAssetObject = vergenizerCVC.assetObject;
         }
         [self performSegueWithIdentifier:@"vergenizerDetailSegue" sender:self];
     }
@@ -42,16 +42,17 @@
 
 
 
-//Delegate method. We union new objects into the URL set so that we don't get dupes.
--(void)addURLSet:(NSSet *)objects{
-    [self.orderedURLSet unionSet:objects];
+//Delegate method. We union new objects into the URLString set so that we don't get dupes.
+-(void)addAssetObjectSet:(NSSet *)objects{
+    
+    [self.assetObjectSet unionSet:objects];
 }
 
 #pragma delegate methods
 
-//This orderedURLSet is tracking everything -- how many assets we have onscreen, what their URLs are, etc.
+//This orderedURLStringSet is tracking everything -- how many assets we have onscreen, what their URLs are, etc.
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSInteger numCells = self.orderedURLSet.count;
+    NSInteger numCells = self.assetObjectSet.count;
     return numCells;
 }
 
@@ -59,8 +60,7 @@
 // So where are the actual cells coming from? They should be tied to some piece of data that's independent of the collectionView.
 // So I guess the orderedSet. That means:
 //              - when we ask for cell at index path we get the tail integer (indexPath.item) and ask for the asset at that index in the set.
-//              - when we clear we remove items from the collection at all index paths (0 to orderedURLSet.count - 1)
-
+//              - when we clear we remove items from the collection at all index paths (0 to orderedURLStringSet.count - 1)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
@@ -70,87 +70,12 @@
     if ([cell isKindOfClass:[VergenizerCVC class]]) {
         
         //Get the asset that's going in the collection view
-        NSURL *assetURL = self.orderedURLSet[indexPath.item];
-        
-        
-        //Add the indexPath to our indexPath queue so our model knows this cell needs an image. Image gets returned asynchronously, so won't be back by the time cell needs to be redrawn
-        [self addIndexPathtoQueue:indexPath];
-        
-        //This fires off a request for the ALAsset in a separate thread. Gets returned in reloadNextIndexPathWithAsset
-        [self.handler assetForURL:assetURL];
-        
-        
-        
+        VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
+        AssetObject *assetObject = self.assetObjectSet[indexPath.item];
+        vergenizerCVC.assetObject = assetObject;
+        [vergenizerCVC syncImage];
     }
     return cell;
-    
-}
-
-
-//All this stuff is predicated on the idea of getting an asset back from the PhotoHandler. No need for separate array of assets to reload.
-
-//Getting and displaying image from PhotoHandler
--(void)reloadNextIndexPathWithAsset:(ALAsset*)asset{
-    
-    
-    if (self.indexPathstoReload[0] && [self.indexPathstoReload[0] isKindOfClass:[NSIndexPath class]]) {
-        
-        //Grabbing the next indexPath and removing it from the queue in one step
-        NSIndexPath *indexPath = [self removeNextIndexPathFromQueue];
-        
-        UICollectionViewCell *cell =  [self.collectionView cellForItemAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[VergenizerCVC class]]) {
-            VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
-            vergenizerCVC.asset = asset;
-            [vergenizerCVC syncImage];
-            [vergenizerCVC setNeedsDisplay];
-            //Add the URL to the dictionary that's going to track all of the watermark parameters
-            [self addAsset:asset toWMHandler:self.wmHandler];
-        }
-        
-    } else {
-        [NSException raise:@"Too few indexPaths" format:@"Delegate requested another indexPath, but there are none left in the queue to reload."];
-    }
-}
-
-- (CGImageRef)getThumbnailForAsset:(ALAsset*)asset{
-    //This method below is asynchronous, and won't give a return value. Need to reload data in the collectionView after it returns
-    return [asset thumbnail];
-}
-
-
-
-
-- (void)addAsset:(ALAsset *)asset toWMHandler:(WatermarkHandler *)wmHandler{
-    
-    //Need a string for dictionary key
-    NSString *thisString = [[asset valueForProperty:ALAssetPropertyAssetURL]absoluteString];
-    
-    //Add this key and its associated object to the dictionary if it's not already there
-    if (![wmHandler.details objectForKey:thisString]) {
-        [wmHandler addNewObjectWithString:thisString andAsset:asset];
-        NSLog(@"Just called for a new object in wmHandler");
-    }
-}
-
-
-// Managing the queue of indexPaths to reload. Need to do this because ALAssets are coming back from the PhotoHandler asynchronously
--(void)addIndexPathtoQueue:(NSIndexPath *) indexPath{
-    [self.indexPathstoReload addObject:indexPath];
-}
-
-
-//Returning the next indexPath in the queue and removing it from the queue. This is the method that should be called when we need to get a new indexPath.
--(NSIndexPath* )removeNextIndexPathFromQueue{
-    if (self.indexPathstoReload[0]) {
-        NSIndexPath *returnPath = self.indexPathstoReload[0];
-        [self.indexPathstoReload removeObjectAtIndex:0];
-        NSLog(@"About to return an indexPath from indexPathstoReload. Count is now %d", self.indexPathstoReload.count);
-        return returnPath;
-    }else{
-        NSLog(@"There's no indexPath at 0. Something went wrong.");
-        return nil;
-    }
     
 }
 
@@ -159,19 +84,21 @@
 #pragma actions
 
 - (IBAction)clearButton:(id)sender {
-    [self.orderedURLSet removeAllObjects];
+    [self.assetObjectSet removeAllObjects];
     [self.collectionView reloadData];
-    [self.wmHandler.details removeAllObjects];
+//    [self.wmHandler.details removeAllObjects];
     self.navigationItem.prompt = nil;
 }
 
 - (IBAction)vergenizeButton:(id)sender {
     NSLog(@"VergenizeButton");
-    for (int i = 0; i<self.groups.count; i++) {
+    NSLog(@"Groups count: %d", self.handler.groups.count);
+    for (int i = 0; i<self.handler.groups.count; i++) {
         NSLog(@"inside for loop");
-        if ([self.groups[i] isKindOfClass:[ALAssetsGroup class]]) {
+        if ([self.handler.groups[i] isKindOfClass:[ALAssetsGroup class]]) {
             NSLog(@"class matches");
-            ALAssetsGroup *thisGroup = self.groups[i];
+            ALAssetsGroup *thisGroup = self.handler.groups[i];
+            NSLog(@"This group's name is %@", [thisGroup valueForProperty:ALAssetsGroupPropertyName]);
             if ([[thisGroup valueForProperty:ALAssetsGroupPropertyName] isEqualToString:@"Vergenized"]) {
                 NSLog(@"Vergenized group found");
                 [self waterMarkPhotosIntoGroup:thisGroup];
@@ -181,22 +108,85 @@
     }
     NSLog(@"Creating Vergenized group");
     [self.handler addAssetGroupWithName:@"Vergenized"];
-#warning need to fix vergenized group not appearing on second "plus button" press
+    [self vergenizeButton:self];
 }
 
--(void) waterMarkPhotosIntoGroup:(ALAssetsGroup *)group{
+#warning need to fix vergenized group not appearing on second "plus button" press
+
+-(void)waterMarkPhotosIntoGroup:(ALAssetsGroup *)group{
     NSLog(@"Watermarking photos into group");
-//    NSArray *keys = [self.wmHandler.details allKeys];
-//    for (int i = 0; i<keys.count; i++) {
-//        NSObject *thisObject = [self.wmHandler.details objectForKey:keys[i]];
-//        if ([thisObject isKindOfClass:[AssetObject class]]) {
-//            NSLog(@"thisObject is AssetObject. Beginning watermarking");
-//            AssetObject *assetObject = (AssetObject *)thisObject;
-//            ALAssetRepresentation *assetRep = [assetObject.asset defaultRepresentation];
-//            ALAssetOrientation orientation = [assetRep orientation];
-//            CGImageRef *ref = [assetRep fullResolutionImage];
-//    }
+    for (int i=0; i<self.assetObjectSet.count; i++) {
+        if ([self.assetObjectSet[i] isKindOfClass:[AssetObject class]]) {
+            AssetObject *thisAssetObject = (AssetObject *)self.assetObjectSet[i];
+            ALAssetRepresentation *thisRep = [thisAssetObject.asset defaultRepresentation];
+            ALAssetOrientation orientation = [thisRep orientation];
+            UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
+            
+            if (!sourceImage) {
+                [NSException raise:@"No source image" format:@"You tried to create a sourceImage from an ALAssetRepresentation but it didn't work"];
+            } else if (sourceImage){
+                NSLog(@"We have a sourceImage. It's %f by %f", sourceImage.size.width, sourceImage.size.height);
+            }
+            CGImageRef cgImage = [sourceImage CGImage];
+            if (!cgImage) {
+                [NSException raise:@"No CGImageRef" format:@"You tried to create a CGImageRef from a UIImage but it didn't work"];
+            } else if (cgImage) {
+                NSLog(@"We have a cgImage. It's %zu by %zu", CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
+            }
+            
+            CGSize targetSize = CGSizeMake(thisAssetObject.outputSize, thisAssetObject.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
+            NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
+            CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
+            
+            //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
+#warning Need to sort out this bytesperrow thing
+            CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
+            
+            NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
+            
+            //Draw our image onto the context.
+            CGContextDrawImage(thisContext, targetRect, cgImage);
+
+#warning need to rewrite this
+            UIImage *watermarkImage = [UIImage imageNamed:thisAssetObject.watermarkString];
+            if (!watermarkImage) {
+                [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
+            }
+            CGContextSaveGState(thisContext);
+            CGContextSetAlpha(thisContext, 0.2);
+            CGImageRef watermarkRef = [watermarkImage CGImage];
+            
+#warning Need constants for these values
+            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * 0.016, targetSize.width*0.016, watermarkImage.size.width, watermarkImage.size.height);
+            CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
+            CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
+            
+            ALAssetsLibraryWriteImageCompletionBlock completionBlock = ^(NSURL *assetURL, NSError *error){
+                
+                NSLog(@"Success!");
+                
+                //Don't forget to release all your Core Graphics stuff
+                CGContextRelease(thisContext);
+            };
+
+            [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
+            
+        }
+    }
+
 }
+
+- (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
+    int bytes;
+    bytes = (int)(bits*4*width);
+    if (bytes%16 != 0) {
+        bytes = bytes+15 - (bytes+15)%16;   //gets bytes up over the next highest multiple of 16 and subtracts the unused part
+    }
+    return bytes;
+}
+
+//lowest multiple of 2:
+//start at 3, add 2-1 = 1 to get it 'up over'
 
 
 #pragma lifecycle methods
@@ -208,11 +198,10 @@
     if ([segue.identifier isEqualToString:@"vergenizerDetailSegue"]) {
         if ([segue.destinationViewController conformsToProtocol:@protocol(DetailDelegate)]) {
             self.detailDelegate = segue.destinationViewController;
-            self.detailDelegate.asset = self.segueAsset;
-            self.detailDelegate.handler = self.wmHandler;
+            self.detailDelegate.assetObject = self.segueAssetObject;
+            self.detailDelegate.assetObjectSet = self.assetObjectSet;
         }
     }
-
 }
 
 - (IBAction)unwindToVergenizerViewController:(UIStoryboardSegue *)unwindSegue
@@ -225,20 +214,29 @@
     
 #warning Not sure where else to put this initialization code. Doesn't seem safe to just be instantiating once in viewDidLoad rather than use lazy instantiation.
     self.handler = [[PhotoHandler alloc]init];
-    self.handler.assetBlockDelegate = self;
 }
 
 
 - (void)viewWillAppear:(BOOL)animated{
-    if(self.orderedURLSet.count == 0){
+    NSLog(@"Inside VWA");
+    [self.view layoutIfNeeded];
+    [self.collectionView reloadData];
+    [self.collectionView layoutIfNeeded];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    if(self.assetObjectSet.count == 0){
         self.navigationItem.prompt = nil;
     } else {
         self.navigationItem.prompt = @"Tap photos to edit";
     }
-    [self.collectionView reloadData];
-    [self.collectionView layoutSubviews];
-    [self.collectionView setNeedsDisplay];
 }
+
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    [self.collectionView layoutIfNeeded];
+}
+
 
 
 - (void)didReceiveMemoryWarning
@@ -247,26 +245,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSMutableOrderedSet *)orderedURLSet{
-    if (!_orderedURLSet) {
-        _orderedURLSet = [[NSMutableOrderedSet alloc]init];
+- (NSMutableOrderedSet *)assetObjectSet{
+    if (!_assetObjectSet) {
+        _assetObjectSet = [[NSMutableOrderedSet alloc]init];
     }
-    return _orderedURLSet;
+    return _assetObjectSet;
 }
 
-- (WatermarkHandler *)wmHandler{
-    if (!_wmHandler) {
-        _wmHandler = [[WatermarkHandler alloc]init];
-    }
-    return _wmHandler;
-}
 
-- (NSMutableArray *) indexPathstoReload{
-    if (!_indexPathstoReload) {
-        _indexPathstoReload = [[NSMutableArray alloc]init];
-    }
-    return _indexPathstoReload;
-}
 
 
 

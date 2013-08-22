@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "PhotoHandler.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "WatermarkHandler.h"
 
 @protocol AlbumDelegate <NSObject>
 @property (strong, nonatomic) PhotoHandler *handler;
@@ -19,8 +21,9 @@
 @end
 
 @protocol VergenizerDelegate <NSObject>
-@property (strong, nonatomic) NSMutableOrderedSet *orderedURLSet;
--(void)addURLSet:(NSSet *)objects;
+@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
+-(void)addAssetObjectSet:(NSSet *)objects;
+@property (strong, nonatomic) WatermarkHandler *wmHandler;
 @end
 
 
@@ -34,9 +37,7 @@
 //outlets
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *albumCollectionView;
-@property (weak, nonatomic) IBOutlet UIView *addSelectedButtonView;
 @property (weak, nonatomic) IBOutlet UIButton *addSelectedButton;
-@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 
 @property (nonatomic) BOOL selectionMode;

@@ -28,13 +28,16 @@
             <objects>
                 <viewController restorationIdentifier="vergenizerViewController" id="gFq-c8-k1g" customClass="VergenizerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9A4-r5-jcr">
-                        <rect key="frame" x="0.0" y="94" width="320" height="474"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AzM-CB-Eui">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
+                            <collectionView autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="24" verticalCompressionResistancePriority="31" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AzM-CB-Eui">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="446"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="624" id="zmm-Nq-Pl4"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ZeW-fQ-QNj">
                                     <size key="itemSize" width="80" height="80"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -71,9 +74,12 @@
                                     <outlet property="delegate" destination="gFq-c8-k1g" id="8MQ-fi-6yV"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDN-0x-KeQ">
-                                <rect key="frame" x="0.0" y="411" width="320" height="44"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDN-0x-KeQ">
+                                <rect key="frame" x="0.0" y="446" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="Mn0-lc-sjL"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Vergenize">
                                     <color key="titleColor" red="0.41520584820000001" green="0.01400454269" blue="0.85113790759999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -90,11 +96,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="AzM-CB-Eui" firstAttribute="top" secondItem="9A4-r5-jcr" secondAttribute="top" id="sNY-Id-nw7"/>
+                            <constraint firstItem="dDN-0x-KeQ" firstAttribute="top" secondItem="AzM-CB-Eui" secondAttribute="bottom" id="1jy-U7-q9u"/>
+                            <constraint firstAttribute="bottom" secondItem="dDN-0x-KeQ" secondAttribute="bottom" constant="15" id="5dy-ni-Vhg"/>
+                            <constraint firstItem="dDN-0x-KeQ" firstAttribute="leading" secondItem="9A4-r5-jcr" secondAttribute="leading" id="7Ji-cn-EgA"/>
+                            <constraint firstItem="AzM-CB-Eui" firstAttribute="leading" secondItem="9A4-r5-jcr" secondAttribute="leading" id="Hk2-1q-tpb"/>
+                            <constraint firstItem="AzM-CB-Eui" firstAttribute="trailing" secondItem="9A4-r5-jcr" secondAttribute="trailing" id="SeT-JM-fDw"/>
+                            <constraint firstItem="dDN-0x-KeQ" firstAttribute="trailing" secondItem="9A4-r5-jcr" secondAttribute="trailing" id="cIN-5b-Is0"/>
+                            <constraint firstItem="AzM-CB-Eui" firstAttribute="top" secondItem="9A4-r5-jcr" secondAttribute="top" id="sg8-fb-mYJ"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" prompt="Tap photos to edit" id="7Y4-Ge-JvP">
+                    <navigationItem key="navigationItem" id="7Y4-Ge-JvP">
                         <barButtonItem key="leftBarButtonItem" title="Clear" id="RDw-T6-hn6">
                             <connections>
                                 <action selector="clearButton:" destination="gFq-c8-k1g" id="7sl-fb-2VV"/>
@@ -133,7 +145,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Done">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.41520584820000001" green="0.01400454269" blue="0.85113790759999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -262,8 +274,8 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-kf-P3i">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QcC-kf-P3i">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="444"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="PLc-qr-X5P">
@@ -280,20 +292,21 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7I-zb-nkJ" customClass="AssetView">
-                                                    <rect key="frame" x="0.0" y="1" width="80" height="80"/>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jAj-dr-w6M" customClass="AssetView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <gestureRecognizers/>
                                                     <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="wQe-By-hDy" appends="YES" id="jxC-Hd-htl"/>
+                                                        <outletCollection property="gestureRecognizers" destination="bFT-Xh-gtI" appends="YES" id="CJe-mT-3OB"/>
                                                     </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="aView" destination="P7I-zb-nkJ" id="l2H-oI-Eii"/>
+                                            <outlet property="aView" destination="jAj-dr-w6M" id="7eX-EP-fgK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -302,40 +315,39 @@
                                     <outlet property="delegate" destination="coc-4e-YJD" id="brB-b0-mE9"/>
                                 </connections>
                             </collectionView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-Vj-1Vd">
-                                <rect key="frame" x="0.0" y="449" width="320" height="56"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Dm-q5-ncN">
+                                <rect key="frame" x="0.0" y="444" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Dm-q5-ncN">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Add Selected">
-                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="highlighted">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addSelectedButton:" destination="coc-4e-YJD" eventType="touchUpInside" id="Zz4-sv-rew"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJD-aI-eqH">
-                                        <rect key="frame" x="278" y="35" width="42" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Sad-vl-Qv6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Add Selected">
+                                    <color key="titleColor" red="0.41520584820000001" green="0.01400454269" blue="0.85113790759999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addSelectedButton:" destination="coc-4e-YJD" eventType="touchUpInside" id="Zz4-sv-rew"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2Dm-q5-ncN" firstAttribute="leading" secondItem="8CO-Lj-yXe" secondAttribute="leading" id="I6X-qi-b2I"/>
+                            <constraint firstAttribute="bottom" secondItem="2Dm-q5-ncN" secondAttribute="bottom" constant="15" id="Ugd-qJ-Vbt"/>
+                            <constraint firstItem="QcC-kf-P3i" firstAttribute="top" secondItem="8CO-Lj-yXe" secondAttribute="top" id="Wzj-1i-w3U"/>
+                            <constraint firstItem="2Dm-q5-ncN" firstAttribute="top" secondItem="QcC-kf-P3i" secondAttribute="bottom" id="ejB-65-irT"/>
+                            <constraint firstItem="QcC-kf-P3i" firstAttribute="leading" secondItem="8CO-Lj-yXe" secondAttribute="leading" id="oLi-QG-2TA"/>
+                            <constraint firstItem="2Dm-q5-ncN" firstAttribute="trailing" secondItem="8CO-Lj-yXe" secondAttribute="trailing" id="rtb-e4-Gvy"/>
+                            <constraint firstItem="QcC-kf-P3i" firstAttribute="trailing" secondItem="8CO-Lj-yXe" secondAttribute="trailing" id="yew-oS-1hX"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="ZU4-u5-iGo">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Xyd-B8-fIQ"/>
                         <barButtonItem key="rightBarButtonItem" title="Select" id="hD7-w5-VDq">
                             <connections>
                                 <action selector="selectButtonTap:" destination="coc-4e-YJD" id="y4g-1q-fxI"/>
@@ -344,17 +356,15 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addSelectedButton" destination="2Dm-q5-ncN" id="Vhu-zC-m0h"/>
-                        <outlet property="addSelectedButtonView" destination="SKS-Vj-1Vd" id="JGm-jw-Kue"/>
                         <outlet property="albumCollectionView" destination="QcC-kf-P3i" id="Cxu-gY-KbD"/>
-                        <outlet property="countLabel" destination="bJD-aI-eqH" id="jsc-W3-EYK"/>
                         <outlet property="selectButton" destination="hD7-w5-VDq" id="m4j-K4-ydf"/>
                         <segue destination="jz0-mD-qy9" kind="push" identifier="bigImageSegue" id="654-Ls-sa2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jtw-Yc-GdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="wQe-By-hDy">
+                <tapGestureRecognizer id="bFT-Xh-gtI">
                     <connections>
-                        <action selector="tap:" destination="coc-4e-YJD" id="SVT-6b-kiJ"/>
+                        <action selector="tap:" destination="coc-4e-YJD" id="POj-4O-uvJ"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -399,13 +409,8 @@
         <class className="AlbumViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AlbumViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addSelectedButton:"/>
-                <relationship kind="action" name="selectButtonTap:"/>
-                <relationship kind="action" name="tap:" candidateClass="UITapGestureRecognizer"/>
                 <relationship kind="outlet" name="addSelectedButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="addSelectedButtonView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="albumCollectionView" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="countLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="selectButton" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -436,9 +441,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
         <class className="UIStoryboardSegue" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UIStoryboardSegue.h"/>
         </class>
@@ -464,9 +466,6 @@
         <class className="vergenizerDetailViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/vergenizerDetailViewController.h"/>
             <relationships>
-                <relationship kind="action" name="allSwitch:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="sizeControl:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="wmControl:" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="allSwitchLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="allSwitchState" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>

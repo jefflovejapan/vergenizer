@@ -29,7 +29,7 @@
 */
 
 -(void) syncImage{
-    self.imageView.image = [UIImage imageWithCGImage:[self.asset thumbnail]];
+    self.imageView.image = [UIImage imageWithCGImage:[self.assetObject.asset thumbnail]];
 }
 
 @end

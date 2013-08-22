@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "AssetView.h"
+#import "AssetObject.h"
 
 @interface AlbumCVC : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet AssetView *aView;
 
-@property (strong, nonatomic) ALAsset *asset;
-@property (nonatomic) BOOL checkmark;
+@property (weak, nonatomic) AssetObject *assetObject;
 
-- (void) addImageViewFromAsset;
-- (void) syncCheckmark;
+
+- (void)addImageFromAsset;
+- (void)syncCheckmark;
 
 @end

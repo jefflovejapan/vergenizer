@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "VergenizerImageView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "AssetObject.h"
 
 @interface VergenizerCVC : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet VergenizerImageView *imageView;
-@property (strong, nonatomic) ALAsset *asset;
+@property (strong, nonatomic) AssetObject *assetObject;
 -(void) syncImage;
 
 @end

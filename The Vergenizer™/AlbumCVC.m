@@ -16,31 +16,17 @@
 @implementation AlbumCVC
 
 //Adds a new UIImageView subview at index 0 to the cell's AssetView subview.
-- (void) addImageViewFromAsset{
-    [self.aView insertSubview:[[UIImageView alloc]initWithFrame:self.aView.frame] atIndex:0];
-    self.aView.imageView= self.aView.subviews[0];
-    self.aView.imageView.image = [UIImage imageWithCGImage:[self.asset thumbnail]];
-    [self setNeedsDisplay];
+- (void) addImageFromAsset{
+    self.aView.imageView.image = [UIImage imageWithCGImage:[self.assetObject.asset thumbnail]];
+    [self.aView setNeedsDisplay];
 }
 
-- (void) syncCheckmark{
-    self.aView.checkmarkView.hidden = !self.checkmark;
-    if (self.checkmark) {
-        self.aView.imageView.alpha = 0.5;
-    } else {
-        self.aView.imageView.alpha = 1.0;
-    }
-    [self setNeedsDisplay];
+//Checkmark state is contained in the assetObject itself
+- (void)syncCheckmark{
+    self.aView.checkmarkView.hidden = self.assetObject.checkmarkHidden;
+    self.aView.alpha = self.assetObject.checkmarkHidden ? 1.0:0.5;
+    [self.aView setNeedsDisplay];
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

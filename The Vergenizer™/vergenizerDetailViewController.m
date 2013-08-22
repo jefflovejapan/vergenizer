@@ -10,9 +10,6 @@
 #import "AssetObject.h"
 
 @interface vergenizerDetailViewController ()
-@property (strong, nonatomic) AssetObject *assetObject;
-@property (nonatomic) NSString *watermarkString;
-@property (nonatomic) NSInteger watermarkSize;
 @property (strong, nonatomic) NSArray *watermarkSizes;
 @property (nonatomic)CGFloat wmRatio;
 
@@ -32,12 +29,51 @@
 }
 
 - (IBAction)sizeControl:(UISegmentedControl *)sender {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            self.assetObject.outputSize = 560;
+            break;
+        case 1:
+            self.assetObject.outputSize = 640;
+            break;
+        case 2:
+            self.assetObject.outputSize = 1020;
+        case 3:
+            self.assetObject.outputSize = 2040;
+            break;
+            
+        default:
+            break;
+    }
 }
+
 - (IBAction)wmControl:(UISegmentedControl *)sender {
-    self.watermarkString = [self wmStringForInteger:[sender selectedSegmentIndex]];
-    self.detailView.wmView.image = [UIImage imageNamed:self.watermarkString];
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            self.assetObject.watermarkShape = nil;
+            self.assetObject.watermarkColor = nil;
+            break;
+        case 1:
+            self.assetObject.watermarkShape = @"logo";
+            self.assetObject.watermarkColor = @"white";
+            break;
+        case 2:
+            self.assetObject.watermarkShape = @"logo";
+            self.assetObject.watermarkColor = @"black";
+            break;
+        case 3:
+            self.assetObject.watermarkShape = @"triangle";
+            self.assetObject.watermarkColor = @"white";
+            break;
+        case 4:
+            self.assetObject.watermarkShape = @"triangle";
+            self.assetObject.watermarkColor = @"black";
+            break;
+        default:
+            break;
+    }
+    self.detailView.wmView.image = [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
     [self redrawWMView];
-    [self.detailView setNeedsDisplay];
 }
 
 
@@ -46,24 +82,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
-    //housekeeping / initializing. self.asset gets set on the segue in from vergenizerviewcontroller
-    NSURL *thisURL = [self.asset valueForProperty:ALAssetPropertyAssetURL];
-    NSString *thisString = [thisURL absoluteString];
-    NSLog(@"The URL for self.asset is %@", thisString);
-    self.assetObject = [self.handler assetObjectForString:thisString];
-    
-    //This sets up a variety of parameters
-    [self setParamsForAssetObject:self.assetObject];
-    
-    //Grabbing the image
-    ALAssetRepresentation *rep = [self.asset defaultRepresentation];
-    ALAssetOrientation orientation = [rep orientation];
-    
-    //Scale = 1 here means one point = one pixel.
-    UIImage *thisImage = [UIImage imageWithCGImage:[rep fullResolutionImage] scale:1 orientation:(UIImageOrientation)orientation];
-    
     //Handles setting up the scrollView and subviews
-    [self setViewsForImage:thisImage];
+    [self setViewsForImage:self.assetObject];
+    [self setParamsFromAssetObject:self.assetObject];
     
     //Setting the content size to be the size of the whole image
     
@@ -72,26 +93,31 @@
 
 
 //Here's all the complicated image setting stuff
-- (void)setViewsForImage:(UIImage*)image{
+- (void)setViewsForImage:(AssetObject *)assetObject{
+    ALAssetRepresentation *rep = [self.assetObject.asset defaultRepresentation];
+    ALAssetOrientation orientation = [rep orientation];
+    
+    //Scale = 1 here means one point = one pixel.
+    UIImage *thisImage = [UIImage imageWithCGImage:[rep fullResolutionImage] scale:1 orientation:(UIImageOrientation)orientation];
     
     //Want to lock contentSize.width at 2040, size height to maintain aspect ratio
-    self.scrollView.contentSize = CGSizeMake(2040, 2040*image.size.height/image.size.width);
-    NSLog(@"At top of setViews, contentsize is %f wide, %f tall \n thisimage is %f wide, %f tall", self.scrollView.contentSize.width, self.scrollView.contentSize.height, image.size.width, image.size.height);
+    self.scrollView.contentSize = CGSizeMake(2040, 2040*thisImage.size.height/thisImage.size.width);
     
     self.detailView = [[DetailView alloc]initWithFrame:CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
-    NSLog(@"At top of setViews, DetailView is %f by %f", self.detailView.frame.size.width, self.detailView.frame.size.width);
     
     [self.scrollView addSubview:self.detailView];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.detailView.frame];
     self.imageView = imageView;
-    self.imageView.image = image;
-    NSLog(@"imageView is %f wide, image is %f", self.imageView.frame.size.width, self.imageView.image.size.width);
+    self.imageView.image = thisImage;
     
     //watermark stuff
-    UIImage *watermark = [UIImage imageNamed:self.watermarkString];
-    CGFloat wmOffset = self.scrollView.contentSize.width*self.wmRatio;
-    NSLog(@"watermark is %f by %f", watermark.size.width, watermark.size.height);
-    CGRect wmRect = CGRectMake(self.scrollView.contentSize.width - watermark.size.width - wmOffset, self.scrollView.contentSize.height - watermark.size.height - wmOffset, watermark.size.width, watermark.size.height);
+    NSString *detailViewWatermarkString = [self detailViewWatermarkStringForString:self.assetObject.watermarkString];
+    UIImage *watermark = [UIImage imageNamed:detailViewWatermarkString];
+    if (!watermark) {
+        [NSException raise:@"No watermark image" format:@"The string provided doesn't match any available image file"];
+    }
+    CGFloat wmOffset = self.imageView.frame.size.width*self.wmRatio;
+    CGRect wmRect = CGRectMake(self.imageView.frame.size.width - watermark.size.width - wmOffset, self.imageView.frame.size.height - watermark.size.height - wmOffset, watermark.size.width, watermark.size.height);
     UIImageView *wmView = [[UIImageView alloc]initWithImage:watermark];
     
     //adding properties to our scroll view's subview
@@ -103,49 +129,16 @@
     self.detailView.wmView.alpha = 0.2;
     [self.detailView addSubview:self.detailView.wmView];
 
-    for (int i = 0; i<self.scrollView.subviews.count; i++) {
-        NSLog(@"scrollview's subview %d is class %@", i, [self.scrollView.subviews[i] class]);
-    }
-        
+   
     self.scrollView.minimumZoomScale = 0.01;
     self.scrollView.maximumZoomScale = 2.0;
 }
 
-- (NSString *)getWMString{
-    NSInteger selectedWM = [self.wmControlOutlet selectedSegmentIndex];
-    switch (selectedWM) {
-        case 0:
-            return nil;
-            break;
-        case 1:
-            return [self wmStringForInteger:1];
-            break;
-        case 2:
-            return [self wmStringForInteger:2];
-            break;
-        case 3:
-            return [self wmStringForInteger:3];
-            break;
-        case 4:
-            return [self wmStringForInteger:4];
-            break;
-        default:
-            [NSException raise:@"Watermark doesn't exist" format:@"The name you selected for a watermark file doesn't exist"];
-            return nil;
-            break;
-    }
-}
 
--(void)updateWM:(NSInteger)wmInt{
-    
-}
-
-
-//reading in parameters from the assset object
-- (void)setParamsForAssetObject:(AssetObject *)assetObject{
-    self.watermarkSize = assetObject.watermarkSize;
-    self.watermarkString = assetObject.watermarkString;
-    switch (self.watermarkSize) {
+//reading in parameters from the asssetObject
+- (void)setParamsFromAssetObject:(AssetObject *)assetObject{
+    NSLog(@"assetObject's watermarkSize is %d and its watermarkString is %@", assetObject.outputSize, assetObject.watermarkString);
+    switch (assetObject.outputSize) {
         case 560:
             self.sizeControlOutlet.selectedSegmentIndex = 0;
             [self.sizeControlOutlet setNeedsDisplay];
@@ -164,42 +157,26 @@
         default:
             break;
     }
-    if ([self.watermarkString isEqualToString:nil]) {
+    
+    if (!self.assetObject.watermarkShape || !self.assetObject.watermarkColor) {
         self.wmControlOutlet.selectedSegmentIndex = 0;
         [self.wmControlOutlet setNeedsDisplay];
-    } else if([self.watermarkString isEqualToString:[self wmStringForInteger:1]]) {
-        self.wmControlOutlet.selectedSegmentIndex = 1;
-        [self.wmControlOutlet setNeedsDisplay];
-    } else if ([self.watermarkString isEqualToString:[self wmStringForInteger:2]]){
-        self.wmControlOutlet.selectedSegmentIndex = 2;
-        [self.wmControlOutlet setNeedsDisplay];
-    } else if ([self.watermarkString isEqualToString:[self wmStringForInteger:3]]){
-        self.wmControlOutlet.selectedSegmentIndex = 3;
-        [self.wmControlOutlet setNeedsDisplay];
-    } else if ([self.watermarkString isEqualToString:[self wmStringForInteger:4]]){
-        self.wmControlOutlet.selectedSegmentIndex = 4;
-        [self.wmControlOutlet setNeedsDisplay];
-    } else {
-        [NSException raise:@"No watermark match" format:@"There's no appropriate watermark for that control value"];
+    }else if ([self.assetObject.watermarkShape isEqualToString:@"logo"]) {
+        if ([self.assetObject.watermarkColor isEqualToString:@"white"]) {
+            self.wmControlOutlet.selectedSegmentIndex = 1;
+            [self.wmControlOutlet setNeedsDisplay];
+        } else if ([self.assetObject.watermarkColor isEqualToString:@"black"]){
+            self.wmControlOutlet.selectedSegmentIndex = 2;
+            [self.wmControlOutlet setNeedsDisplay];
+        }
+    } else if ([self.assetObject.watermarkShape isEqualToString:@"triangle"]){
+        if ([self.assetObject.watermarkColor isEqualToString:@"white"]) {
+            self.wmControlOutlet.selectedSegmentIndex = 3;
+            [self.wmControlOutlet setNeedsDisplay];
+        }
     }
 }
 
-- (NSString *)wmStringForInteger:(NSInteger)wmInt{
-    if (wmInt == 0) {
-        return nil;
-    } else if (wmInt == 1){
-        return [NSString stringWithFormat:@"verge_water_500_white"];
-    } else if (wmInt == 2){
-        return [NSString stringWithFormat:@"verge_water_500_black"];
-    } else if (wmInt == 3){
-        return [NSString stringWithFormat:@"verge_water_200_white_triangle"];
-    } else if (wmInt == 4){
-        return [NSString stringWithFormat:@"verge_water_200_black_triangle"];
-    } else {
-        [NSException raise:@"invalid integer" format:@"There's no wmString for that integer"];
-        return nil;
-    }
-}
 
 -(void)redrawWMView{
     UIImage *image = self.detailView.wmView.image;
@@ -219,74 +196,30 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-- (ALAsset *)asset{
-    if (!_asset) {
-        _asset  = [[ALAsset alloc]init];
-    }
-    return _asset;
-}
 
-- (NSArray *)watermarkSizes{
-    if (!_watermarkSizes) {
-        NSNumber *size0 = [NSNumber numberWithInteger:560];
-        NSNumber *size1 = [NSNumber numberWithInteger:640];
-        NSNumber *size2 = [NSNumber numberWithInteger:1020];
-        NSNumber *size3 = [NSNumber numberWithInteger:2040];
-        _watermarkSizes = [NSArray arrayWithObjects:size0, size1, size2, size3, nil];
-    }
-    return _watermarkSizes;
-}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    switch ([self.sizeControlOutlet selectedSegmentIndex]) {
-        case 0:
-            self.watermarkSize = 560;
-            break;
-        case 1:
-            self.watermarkSize = 640;
-            break;
-        case 2:
-            self.watermarkSize = 1020;
-            break;
-        case 3:
-            self.watermarkSize = 2040;
-            break;
-            
-        default:
-            break;
-    }
-    self.watermarkString = [self wmStringForInteger:[self.wmControlOutlet selectedSegmentIndex]];
     
     if(self.allSwitchState.isOn){
         NSLog(@"switchstate returned yes");
         [self applyParamstoAll];
     } else if(!self.allSwitchState.isOn) {
         NSLog(@"switchstate returned no");
-        self.assetObject.watermarkString = self.watermarkString;
-        self.assetObject.watermarkSize = self.watermarkSize;
     } else{
         NSLog(@"switchstate returned nil");
     }
 }
 
 -(void)applyParamstoAll{
-    NSLog(@"Inside applyParamstoAll");
-    NSArray *keys = [self.handler.details allKeys];
-    for (int i=0; i<keys.count; i++) {
-        if (keys[i]) {
-            if ([[self.handler.details objectForKey:keys[i]] isKindOfClass:[AssetObject class]]) {
-                
-                //careful. We want to take parameters from our assetObject property and apply to them to the objects in the dictionary.
-                AssetObject *dictionaryObject = [self.handler.details objectForKey:keys[i]];
-                dictionaryObject.watermarkSize = self.watermarkSize;
-                dictionaryObject.watermarkString = self.watermarkString;
-            }
+    for (int i=0; i<self.assetObjectSet.count; i++) {
+        if ([self.assetObjectSet[i] isKindOfClass:[AssetObject class]]) {
+            AssetObject *thisObject = self.assetObjectSet[i];
+            thisObject.outputSize = self.assetObject.outputSize;
+            thisObject.watermarkColor = self.assetObject.watermarkColor;
+            thisObject.watermarkShape = self.assetObject.watermarkShape;
+            // self.assetObject.watermarkString gets set automatically
         }
     }
 }
@@ -295,6 +228,31 @@
     return self.detailView;
 }
 
+- (NSString *)detailViewWatermarkStringForString:(NSString *)string{
+    NSString *returnString = [[NSString alloc]init];
+    if ([string rangeOfString:@"logo_white"].location != NSNotFound) {
+        returnString = @"logo_white_500";
+    } else if ([string rangeOfString:@"logo_black"].location != NSNotFound){
+        returnString = @"logo_black_500";
+    } else if ([string rangeOfString:@"triangle_white"].location != NSNotFound){
+        returnString = @"triangle_white_200";
+    } else if ([string rangeOfString:@"triangle_black"].location != NSNotFound){
+        returnString = @"triangle_black_200";
+    } else {
+        [NSException raise:@"Invalid input string" format:@"watermarkStringForString can't return a valid string because the input string doesn't contain necessary substring"];
+        returnString = nil;
+    }
+    return returnString;
+
+}
+
+
+- (AssetObject *)assetObject{
+    if (!_assetObject) {
+        _assetObject = [[AssetObject alloc]init];
+    }
+    return _assetObject;
+}
 
 
 @end

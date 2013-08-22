@@ -10,6 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "PhotoHandler.h"
 #import "AlbumViewController.h"
+#import "AssetObject.h"
 
 @protocol PhotoHandlerDelegate <NSObject>
 @property (strong, nonatomic) PhotoHandler *handler;

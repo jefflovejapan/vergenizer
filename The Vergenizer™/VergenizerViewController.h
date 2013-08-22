@@ -16,29 +16,31 @@
 #import "WatermarkHandler.h"
 
 @protocol DetailDelegate <NSObject>
-@property (strong, nonatomic) ALAsset *asset;
+@property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) WatermarkHandler *handler;
--(void) updateWM:(NSInteger)wmInt;
+@property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
+//-(void) updateWM:(NSInteger)wmInt;
 @end
 
 @protocol WatermarkHandlerDelegate <NSObject>
 @property (strong, nonatomic) WatermarkHandler *wmHandler;
 @end
 
-@interface VergenizerViewController : UIViewController <PhotoHandlerDelegate, AlbumDelegate, VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, AssetBlockDelegate>
+@interface VergenizerViewController : UIViewController <PhotoHandlerDelegate, AlbumDelegate, VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
+//AssetBlockDelegate used to be in here, but don't think I need it anymore
 
 //properties declared in protocols
 @property (strong, nonatomic) PhotoHandler *handler;
-@property (strong, nonatomic) NSMutableOrderedSet *orderedURLSet;
+@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
 @property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 
--(void)addURLSet:(NSSet *)objects;
--(void)reloadNextIndexPathWithAsset:(ALAsset*)asset;
+-(void)addAssetObjectSet:(NSSet *)objects;
+//-(void)reloadNextIndexPathWithAsset:(ALAsset*)asset;
+
 
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary;
 @property (strong, nonatomic) PickerViewController *picker;
 @property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) NSMutableArray *groups;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (strong, nonatomic) WatermarkHandler *wmHandler;

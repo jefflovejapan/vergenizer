@@ -34,23 +34,25 @@
     cell.imageView.image = [UIImage imageWithCGImage:[group posterImage]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
-    
-}
-
-- (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    self.albumController.albumIndex = indexPath.item;
-    
-
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    //Initializing the destination AlbumViewController
     self.albumController = (AlbumViewController *)segue.destinationViewController;
     self.albumController.albumDelegate = self;
     self.albumController.albumDelegate.handler = self.handlerDelegate.handler;
     NSIndexPath *indexPath = [self.albumTable indexPathForSelectedRow];
     self.albumController.albumIndex = indexPath.item;
-
+    
+    ALAssetsGroup *group = self.handler.groups[indexPath.item];
+    self.albumController.group = group;
+    [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        if (result) {
+            [self.albumController.albumPhotos addObject:[[AssetObject alloc]initWithAsset:result]];
+        }
+    }];
+    NSLog(@"Preparing for segue. There are %d objects in self.albumController.albumPhotos. The first has class %@", self.albumController.albumPhotos.count, [self.albumController.albumPhotos[0] class]);
 }
 
 

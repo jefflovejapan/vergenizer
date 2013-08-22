@@ -11,15 +11,12 @@
 #import <Foundation/Foundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@protocol AssetBlockDelegate <NSObject>
--(void)reloadNextIndexPathWithAsset:(ALAsset*)asset;
-@end
 
 @interface PhotoHandler : NSObject
 @property (strong, nonatomic)NSMutableArray *groups;
-@property (strong, nonatomic) id<AssetBlockDelegate> assetBlockDelegate;
+@property (strong, nonatomic) ALAssetsLibrary *library;
 - (PhotoHandler *)init;
 - (CGImageRef)posterImageForAssetsGroup:(ALAssetsGroup *)assetsGroup;
-- (void)assetForURL:(NSURL *)assetURL;
+//- (void)assetForURL:(NSURL *)assetURL;
 - (void)addAssetGroupWithName:(NSString *)nameString;
 @end
