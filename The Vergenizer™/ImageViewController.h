@@ -10,7 +10,7 @@
 #import "AlbumViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface ImageViewController : UIViewController <BigImageDelegate, UIScrollViewDelegate>
+@interface ImageViewController : UIViewController <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *imageView;
 @end

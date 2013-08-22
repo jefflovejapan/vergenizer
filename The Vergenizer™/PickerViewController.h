@@ -12,15 +12,9 @@
 #import "AlbumViewController.h"
 #import "AssetObject.h"
 
-@protocol PhotoHandlerDelegate <NSObject>
-@property (strong, nonatomic) PhotoHandler *handler;
-@end
 
-
-@interface PickerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, AlbumDelegate>
+@interface PickerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *albumTable;
-@property (strong, nonatomic) id <PhotoHandlerDelegate> handlerDelegate;
 @property (strong, nonatomic) PhotoHandler *handler;
-@property (weak, nonatomic) AlbumViewController *albumController;
 @end
 

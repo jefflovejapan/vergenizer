@@ -26,7 +26,7 @@
 @property (strong, nonatomic) WatermarkHandler *wmHandler;
 @end
 
-@interface VergenizerViewController : UIViewController <PhotoHandlerDelegate, AlbumDelegate, VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
+@interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
 //AssetBlockDelegate used to be in here, but don't think I need it anymore
 
 //properties declared in protocols

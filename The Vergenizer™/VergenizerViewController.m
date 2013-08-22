@@ -192,8 +192,9 @@
 #pragma lifecycle methods
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
-        self.picker = (PickerViewController *)segue.destinationViewController;
-        self.picker.handlerDelegate = self;
+        PickerViewController *pvc;
+        pvc = segue.destinationViewController;
+        pvc.handler = self.handler;
     }
     if ([segue.identifier isEqualToString:@"vergenizerDetailSegue"]) {
         if ([segue.destinationViewController conformsToProtocol:@protocol(DetailDelegate)]) {

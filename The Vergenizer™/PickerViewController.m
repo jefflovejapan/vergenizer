@@ -17,7 +17,7 @@
 
 @implementation PickerViewController
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger numRows = [self.handlerDelegate.handler.groups count];
+    NSInteger numRows = [self.handler.groups count];
     return numRows;
 }
 
@@ -27,7 +27,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
-    ALAssetsGroup *group = [self.handlerDelegate.handler.groups objectAtIndex:[indexPath item]];
+    ALAssetsGroup *group = [self.handler.groups objectAtIndex:[indexPath item]];
     NSString *cellText = [group valueForProperty:ALAssetsGroupPropertyName];
     cell.textLabel.text = cellText;
     
@@ -37,22 +37,23 @@
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    NSLog(@"Inside PFS in PVC");
     //Initializing the destination AlbumViewController
-    self.albumController = (AlbumViewController *)segue.destinationViewController;
-    self.albumController.albumDelegate = self;
-    self.albumController.albumDelegate.handler = self.handlerDelegate.handler;
+    AlbumViewController *albumController;
+    albumController = (AlbumViewController *)segue.destinationViewController;
     NSIndexPath *indexPath = [self.albumTable indexPathForSelectedRow];
-    self.albumController.albumIndex = indexPath.item;
-    
     ALAssetsGroup *group = self.handler.groups[indexPath.item];
-    self.albumController.group = group;
+    if (!self.handler) {
+        NSLog(@"Handler doesn't exist");
+    }
+    NSLog(@"The selected asset group is %@", [group description]);
+    albumController.group = group;
     [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
-            [self.albumController.albumPhotos addObject:[[AssetObject alloc]initWithAsset:result]];
+            [albumController.albumImages addObject:[UIImage imageWithCGImage:[result thumbnail]]];
         }
     }];
-    NSLog(@"Preparing for segue. There are %d objects in self.albumController.albumPhotos. The first has class %@", self.albumController.albumPhotos.count, [self.albumController.albumPhotos[0] class]);
+//    NSLog(@"Preparing for segue. There are %d objects in self.albumController.albumPhotos. The first has class %@", albumController.albumImages.count, [albumController.albumImages[0] class]);
 }
 
 
