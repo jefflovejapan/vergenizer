@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "AssetView.h"
 #import "AssetObject.h"
-#import "ImageView.h"
+#import "AlbumImageView.h"
 
 @interface AlbumCVC : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet ImageView *imageView;
+@property (weak, nonatomic) IBOutlet AlbumImageView *albumImageView;
 
 
 @end

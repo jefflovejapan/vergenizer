@@ -37,10 +37,15 @@
         [self exitSelectionMode];
     }
 }
+
 - (IBAction)albumCellTap:(id)sender {
-    self.someInt+=1;
-    NSLog(@"tap tap %d", (int)self.someInt);
+    NSLog(@"bing bing");
 }
+
+
+
+
+
 
 //Needs to be implemented. Take an array/set of selected assets and send them back to VergenizerViewController for watermarking.
 - (IBAction)addSelectedButton:(id)sender {
@@ -104,7 +109,7 @@ const int IPHONE_WIDTH = 320;
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        albumCVC.imageView.image = self.albumImages[indexPath.item];
+        albumCVC.albumImageView.image = self.albumImages[indexPath.item];
     }
     return cell;
 }
@@ -146,11 +151,5 @@ const int IPHONE_WIDTH = 320;
     return _assetSet;
 }
 
--(NSInteger *)someInt{
-    if (!_someInt) {
-        _someInt = 0;
-    }
-    return _someInt;
-}
 
 @end

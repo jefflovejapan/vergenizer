@@ -307,12 +307,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jgw-s1-fKr" customClass="ImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ljd-eR-I5v" customClass="AlbumImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <gestureRecognizers/>
                                                     <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="996-Ng-VMT" appends="YES" id="5Ko-1y-NUr"/>
+                                                        <outletCollection property="gestureRecognizers" destination="mO6-Dw-nCc" appends="YES" id="lJ7-Nl-ebt"/>
                                                     </connections>
                                                 </imageView>
                                             </subviews>
@@ -320,7 +320,7 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="imageView" destination="jgw-s1-fKr" id="GNQ-bQ-E1z"/>
+                                            <outlet property="albumImageView" destination="ljd-eR-I5v" id="OqZ-q2-9nf"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -372,13 +372,12 @@
                         <outlet property="addSelectedButton" destination="2Dm-q5-ncN" id="Vhu-zC-m0h"/>
                         <outlet property="collectionView" destination="QcC-kf-P3i" id="KSh-rz-6Jp"/>
                         <outlet property="selectButton" destination="hD7-w5-VDq" id="m4j-K4-ydf"/>
-                        <segue destination="jz0-mD-qy9" kind="push" identifier="bigImageSegue" id="654-Ls-sa2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jtw-Yc-GdR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="996-Ng-VMT">
+                <tapGestureRecognizer id="mO6-Dw-nCc">
                     <connections>
-                        <action selector="albumCellTap:" destination="coc-4e-YJD" id="MKS-IE-5rn"/>
+                        <action selector="albumCellTap:" destination="coc-4e-YJD" id="uHA-s1-kAe"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -393,11 +392,11 @@
                         <viewControllerLayoutGuide type="bottom" id="OFu-OR-rDZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mVS-Mg-VZq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pvg-c7-wvt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="jz0-mD-qy9" id="Xhp-Bc-1ee"/>

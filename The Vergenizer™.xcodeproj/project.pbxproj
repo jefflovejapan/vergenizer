@@ -32,7 +32,7 @@
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
-		DFABFE6817C63BCE0000CD9C /* ImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFABFE6717C63BCE0000CD9C /* ImageView.m */; };
+		DF94D3D017CE211400D1D2ED /* AlbumImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +86,8 @@
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
-		DFABFE6617C63BCE0000CD9C /* ImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageView.h; sourceTree = "<group>"; };
-		DFABFE6717C63BCE0000CD9C /* ImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageView.m; sourceTree = "<group>"; };
+		DF94D3CE17CE211400D1D2ED /* AlbumImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumImageView.h; path = ../AlbumImageView.h; sourceTree = "<group>"; };
+		DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumImageView.m; path = ../AlbumImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,12 +148,12 @@
 			isa = PBXGroup;
 			children = (
 				DF1E94E217ACAFAB0090E6BD /* Main_iPhone.storyboard */,
-				DFABFE6617C63BCE0000CD9C /* ImageView.h */,
-				DFABFE6717C63BCE0000CD9C /* ImageView.m */,
 				DF1E94E317ACAFAB0090E6BD /* VergenizerCVC.h */,
 				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
 				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
 				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
+				DF94D3CE17CE211400D1D2ED /* AlbumImageView.h */,
+				DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */,
 				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
 				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
 				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
@@ -319,7 +319,6 @@
 			files = (
 				DF1E950417ACAFAB0090E6BD /* ImageViewController.m in Sources */,
 				DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */,
-				DFABFE6817C63BCE0000CD9C /* ImageView.m in Sources */,
 				DF1E94B717ACAF5C0090E6BD /* main.m in Sources */,
 				DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */,
 				DF1E950317ACAFAB0090E6BD /* DetailView.m in Sources */,
@@ -328,6 +327,7 @@
 				DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */,
 				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
 				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
+				DF94D3D017CE211400D1D2ED /* AlbumImageView.m in Sources */,
 				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,
 				DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */,
 				DF1E94FE17ACAFAB0090E6BD /* VergenizerCVC.m in Sources */,
