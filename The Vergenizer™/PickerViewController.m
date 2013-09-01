@@ -48,6 +48,7 @@
     }
     NSLog(@"The selected asset group is %@", [group description]);
     albumController.group = group;
+    albumController.handler =self.handler;
     [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
             [albumController.albumImages addObject:[UIImage imageWithCGImage:[result thumbnail]]];

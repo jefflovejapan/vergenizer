@@ -25,14 +25,14 @@
 
 //Returns when collectionViewCell is tapped
 - (IBAction)vergenizerCellTap:(id)sender {
+    NSLog(@"taptap");
     CGPoint tapLocation = [sender locationInView:self.view];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[VergenizerCVC class]]) {
+        if (cell && [cell isKindOfClass:[VergenizerCVC class]]) {
             //Say we tap on the image with index.item == 1. We want the asset at the URL in index 1.
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
-
             self.segueAssetObject = vergenizerCVC.assetObject;
         }
         [self performSegueWithIdentifier:@"vergenizerDetailSegue" sender:self];

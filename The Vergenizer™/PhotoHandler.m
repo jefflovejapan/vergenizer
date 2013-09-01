@@ -58,6 +58,7 @@
     [self.library addAssetsGroupAlbumWithName:nameString resultBlock:newGroupBlock failureBlock:failureBlock];
 }
 
+
 - (ALAssetsLibrary *) library{
     if (!_library) _library = [[ALAssetsLibrary alloc] init];
     return _library;

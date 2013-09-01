@@ -15,12 +15,13 @@
 //Used in segue to ImageViewController
 @property (strong, nonatomic) UIImage *segueImage;
 @property (nonatomic) NSInteger *someInt;
+@property (strong, nonatomic) ImageViewController *ivc;
 
 //Used rather than array to check for dupes. Gets new photos unioned into set via 
 @property (strong, nonatomic) NSMutableSet *assetSet;
 
-
-
+//Are we in selectionMode?
+@property (nonatomic) BOOL selectionMode;
 
 @end
 
@@ -30,6 +31,7 @@
 
 //Gets triggered when tapping the "select" button. Should probably rename.
 - (IBAction)selectButtonTap:(id)sender {
+    NSLog(@"select button");
     if (!self.selectionMode) {
         [self enterSelectionMode];
     } else {
@@ -38,8 +40,19 @@
     }
 }
 
+
+#warning Want to change this so that if selectionMode == YES we select and highlight the cell using UICollectionView's built-in mechanism. See: http://d.pr/AvIc
+
 - (IBAction)albumCellTap:(id)sender {
-    NSLog(@"bing bing");
+    NSLog(@"taptap");
+    CGPoint tapLocation = [sender locationInView:self.collectionView];
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
+    if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
+        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[AlbumCVC class]]) {
+            [self goBig:indexPath];
+        }
+    }
 }
 
 
@@ -64,9 +77,17 @@
 
 #pragma Private Methods
 
--(void) goBig:(UIImage *)image{
-    self.segueImage = image;
+-(void) goBig:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.item];
+    ALAssetsGroupEnumerationResultsBlock resultsBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop){
+        [self setIVCViewsWithAsset:result];
+    };
+    [self.group enumerateAssetsAtIndexes:indexSet options:0 usingBlock:resultsBlock];
+}
+
+-(void)setIVCViewsWithAsset:(ALAsset *)asset{
+    
 }
 
 
@@ -119,16 +140,17 @@ const int IPHONE_WIDTH = 320;
 #pragma lifecycle methods
 
 -(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"There are %d images in self.albumImages", self.albumImages.count);
     
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     NSLog(@"Inside PFS in AVC");
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
-        ImageViewController *ivc;
-        ivc = segue.destinationViewController;
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:self.segueImage];
-        ivc.imageView = imageView;
+        self.ivc = segue.destinationViewController;
+//What's happening? I tap a cell then kick off a block to find the alasset AND segue. No way to know which one returns first.
+//Choice 1: I segue right away with a 0,0 image. From the segue I get the destination view controller, which I can keep in a property. That way my enumeration block can see it and know how to set up the scroll view.
+//Choice 2: I kick off the enumeration block first. That way I'm sure to have the image when I hit the segue. Problem is I would need to block the main thread.
     }
 }
 
@@ -149,6 +171,12 @@ const int IPHONE_WIDTH = 320;
         _assetSet = [[NSMutableSet alloc]init];
     }
     return _assetSet;
+}
+-(ImageViewController *)ivc{
+    if (!_ivc) {
+        _ivc = [[ImageViewController alloc]init];
+    }
+    return _ivc;
 }
 
 

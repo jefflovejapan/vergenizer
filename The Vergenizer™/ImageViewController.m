@@ -26,11 +26,11 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    self.scrollView.contentSize = self.imageView.bounds.size;
-    [self.scrollView addSubview:self.imageView];
-    [self.scrollView setMinimumZoomScale:0.1];
-    [self.scrollView setMaximumZoomScale:1.0];
-    [self.scrollView zoomToRect:self.imageView.bounds animated:NO];
+//    self.scrollView.contentSize = self.imageView.bounds.size;
+//    [self.scrollView addSubview:self.imageView];
+//    [self.scrollView setMinimumZoomScale:0.1];
+//    [self.scrollView setMaximumZoomScale:1.0];
+//    [self.scrollView zoomToRect:self.imageView.bounds animated:NO];
 
 }
 
