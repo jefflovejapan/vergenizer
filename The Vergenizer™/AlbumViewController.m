@@ -79,13 +79,11 @@
         NSNumber *key;
         for (key in self.selectedItems.allKeys){
             NSLog(@"Value for %@: %@", key, self.selectedItems[key]);
+            NSLog(@"AlbumAssets: %@", self.albumAssets);
             if ([self.selectedItems[key] boolValue]) {
-                NSLog(@"bool val is true");
-                if (self.albumImages[[key intValue]] == nil) {
-                    NSLog(@"Nil image wtf");
-                }
-                AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumImages[[key intValue]]];
+                AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[key intValue]]];
                 [self.assetObjectSet addObject:ao];
+                NSLog(@"AOS: %@", self.assetObjectSet);
                 NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
             } else {
                 NSLog(@"Bool value is false");
@@ -155,7 +153,7 @@
      numberOfItemsInSection:(NSInteger)section{
     
     // Get the count of assets in the albumThumbnails array
-    NSInteger numCells = self.albumImages.count;
+    NSInteger numCells = self.albumAssets.count;
     return numCells;
     
 }
@@ -168,7 +166,7 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        albumCVC.albumImageView.image = self.albumImages[indexPath.item];
+        albumCVC.albumImageView.image = [[UIImage alloc] initWithCGImage:[self.albumAssets[indexPath.item] thumbnail]];
     }
     cell.alpha = [self alphaForSelected:self.selectedItems[@(indexPath.item)]];
     return cell;
@@ -194,17 +192,17 @@
 
 
 //This array holds UIImages. It's going to be set on segue in so that we'll already have an array of images to draw from for collectionViewCells.
--(NSMutableArray *)albumImages{
-    if (!_albumImages) {
-        _albumImages = [[NSMutableArray alloc]init];
+-(NSMutableArray *)albumAssets{
+    if (!_albumAssets) {
+        _albumAssets = [[NSMutableArray alloc]init];
     }
-    return _albumImages;
+    return _albumAssets;
 }
 
 -(NSMutableDictionary *)selectedItems{
     if (!_selectedItems) {
         _selectedItems = [[NSMutableDictionary alloc]init];
-        for (int i = 0; i < self.albumImages.count; i++) {
+        for (int i = 0; i < self.albumAssets.count; i++) {
             _selectedItems[[NSNumber numberWithInt:i]] = @NO;
         }
     }
@@ -216,6 +214,13 @@
         _ivc = [[ImageViewController alloc]init];
     }
     return _ivc;
+}
+
+-(NSMutableOrderedSet *) assetObjectSet {
+    if (!_assetObjectSet) {
+        _assetObjectSet = [[NSMutableOrderedSet alloc] init];
+    }
+    return _assetObjectSet;
 }
 
 

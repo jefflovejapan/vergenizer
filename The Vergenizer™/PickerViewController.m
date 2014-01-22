@@ -51,7 +51,7 @@
     albumController.handler =self.handler;
     [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
         if (result) {
-            [albumController.albumImages addObject:[UIImage imageWithCGImage:[result thumbnail]]];
+            [albumController.albumAssets addObject:result];
         }
     }];
 //    NSLog(@"Preparing for segue. There are %d objects in self.albumController.albumPhotos. The first has class %@", albumController.albumImages.count, [albumController.albumImages[0] class]);

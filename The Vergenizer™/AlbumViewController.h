@@ -32,7 +32,7 @@
 
 
 @property (nonatomic) NSInteger albumIndex;
-@property (nonatomic, strong) NSMutableArray *albumImages;
+@property (nonatomic, strong) NSMutableArray *albumAssets;
 @property (nonatomic, strong) ALAssetsGroup *group;
 @property (nonatomic, strong) PhotoHandler *handler;
 

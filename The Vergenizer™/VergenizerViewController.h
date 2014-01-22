@@ -34,7 +34,7 @@
 @property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
 @property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 
--(void)addAssetObjectSet:(NSSet *)objects;
+-(void)addAssetObjectSet:(NSMutableSet *)objects;
 //-(void)reloadNextIndexPathWithAsset:(ALAsset*)asset;
 
 

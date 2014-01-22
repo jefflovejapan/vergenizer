@@ -43,9 +43,9 @@
 
 
 //Delegate method. We union new objects into the URLString set so that we don't get dupes.
--(void)addAssetObjectSet:(NSSet *)objects{
+-(void)addAssetObjectSet:(NSMutableOrderedSet *)objects{
     
-    [self.assetObjectSet unionSet:objects];
+    [self.assetObjectSet unionOrderedSet:objects];
 }
 
 #pragma delegate methods
