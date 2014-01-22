@@ -25,14 +25,19 @@
 
 -(PhotoHandler *)init{
     self = [super init];
+    [self.groups removeAllObjects];
+    [self updateAssetGroups];
+    return self;
+}
+
+-(void)updateAssetGroups{
     ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop) {
-        
-        if (group) {
+        NSLog(@"self.groups contains %@: %d", group, [self.groups containsObject:group]);
+        if (group && ![self.groups containsObject:group]) {
+            NSLog(@"Adding group %@", group);
             [self.groups addObject:group];
         }
     };
-    
-    
     
     ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
         [NSException raise:@"Hit failure block insidePhotoHandler" format:@"Weren't able to get through enumerating groups in ALAssetLibrary"];
@@ -40,27 +45,31 @@
     
     NSUInteger groupTypes = ALAssetsGroupAll;
     [self.library enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
-    
-    return self;
 }
 
 - (void)addAssetGroupWithName:(NSString *)nameString{
-    ALAssetsLibraryGroupResultBlock newGroupBlock = ^(ALAssetsGroup *group) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Vergenized group added");
-#warning Need something here to let vvc know it can start watermarking
-            });
-    };
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
-        [error localizedDescription];
-    };
-    
-    [self.library addAssetsGroupAlbumWithName:nameString resultBlock:newGroupBlock failureBlock:failureBlock];
+    NSLog(@"Attempting to addAssetGroupWithName: %@", nameString);
+
+//    ALAssetsLibraryGroupResultBlock newGroupBlock = ^(ALAssetsGroup *group) {
+//        NSLog(@"Here's the group: %@", group);
+//    };
+//
+//    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
+//        NSLog(@"Adding the vergenized group failed");
+//        [error localizedDescription];
+//    };
+
+    NSLog(@"library: %@", self.library);
+    [self.library addAssetsGroupAlbumWithName:nameString
+                                  resultBlock:nil
+                                 failureBlock:nil];
 }
 
 
 - (ALAssetsLibrary *) library{
-    if (!_library) _library = [[ALAssetsLibrary alloc] init];
+    if (!_library) {
+     _library = [[ALAssetsLibrary alloc] init];   
+    }
     return _library;
 }
 

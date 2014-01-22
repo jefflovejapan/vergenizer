@@ -14,7 +14,7 @@
 
 @interface VergenizerViewController ()
 
-//Used in segue to detai view for setting watermark params
+//Used in segue to detail view for setting watermark params
 @property (strong, nonatomic) AssetObject *segueAssetObject;
 
 //An array, used like a queue, to manage which index paths to reload when the model gets new images
@@ -30,7 +30,6 @@
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if (cell && [cell isKindOfClass:[VergenizerCVC class]]) {
-            //Say we tap on the image with index.item == 1. We want the asset at the URL in index 1.
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
             self.segueAssetObject = vergenizerCVC.assetObject;
         }
@@ -93,9 +92,9 @@
     NSLog(@"VergenizeButton");
     NSLog(@"Groups count: %d", self.handler.groups.count);
     for (int i = 0; i<self.handler.groups.count; i++) {
+        NSLog(@"i: %d", i);
         NSLog(@"inside for loop");
         if ([self.handler.groups[i] isKindOfClass:[ALAssetsGroup class]]) {
-            NSLog(@"class matches");
             ALAssetsGroup *thisGroup = self.handler.groups[i];
             NSLog(@"This group's name is %@", [thisGroup valueForProperty:ALAssetsGroupPropertyName]);
             if ([[thisGroup valueForProperty:ALAssetsGroupPropertyName] isEqualToString:@"Vergenized"]) {
@@ -107,6 +106,8 @@
     }
     NSLog(@"Creating Vergenized group");
     [self.handler addAssetGroupWithName:@"Vergenized"];
+    [self.handler updateAssetGroups];
+    NSLog(@"handler groups: %@", self.handler.groups);
     [self vergenizeButton:self];
 }
 
@@ -211,14 +212,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-#warning Not sure where else to put this initialization code. Doesn't seem safe to just be instantiating once in viewDidLoad rather than use lazy instantiation.
-    self.handler = [[PhotoHandler alloc]init];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated{
-    NSLog(@"Inside VWA");
     [self.view layoutIfNeeded];
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
@@ -250,6 +247,13 @@
         _assetObjectSet = [[NSMutableOrderedSet alloc]init];
     }
     return _assetObjectSet;
+}
+
+- (PhotoHandler *)handler{
+    if (!_handler) {
+        _handler = [[PhotoHandler alloc]init];
+    }
+    return _handler;
 }
 
 

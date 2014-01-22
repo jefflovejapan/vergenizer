@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Blagdon Jeffrey. All rights reserved.
 //
 
-#import "vergenizerDetailViewController.h"
+#import "VDetailViewController.h"
 #import "AssetObject.h"
 
 @interface vergenizerDetailViewController ()

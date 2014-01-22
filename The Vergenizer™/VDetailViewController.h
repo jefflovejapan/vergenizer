@@ -10,7 +10,7 @@
 #import "VergenizerViewController.h"
 #import "WatermarkHandler.h"
 #import "AssetObject.h"
-#import "DetailView.h"
+#import "VDetailView.h"
 
 @interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) AssetObject *assetObject;

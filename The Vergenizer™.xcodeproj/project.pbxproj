@@ -25,8 +25,8 @@
 		DF1E94FE17ACAFAB0090E6BD /* VergenizerCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */; };
 		DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */; };
 		DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */; };
-		DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */; };
-		DF1E950317ACAFAB0090E6BD /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EE17ACAFAB0090E6BD /* DetailView.m */; };
+		DF1E950217ACAFAB0090E6BD /* VDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EC17ACAFAB0090E6BD /* VDetailViewController.m */; };
+		DF1E950317ACAFAB0090E6BD /* VDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94EE17ACAFAB0090E6BD /* VDetailView.m */; };
 		DF1E950417ACAFAB0090E6BD /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */; };
 		DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */; };
 		DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */; };
@@ -72,10 +72,10 @@
 		DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumCVC.m; sourceTree = "<group>"; };
 		DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VergenizerImageView.h; sourceTree = "<group>"; };
 		DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VergenizerImageView.m; sourceTree = "<group>"; };
-		DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vergenizerDetailViewController.h; sourceTree = "<group>"; };
-		DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vergenizerDetailViewController.m; sourceTree = "<group>"; };
-		DF1E94ED17ACAFAB0090E6BD /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
-		DF1E94EE17ACAFAB0090E6BD /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
+		DF1E94EB17ACAFAB0090E6BD /* VDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDetailViewController.h; sourceTree = "<group>"; };
+		DF1E94EC17ACAFAB0090E6BD /* VDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDetailViewController.m; sourceTree = "<group>"; };
+		DF1E94ED17ACAFAB0090E6BD /* VDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDetailView.h; sourceTree = "<group>"; };
+		DF1E94EE17ACAFAB0090E6BD /* VDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDetailView.m; sourceTree = "<group>"; };
 		DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumViewController.h; sourceTree = "<group>"; };
@@ -207,8 +207,8 @@
 				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
 				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
 				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
-				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
-				DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */,
+				DF1E94EB17ACAFAB0090E6BD /* VDetailViewController.h */,
+				DF1E94EC17ACAFAB0090E6BD /* VDetailViewController.m */,
 				DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */,
 				DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */,
 				DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */,
@@ -228,8 +228,8 @@
 				DF1E87BD188F57FB0031B754 /* AlbumImageView.h */,
 				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
 				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
-				DF1E94ED17ACAFAB0090E6BD /* DetailView.h */,
-				DF1E94EE17ACAFAB0090E6BD /* DetailView.m */,
+				DF1E94ED17ACAFAB0090E6BD /* VDetailView.h */,
+				DF1E94EE17ACAFAB0090E6BD /* VDetailView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -341,10 +341,10 @@
 				DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */,
 				DF1E94B717ACAF5C0090E6BD /* main.m in Sources */,
 				DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */,
-				DF1E950317ACAFAB0090E6BD /* DetailView.m in Sources */,
+				DF1E950317ACAFAB0090E6BD /* VDetailView.m in Sources */,
 				DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */,
 				DF1E94BB17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m in Sources */,
-				DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */,
+				DF1E950217ACAFAB0090E6BD /* VDetailViewController.m in Sources */,
 				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
 				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
 				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Blagdon Jeffrey. All rights reserved.
 //
 
-#import "DetailView.h"
+#import "VDetailView.h"
 
 @implementation DetailView
 

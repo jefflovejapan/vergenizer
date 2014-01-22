@@ -17,6 +17,6 @@
 @property (strong, nonatomic) ALAssetsLibrary *library;
 - (PhotoHandler *)init;
 - (CGImageRef)posterImageForAssetsGroup:(ALAssetsGroup *)assetsGroup;
-//- (void)assetForURL:(NSURL *)assetURL;
 - (void)addAssetGroupWithName:(NSString *)nameString;
+- (void)updateAssetGroups;
 @end
