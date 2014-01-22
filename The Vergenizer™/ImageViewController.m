@@ -16,7 +16,7 @@
 @implementation ImageViewController
 
 #define MAX_ZOOM_SCALE 2.0
-#define MIN_ZOOM_SCALE 0.5
+#define MIN_ZOOM_SCALE 0.1
 
 - (void)viewWillAppear:(BOOL)animated{
 }
@@ -52,6 +52,7 @@
         if (self.image) {
             self.imageView.image = self.image;
             self.imageView.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
+            self.scrollView.zoomScale = 1.0;
             self.scrollView.contentSize = self.image.size;
             [self.scrollView zoomToRect:self.imageView.bounds animated:NO];
             [self.scrollView setNeedsDisplay];
