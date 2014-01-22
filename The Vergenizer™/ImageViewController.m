@@ -15,15 +15,8 @@
 
 @implementation ImageViewController
 
-#define MAX_ZOOM_SCALE = 2.0;
-#define MIN_ZOOM_SCALE = 0.5;
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    
-}
+#define MAX_ZOOM_SCALE 2.0
+#define MIN_ZOOM_SCALE 0.5
 
 - (void)viewWillAppear:(BOOL)animated{
 }
@@ -38,5 +31,32 @@
     return self.imageView;
 }
 
+- (UIImageView *)imageView{
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc]initWithFrame:CGRectZero];
+    }
+    return _imageView;
+}
+
+- (void)viewDidLoad{
+    [self.scrollView addSubview:self.imageView];
+    self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
+    self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
+    [self resetImage];
+}
+
+- (void)resetImage{
+    if (self.scrollView) {
+        self.scrollView.contentSize = CGSizeZero;
+        self.imageView.image = nil;
+        if (self.image) {
+            self.imageView.image = self.image;
+            self.imageView.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
+            self.scrollView.contentSize = self.image.size;
+            [self.scrollView zoomToRect:self.imageView.bounds animated:NO];
+            [self.scrollView setNeedsDisplay];
+        }
+    }
+}
 
 @end

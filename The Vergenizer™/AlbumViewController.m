@@ -99,32 +99,22 @@
 -(void) goBig:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.item];
-#warning Need to figure out why setIVCViewsWithAsset is getting called twice
-    //    for (int i = 0; i<indexSet.count; i++) {
-//        NSLog(@"item %d in indexSet is %d", i, indexSet[i]);
-//    }
     ALAssetsGroupEnumerationResultsBlock resultsBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop){
-        NSLog(@"Calling setIVCViews");
-        [self setIVCViewsWithAsset:result];
+        if (result != nil) {
+            [self setIVCAsset:result];
+        }
     };
     [self.group enumerateAssetsAtIndexes:indexSet options:0 usingBlock:resultsBlock];
 }
 
--(void)setIVCViewsWithAsset:(ALAsset *)asset{
+-(void)setIVCAsset:(ALAsset *)asset{
     if (self.ivc) {
         ALAssetRepresentation *rep = [asset defaultRepresentation];
         ALAssetOrientation alo = [rep orientation];
         CGImageRef ref = [[asset defaultRepresentation]fullResolutionImage];
         UIImage *image = [UIImage imageWithCGImage:ref scale:1.0 orientation:(UIImageOrientation)alo];
-        NSLog(@"UIImage is %f by %f", image.size.width, image.size.height);
-        self.ivc.scrollView.contentSize = image.size;
-        NSLog(@"Scroll View is %f by %f", self.ivc.scrollView.contentSize.width, self.ivc.scrollView.contentSize.height);
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
-        self.ivc.imageView = imageView;
-        [self.ivc.scrollView addSubview:self.ivc.imageView];
-        [self.ivc.scrollView setMinimumZoomScale:0.1];
-        [self.ivc.scrollView setMaximumZoomScale:1.0];
-        [self.ivc.scrollView zoomToRect:self.ivc.imageView.bounds animated:NO];
+        self.ivc.image = image;
+        
         [self.ivc.scrollView setNeedsDisplay];
     }
 }
@@ -152,7 +142,6 @@
     
     // Get the count of assets in the albumThumbnails array
     NSInteger numCells = self.albumImages.count;
-    NSLog(@"There are %d cells", numCells);
     return numCells;
     
 }
