@@ -22,10 +22,10 @@
 @property (nonatomic) NSInteger *someInt;
 @property (strong, nonatomic) ImageViewController *ivc;
 
-//Used rather than array to check for dupes. Gets new photos unioned into set via 
+//Managing cell selections and the asset set to send back to VVC
 @property (strong, nonatomic) NSMutableDictionary *selectedItems;
+@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
 
-//Are we in selectionMode?
 @property (nonatomic) BOOL selectionMode;
 
 @end
@@ -73,14 +73,28 @@
 
 //Needs to be implemented. Take an array/set of selected assets and send them back to VergenizerViewController for watermarking.
 - (IBAction)addSelectedButton:(id)sender {
-//    NSArray *controllers = [self.navigationController viewControllers];
-//    if ([controllers[0] conformsToProtocol:@protocol(VergenizerDelegate)]) {
-//        self.vergenizerDelegate = controllers[0];
-//        [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
-//        NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
-//    }
-//    NSLog(@"Popping to root");
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSArray *controllers = [self.navigationController viewControllers];
+    if ([controllers[0] conformsToProtocol:@protocol(VergenizerDelegate)]) {
+        self.vergenizerDelegate = controllers[0];
+        NSNumber *key;
+        for (key in self.selectedItems.allKeys){
+            NSLog(@"Value for %@: %@", key, self.selectedItems[key]);
+            if ([self.selectedItems[key] boolValue]) {
+                NSLog(@"bool val is true");
+                if (self.albumImages[[key intValue]] == nil) {
+                    NSLog(@"Nil image wtf");
+                }
+                AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumImages[[key intValue]]];
+                [self.assetObjectSet addObject:ao];
+                NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
+            } else {
+                NSLog(@"Bool value is false");
+            }
+        };
+        [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
+    }
+    NSLog(@"Popping to root");
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 
@@ -172,9 +186,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
-//What's happening? I tap a cell then kick off a block to find the alasset AND segue. No way to know which one returns first.
-//Choice 1: I segue right away with a 0,0 image. From the segue I get the destination view controller, which I can keep in a property. That way my enumeration block can see it and know how to set up the scroll view.
-//Choice 2: I kick off the enumeration block first. That way I'm sure to have the image when I hit the segue. Problem is I would need to block the main thread.
     }
 }
 

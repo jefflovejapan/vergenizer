@@ -15,7 +15,7 @@
 
 @protocol VergenizerDelegate <NSObject>
 @property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
--(void)addAssetObjectSet:(NSSet *)objects;
+-(void)addAssetObjectSet:(NSMutableOrderedSet *)objects;
 @property (strong, nonatomic) WatermarkHandler *wmHandler;
 @end
 
