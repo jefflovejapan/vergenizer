@@ -31,32 +31,35 @@
 
 //Gets triggered when tapping the "select" button. Should probably rename.
 - (IBAction)selectButtonTap:(id)sender {
-    NSLog(@"select button");
     if (!self.selectionMode) {
         [self enterSelectionMode];
     } else {
-        
         [self exitSelectionMode];
     }
 }
 
 
-#warning Want to change this so that if selectionMode == YES we select and highlight the cell using UICollectionView's built-in mechanism. See: http://d.pr/AvIc
+#warning Need to add selected photos to array
 
 - (IBAction)albumCellTap:(id)sender {
-    NSLog(@"taptap");
     CGPoint tapLocation = [sender locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if ([cell isKindOfClass:[AlbumCVC class]]) {
-            [self goBig:indexPath];
+            if (self.selectionMode) {
+                [self toggleCellSelection:cell];
+            } else {
+                [self goBig:indexPath];
+            }
         }
     }
 }
 
 
-
+-(void)toggleCellSelection:(UICollectionViewCell *)cell {
+    
+}
 
 
 
@@ -80,14 +83,34 @@
 -(void) goBig:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.item];
+#warning Need to figure out why setIVCViewsWithAsset is getting called twice
+    //    for (int i = 0; i<indexSet.count; i++) {
+//        NSLog(@"item %d in indexSet is %d", i, indexSet[i]);
+//    }
     ALAssetsGroupEnumerationResultsBlock resultsBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop){
+        NSLog(@"Calling setIVCViews");
         [self setIVCViewsWithAsset:result];
     };
     [self.group enumerateAssetsAtIndexes:indexSet options:0 usingBlock:resultsBlock];
 }
 
 -(void)setIVCViewsWithAsset:(ALAsset *)asset{
-    
+    if (self.ivc) {
+        ALAssetRepresentation *rep = [asset defaultRepresentation];
+        ALAssetOrientation alo = [rep orientation];
+        CGImageRef ref = [[asset defaultRepresentation]fullResolutionImage];
+        UIImage *image = [UIImage imageWithCGImage:ref scale:1.0 orientation:(UIImageOrientation)alo];
+        NSLog(@"UIImage is %f by %f", image.size.width, image.size.height);
+        self.ivc.scrollView.contentSize = image.size;
+        NSLog(@"Scroll View is %f by %f", self.ivc.scrollView.contentSize.width, self.ivc.scrollView.contentSize.height);
+        UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
+        self.ivc.imageView = imageView;
+        [self.ivc.scrollView addSubview:self.ivc.imageView];
+        [self.ivc.scrollView setMinimumZoomScale:0.1];
+        [self.ivc.scrollView setMaximumZoomScale:1.0];
+        [self.ivc.scrollView zoomToRect:self.ivc.imageView.bounds animated:NO];
+        [self.ivc.scrollView setNeedsDisplay];
+    }
 }
 
 
@@ -140,12 +163,11 @@ const int IPHONE_WIDTH = 320;
 #pragma lifecycle methods
 
 -(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"There are %d images in self.albumImages", self.albumImages.count);
+
     
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"Inside PFS in AVC");
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
 //What's happening? I tap a cell then kick off a block to find the alasset AND segue. No way to know which one returns first.

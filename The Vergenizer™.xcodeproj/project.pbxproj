@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF1E87BE188F57FB0031B754 /* AlbumImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E87BC188F57FB0031B754 /* AlbumImageView.m */; };
 		DF1E94AB17ACAF5C0090E6BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94AA17ACAF5C0090E6BD /* Foundation.framework */; };
 		DF1E94AD17ACAF5C0090E6BD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94AC17ACAF5C0090E6BD /* CoreGraphics.framework */; };
 		DF1E94AF17ACAF5C0090E6BD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF1E94AE17ACAF5C0090E6BD /* UIKit.framework */; };
@@ -32,7 +33,6 @@
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
-		DF94D3D017CE211400D1D2ED /* AlbumImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DF1E87BC188F57FB0031B754 /* AlbumImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumImageView.m; sourceTree = "<group>"; };
+		DF1E87BD188F57FB0031B754 /* AlbumImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumImageView.h; sourceTree = "<group>"; };
 		DF1E94A717ACAF5C0090E6BD /* The Vergenizer™.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The Vergenizer™.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF1E94AA17ACAF5C0090E6BD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF1E94AC17ACAF5C0090E6BD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -86,8 +88,6 @@
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
-		DF94D3CE17CE211400D1D2ED /* AlbumImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumImageView.h; path = ../AlbumImageView.h; sourceTree = "<group>"; };
-		DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumImageView.m; path = ../AlbumImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +152,8 @@
 				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
 				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
 				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
-				DF94D3CE17CE211400D1D2ED /* AlbumImageView.h */,
-				DF94D3CF17CE211400D1D2ED /* AlbumImageView.m */,
+				DF1E87BC188F57FB0031B754 /* AlbumImageView.m */,
+				DF1E87BD188F57FB0031B754 /* AlbumImageView.h */,
 				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
 				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
 				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
@@ -266,6 +266,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Blagdon Jeffrey";
 				TargetAttributes = {
+					DF1E94A617ACAF5C0090E6BD = {
+						DevelopmentTeam = LD8C254XK3;
+					};
 					DF1E94CA17ACAF5D0090E6BD = {
 						TestTargetID = DF1E94A617ACAF5C0090E6BD;
 					};
@@ -318,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF1E950417ACAFAB0090E6BD /* ImageViewController.m in Sources */,
+				DF1E87BE188F57FB0031B754 /* AlbumImageView.m in Sources */,
 				DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */,
 				DF1E94B717ACAF5C0090E6BD /* main.m in Sources */,
 				DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */,
@@ -327,7 +331,6 @@
 				DF1E950217ACAFAB0090E6BD /* vergenizerDetailViewController.m in Sources */,
 				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
 				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
-				DF94D3D017CE211400D1D2ED /* AlbumImageView.m in Sources */,
 				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,
 				DF1E950617ACAFAB0090E6BD /* PickerViewController.m in Sources */,
 				DF1E94FE17ACAFAB0090E6BD /* VergenizerCVC.m in Sources */,
@@ -455,10 +458,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "The Vergenizer™/The Vergenizer™-Prefix.pch";
 				INFOPLIST_FILE = "The Vergenizer™/The Vergenizer™-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -468,10 +474,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "The Vergenizer™/The Vergenizer™-Prefix.pch";
 				INFOPLIST_FILE = "The Vergenizer™/The Vergenizer™-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
