@@ -18,7 +18,7 @@
 @property (strong, nonatomic) ImageViewController *ivc;
 
 //Used rather than array to check for dupes. Gets new photos unioned into set via 
-@property (strong, nonatomic) NSMutableSet *assetSet;
+@property (strong, nonatomic) NSMutableDictionary *selectedItems;
 
 //Are we in selectionMode?
 @property (nonatomic) BOOL selectionMode;
@@ -48,7 +48,7 @@
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if ([cell isKindOfClass:[AlbumCVC class]]) {
             if (self.selectionMode) {
-                [self toggleCellSelection:cell];
+                [self toggleIndexSelection:indexPath];
             } else {
                 [self goBig:indexPath];
             }
@@ -57,8 +57,8 @@
 }
 
 
--(void)toggleCellSelection:(UICollectionViewCell *)cell {
-    
+-(void)toggleIndexSelection:(NSIndexPath *)indexPath {
+    NSLog(@"Value for indexPath.item: %@", self.selectedItems[[NSNumber numberWithInt:indexPath.item] ]);
 }
 
 
@@ -188,12 +188,17 @@ const int IPHONE_WIDTH = 320;
     return _albumImages;
 }
 
--(NSMutableSet *)assetSet{
-    if (!_assetSet) {
-        _assetSet = [[NSMutableSet alloc]init];
+-(NSMutableDictionary *)selectedItems{
+    if (!_selectedItems) {
+        _selectedItems = [[NSMutableDictionary alloc]init];
     }
-    return _assetSet;
+    for (int i = 0; i < self.albumImages.count; i++) {
+        _selectedItems[[NSNumber numberWithInt:i]] = @NO;
+    }
+    NSLog(@"selectedItems: %@", _selectedItems);
+    return _selectedItems;
 }
+
 -(ImageViewController *)ivc{
     if (!_ivc) {
         _ivc = [[ImageViewController alloc]init];
