@@ -10,6 +10,11 @@
 #import "AlbumCVC.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#define ALPHA_FOR_SELECTED 0.2
+#define ALPHA_FOR_UNSELECTED 1
+#define IPHONE_WIDTH 320
+
+
 @interface AlbumViewController ()
 
 //Used in segue to ImageViewController
@@ -83,6 +88,14 @@
 
 #pragma Private Methods
 
+-(CGFloat) alphaForSelected:(NSNumber *)selected{
+    if ([selected boolValue]) {
+        return ALPHA_FOR_SELECTED;
+    } else {
+        return ALPHA_FOR_UNSELECTED;
+    }
+}
+
 -(void) goBig:(NSIndexPath *)indexPath{
     [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.item];
@@ -132,10 +145,6 @@
     [self.addSelectedButton setNeedsDisplay];
 }
 
-#pragma constants
-
-const int IPHONE_WIDTH = 320;
-
 #pragma delegate methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -158,6 +167,7 @@ const int IPHONE_WIDTH = 320;
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
         albumCVC.albumImageView.image = self.albumImages[indexPath.item];
     }
+    cell.alpha = [self alphaForSelected:self.selectedItems[@(indexPath.item)]];
     return cell;
 }
 
