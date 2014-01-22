@@ -72,7 +72,11 @@
         default:
             break;
     }
-    self.detailView.wmView.image = [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
+    if (self.assetObject.watermarkString == nil) {
+        self.detailView.wmView.image = nil;
+    } else {
+        self.detailView.wmView.image = [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
+    }
     [self redrawWMView];
 }
 

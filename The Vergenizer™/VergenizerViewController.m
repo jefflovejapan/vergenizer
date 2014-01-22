@@ -25,7 +25,6 @@
 
 //Returns when collectionViewCell is tapped
 - (IBAction)vergenizerCellTap:(id)sender {
-    NSLog(@"taptap");
     CGPoint tapLocation = [sender locationInView:self.view];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {

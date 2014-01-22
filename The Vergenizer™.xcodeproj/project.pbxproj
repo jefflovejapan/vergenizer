@@ -148,26 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				DF1E94E217ACAFAB0090E6BD /* Main_iPhone.storyboard */,
-				DF1E94E317ACAFAB0090E6BD /* VergenizerCVC.h */,
-				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
-				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
-				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
-				DF1E87BC188F57FB0031B754 /* AlbumImageView.m */,
-				DF1E87BD188F57FB0031B754 /* AlbumImageView.h */,
-				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
-				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
-				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
-				DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */,
-				DF1E94ED17ACAFAB0090E6BD /* DetailView.h */,
-				DF1E94EE17ACAFAB0090E6BD /* DetailView.m */,
-				DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */,
-				DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */,
-				DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */,
-				DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */,
-				DF1E94F317ACAFAB0090E6BD /* PickerViewController.h */,
-				DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */,
-				DF1E94F517ACAFAB0090E6BD /* VergenizerViewController.h */,
-				DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */,
+				DFA0B6431890617A0016B307 /* Controllers */,
+				DFA0B644189061890016B307 /* Views */,
 				DF1E950B17ACAFB70090E6BD /* Model */,
 				DF1E94B117ACAF5C0090E6BD /* Supporting Files */,
 			);
@@ -216,6 +198,40 @@
 				DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		DFA0B6431890617A0016B307 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DF1E94E317ACAFAB0090E6BD /* VergenizerCVC.h */,
+				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
+				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
+				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
+				DF1E94EB17ACAFAB0090E6BD /* vergenizerDetailViewController.h */,
+				DF1E94EC17ACAFAB0090E6BD /* vergenizerDetailViewController.m */,
+				DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */,
+				DF1E94F017ACAFAB0090E6BD /* ImageViewController.m */,
+				DF1E94F117ACAFAB0090E6BD /* AlbumViewController.h */,
+				DF1E94F217ACAFAB0090E6BD /* AlbumViewController.m */,
+				DF1E94F317ACAFAB0090E6BD /* PickerViewController.h */,
+				DF1E94F417ACAFAB0090E6BD /* PickerViewController.m */,
+				DF1E94F517ACAFAB0090E6BD /* VergenizerViewController.h */,
+				DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DFA0B644189061890016B307 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DF1E87BC188F57FB0031B754 /* AlbumImageView.m */,
+				DF1E87BD188F57FB0031B754 /* AlbumImageView.h */,
+				DF1E94E717ACAFAB0090E6BD /* VergenizerImageView.h */,
+				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
+				DF1E94ED17ACAFAB0090E6BD /* DetailView.h */,
+				DF1E94EE17ACAFAB0090E6BD /* DetailView.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
