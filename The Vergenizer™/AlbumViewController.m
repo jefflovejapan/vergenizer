@@ -58,7 +58,10 @@
 
 
 -(void)toggleIndexSelection:(NSIndexPath *)indexPath {
-    NSLog(@"Value for indexPath.item: %@", self.selectedItems[[NSNumber numberWithInt:indexPath.item] ]);
+    NSNumber *selection = @(indexPath.item);
+    NSNumber *newValue = @(![self.selectedItems[selection] boolValue]);
+    self.selectedItems[selection] = newValue;
+    [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
 }
 
 
@@ -191,11 +194,10 @@ const int IPHONE_WIDTH = 320;
 -(NSMutableDictionary *)selectedItems{
     if (!_selectedItems) {
         _selectedItems = [[NSMutableDictionary alloc]init];
+        for (int i = 0; i < self.albumImages.count; i++) {
+            _selectedItems[[NSNumber numberWithInt:i]] = @NO;
+        }
     }
-    for (int i = 0; i < self.albumImages.count; i++) {
-        _selectedItems[[NSNumber numberWithInt:i]] = @NO;
-    }
-    NSLog(@"selectedItems: %@", _selectedItems);
     return _selectedItems;
 }
 
