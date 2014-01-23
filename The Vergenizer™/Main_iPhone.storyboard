@@ -116,7 +116,7 @@
                                 <action selector="clearButton:" destination="gFq-c8-k1g" id="7sl-fb-2VV"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="+" id="mFr-7p-F3J">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="mFr-7p-F3J">
                             <connections>
                                 <segue destination="guD-6a-ncH" kind="push" identifier="pickerSegue" id="Rbr-nl-aim"/>
                             </connections>
@@ -124,6 +124,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="AzM-CB-Eui" id="YQh-p2-lC4"/>
+                        <outlet property="vergenizeButton" destination="dDN-0x-KeQ" id="anU-BD-vCG"/>
                         <segue destination="03y-UO-xFV" kind="modal" identifier="vergenizerDetailSegue" modalTransitionStyle="coverVertical" id="43L-F9-QeK"/>
                     </connections>
                 </viewController>
@@ -295,6 +296,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Fyg-wA-DnF"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add Selected">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

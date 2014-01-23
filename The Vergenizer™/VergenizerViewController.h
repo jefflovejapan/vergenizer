@@ -36,6 +36,8 @@
 @property (strong, nonatomic) PickerViewController *picker;
 @property (strong, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *vergenizeButton;
+
 
 @property (strong, nonatomic) WatermarkHandler *wmHandler;
 

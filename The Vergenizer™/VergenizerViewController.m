@@ -74,6 +74,7 @@
     [self.assetObjectSet removeAllObjects];
     [self.collectionView reloadData];
     self.navigationItem.prompt = nil;
+    [self checkHiddenVergenizeButton];
 }
 
 - (IBAction)vergenizeButton:(id)sender {
@@ -134,6 +135,14 @@
     return bytes;
 }
 
+- (void)checkHiddenVergenizeButton{
+    if (self.assetObjectSet.count == 0) {
+        self.vergenizeButton.hidden = YES;
+    } else {
+        self.vergenizeButton.hidden = NO;
+    }
+}
+
 
 #pragma lifecycle methods
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -158,6 +167,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
+    [self checkHiddenVergenizeButton];
     [self.view layoutIfNeeded];
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
