@@ -8,6 +8,10 @@
 
 #import "AssetObject.h"
 
+#define DEFAULT_WM_COLOR @"white"
+#define DEFAULT_WM_SHAPE @"logo"
+#define DEFAULT_WM_SIZE 1020
+
 @implementation AssetObject
 
 //
@@ -18,15 +22,12 @@
     self.URLString = [assetURL absoluteString];
     self.asset = asset;
     
-#warning These should really be some kind of constant, but not sure how to implement
-    self.watermarkColor = @"white";
-    self.watermarkShape = @"logo";
-    self.outputSize = 1020;
-    self.checkmarkHidden = YES;
+    self.watermarkColor = DEFAULT_WM_COLOR;
+    self.watermarkShape = DEFAULT_WM_SHAPE;
+    self.outputSize = DEFAULT_WM_SIZE;
     return self;
 }
 
-#warning need to implement hash as well. Also, Zen makes the point that introspection and casting might not be the best way to go about this
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[self class]]) {
         AssetObject *assetObject = (AssetObject *)object;
@@ -57,7 +58,6 @@
     [self syncWatermarkString];
 }
 
-//Any time we set either self.watermarkColor or self.watermarkShape we automatically set self.watermarkString
 - (void)syncWatermarkString{
     NSLog(@"Just called syncWatermarkString inside assetObject \n watermarkShape is %@ \n watermarkColor is %@ \n outputSize is %d", self.watermarkShape, self.watermarkColor, self.outputSize);
     int watermarkSize = 0;

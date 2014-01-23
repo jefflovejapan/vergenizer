@@ -9,9 +9,14 @@
 #import "VDetailViewController.h"
 #import "AssetObject.h"
 
+#define MIN_ZOOM_SCALE 0.01
+#define MAX_ZOOM_SCALE 2.0
+#define WM_ALPHA 0.2
+#define WM_RATIO 0.016
+#define SV_CONTENT_SIZE 2040
+
 @interface vergenizerDetailViewController ()
 @property (strong, nonatomic) NSArray *watermarkSizes;
-@property (nonatomic)CGFloat wmRatio;
 
 
 @end
@@ -86,17 +91,14 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
-    //Handles setting up the scrollView and subviews
+    //Sets up the scrollView and subviews
     [self setViewsForImage:self.assetObject];
     [self setParamsFromAssetObject:self.assetObject];
-    
-    //Setting the content size to be the size of the whole image
-    
     [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
 }
 
 
-//Here's all the complicated image setting stuff
+//The complicated image-setting stuff
 - (void)setViewsForImage:(AssetObject *)assetObject{
     ALAssetRepresentation *rep = [self.assetObject.asset defaultRepresentation];
     ALAssetOrientation orientation = [rep orientation];
@@ -104,8 +106,8 @@
     //Scale = 1 here means one point = one pixel.
     UIImage *thisImage = [UIImage imageWithCGImage:[rep fullResolutionImage] scale:1 orientation:(UIImageOrientation)orientation];
     
-    //Want to lock contentSize.width at 2040, size height to maintain aspect ratio
-    self.scrollView.contentSize = CGSizeMake(2040, 2040*thisImage.size.height/thisImage.size.width);
+    //Want to lock contentSize.width at 2040 and resize height to maintain aspect ratio
+    self.scrollView.contentSize = CGSizeMake(SV_CONTENT_SIZE, SV_CONTENT_SIZE * thisImage.size.height/thisImage.size.width);
     
     self.detailView = [[DetailView alloc]initWithFrame:CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
     
@@ -120,7 +122,7 @@
     if (!watermark) {
         [NSException raise:@"No watermark image" format:@"The string provided doesn't match any available image file"];
     }
-    CGFloat wmOffset = self.imageView.frame.size.width*self.wmRatio;
+    CGFloat wmOffset = self.imageView.frame.size.width * WM_RATIO;
     CGRect wmRect = CGRectMake(self.imageView.frame.size.width - watermark.size.width - wmOffset, self.imageView.frame.size.height - watermark.size.height - wmOffset, watermark.size.width, watermark.size.height);
     UIImageView *wmView = [[UIImageView alloc]initWithImage:watermark];
     
@@ -130,12 +132,12 @@
     self.detailView.frame = CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height);
     self.detailView.wmView = wmView;
     self.detailView.wmView.frame = wmRect;
-    self.detailView.wmView.alpha = 0.2;
+    self.detailView.wmView.alpha = WM_ALPHA;
     [self.detailView addSubview:self.detailView.wmView];
 
    
-    self.scrollView.minimumZoomScale = 0.01;
-    self.scrollView.maximumZoomScale = 2.0;
+    self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
+    self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
 }
 
 
@@ -185,24 +187,13 @@
 -(void)redrawWMView{
     UIImage *image = self.detailView.wmView.image;
     NSLog(@"image is %f by %f", image.size.width, image.size.height);
-    CGFloat wmOffset = self.detailView.imageView.frame.size.width * self.wmRatio;
+    CGFloat wmOffset = self.detailView.imageView.frame.size.width * WM_RATIO;
     NSLog(@"wmoffset is %f", wmOffset);
     CGRect wmRect = CGRectMake(self.detailView.imageView.frame.size.width - image.size.width - wmOffset, self.detailView.imageView.frame.size.height - image.size.height - wmOffset, image.size.width, image.size.height);
     self.detailView.wmView.frame = wmRect;
     [self.scrollView setNeedsDisplay];
     [self.detailView.wmView setNeedsDisplay];
 }
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.wmRatio = 0.016;
-
-}
-
-
-
-
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     

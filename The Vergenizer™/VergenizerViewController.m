@@ -11,14 +11,13 @@
 #import "VergenizerCVC.h"
 #import "AssetObject.h"
 
+#define OFFSET_RATIO 0.016
+
 
 @interface VergenizerViewController ()
 
-//Used in segue to detail view for setting watermark params
 @property (strong, nonatomic) AssetObject *segueAssetObject;
 
-//An array, used like a queue, to manage which index paths to reload when the model gets new images
-@property (strong, nonatomic) NSMutableArray *indexPathstoReload;
 @end
 
 @implementation VergenizerViewController
@@ -39,26 +38,17 @@
 }
 
 
-
-//Delegate method. We union new objects into the URLString set so that we don't get dupes.
 -(void)addAssetObjectSet:(NSMutableOrderedSet *)objects{
-    
     [self.assetObjectSet unionOrderedSet:objects];
 }
 
 #pragma delegate methods
 
-//This orderedURLStringSet is tracking everything -- how many assets we have onscreen, what their URLs are, etc.
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSInteger numCells = self.assetObjectSet.count;
     return numCells;
 }
-
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
-// So where are the actual cells coming from? They should be tied to some piece of data that's independent of the collectionView.
-// So I guess the orderedSet. That means:
-//              - when we ask for cell at index path we get the tail integer (indexPath.item) and ask for the asset at that index in the set.
-//              - when we clear we remove items from the collection at all index paths (0 to orderedURLStringSet.count - 1)
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     UICollectionViewCell *cell;
@@ -66,8 +56,6 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"vergenizerCell" forIndexPath:indexPath];
     
     if ([cell isKindOfClass:[VergenizerCVC class]]) {
-        
-        //Get the asset that's going in the collection view
         VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
         AssetObject *assetObject = self.assetObjectSet[indexPath.item];
         vergenizerCVC.assetObject = assetObject;
@@ -84,41 +72,18 @@
 - (IBAction)clearButton:(id)sender {
     [self.assetObjectSet removeAllObjects];
     [self.collectionView reloadData];
-//    [self.wmHandler.details removeAllObjects];
     self.navigationItem.prompt = nil;
 }
 
 - (IBAction)vergenizeButton:(id)sender {
-    NSLog(@"VergenizeButton");
-    NSLog(@"Groups count: %d", self.handler.groups.count);
-    for (int i = 0; i<self.handler.groups.count; i++) {
-        NSLog(@"i: %d", i);
-        NSLog(@"inside for loop");
-        if ([self.handler.groups[i] isKindOfClass:[ALAssetsGroup class]]) {
-            ALAssetsGroup *thisGroup = self.handler.groups[i];
-            NSLog(@"This group's name is %@", [thisGroup valueForProperty:ALAssetsGroupPropertyName]);
-            if ([[thisGroup valueForProperty:ALAssetsGroupPropertyName] isEqualToString:@"Vergenized"]) {
-                NSLog(@"Vergenized group found");
-                [self waterMarkPhotosIntoGroup:thisGroup];
-                return;
-            }
-        }
-    }
-    NSLog(@"Creating Vergenized group");
-    [self.handler addAssetGroupWithName:@"Vergenized"];
-    [self.handler updateAssetGroups];
-    NSLog(@"handler groups: %@", self.handler.groups);
-    [self vergenizeButton:self];
+    [self waterMarkPhotos];
 }
 
-#warning need to fix vergenized group not appearing on second "plus button" press
-
--(void)waterMarkPhotosIntoGroup:(ALAssetsGroup *)group{
+-(void)waterMarkPhotos{
     NSLog(@"Watermarking photos into group");
-    for (int i=0; i<self.assetObjectSet.count; i++) {
-        if ([self.assetObjectSet[i] isKindOfClass:[AssetObject class]]) {
-            AssetObject *thisAssetObject = (AssetObject *)self.assetObjectSet[i];
-            ALAssetRepresentation *thisRep = [thisAssetObject.asset defaultRepresentation];
+    AssetObject *ao;
+    for (ao in self.assetObjectSet) {
+            ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
             ALAssetOrientation orientation = [thisRep orientation];
             UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
             
@@ -134,12 +99,11 @@
                 NSLog(@"We have a cgImage. It's %zu by %zu", CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
             }
             
-            CGSize targetSize = CGSizeMake(thisAssetObject.outputSize, thisAssetObject.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
+            CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
             NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
             CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
             
             //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
-#warning Need to sort out this bytesperrow thing
             CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
             
             NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
@@ -147,8 +111,7 @@
             //Draw our image onto the context.
             CGContextDrawImage(thisContext, targetRect, cgImage);
 
-#warning need to rewrite this
-            UIImage *watermarkImage = [UIImage imageNamed:thisAssetObject.watermarkString];
+            UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
             if (!watermarkImage) {
                 [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
             }
@@ -156,8 +119,7 @@
             CGContextSetAlpha(thisContext, 0.2);
             CGImageRef watermarkRef = [watermarkImage CGImage];
             
-#warning Need constants for these values
-            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * 0.016, targetSize.width*0.016, watermarkImage.size.width, watermarkImage.size.height);
+            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
             CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
             CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
             
@@ -166,18 +128,14 @@
                 NSLog(@"Success!");
                 
                 //Don't forget to release all your Core Graphics stuff
-                CGContextRelease(thisContext);
-                
-                //Shouldn't be necessary but get an error without -- don't delete
                 UIGraphicsEndImageContext();
+                CGContextRelease(thisContext);
+
             };
 
             [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
-            
         }
     }
-
-}
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -187,9 +145,6 @@
     }
     return bytes;
 }
-
-//lowest multiple of 2:
-//start at 3, add 2-1 = 1 to get it 'up over'
 
 
 #pragma lifecycle methods
@@ -258,9 +213,6 @@
     }
     return _handler;
 }
-
-
-
 
 
 @end

@@ -31,38 +31,23 @@
 }
 
 -(void)updateAssetGroups{
+    NSLog(@"Inside UAG");
     ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop) {
-        NSLog(@"self.groups contains %@: %d", group, [self.groups containsObject:group]);
-        if (group && ![self.groups containsObject:group]) {
-            NSLog(@"Adding group %@", group);
-            [self.groups addObject:group];
+        if (group != nil) {
+            NSLog(@"self.groups contains %@: %d", group, [self.groups containsObject:group]);
+            if (![self.groups containsObject:group]) {
+                NSLog(@"Adding group %@", group);
+                [self.groups addObject:group];
+            }
         }
     };
     
     ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
-        [NSException raise:@"Hit failure block insidePhotoHandler" format:@"Weren't able to get through enumerating groups in ALAssetLibrary"];
+        [NSException raise:@"Hit failure block insidePhotoHandler" format:@"%@", [error description]];
     };
     
     NSUInteger groupTypes = ALAssetsGroupAll;
     [self.library enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
-}
-
-- (void)addAssetGroupWithName:(NSString *)nameString{
-    NSLog(@"Attempting to addAssetGroupWithName: %@", nameString);
-
-//    ALAssetsLibraryGroupResultBlock newGroupBlock = ^(ALAssetsGroup *group) {
-//        NSLog(@"Here's the group: %@", group);
-//    };
-//
-//    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error){
-//        NSLog(@"Adding the vergenized group failed");
-//        [error localizedDescription];
-//    };
-
-    NSLog(@"library: %@", self.library);
-    [self.library addAssetsGroupAlbumWithName:nameString
-                                  resultBlock:nil
-                                 failureBlock:nil];
 }
 
 

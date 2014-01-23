@@ -21,9 +21,6 @@
     return numRows;
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
     cell = [tableView dequeueReusableCellWithIdentifier:@"albumCell" forIndexPath:indexPath];
@@ -38,7 +35,6 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSLog(@"Inside PFS in PVC");
-    //Initializing the destination AlbumViewController
     AlbumViewController *albumController;
     albumController = (AlbumViewController *)segue.destinationViewController;
     NSIndexPath *indexPath = [self.albumTable indexPathForSelectedRow];
@@ -54,7 +50,6 @@
             [albumController.albumAssets addObject:result];
         }
     }];
-//    NSLog(@"Preparing for segue. There are %d objects in self.albumController.albumPhotos. The first has class %@", albumController.albumImages.count, [albumController.albumImages[0] class]);
 }
 
 

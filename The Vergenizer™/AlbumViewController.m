@@ -43,9 +43,6 @@
     }
 }
 
-
-#warning Need to add selected photos to array
-
 - (IBAction)albumCellTap:(id)sender {
     CGPoint tapLocation = [sender locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
@@ -69,9 +66,6 @@
     [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
 }
 
-
-
-//Needs to be implemented. Take an array/set of selected assets and send them back to VergenizerViewController for watermarking.
 - (IBAction)addSelectedButton:(id)sender {
     NSArray *controllers = [self.navigationController viewControllers];
     if ([controllers[0] conformsToProtocol:@protocol(VergenizerDelegate)]) {
@@ -152,13 +146,11 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section{
     
-    // Get the count of assets in the albumThumbnails array
     NSInteger numCells = self.albumAssets.count;
     return numCells;
     
 }
 
-//Way simpler. The trick to getting back to ALAssets is going to be the index paths of the highlighted cells. We can put all those indexPaths in a set and call enumerateWithIndexPaths on our ALAssetsGroup to get the assets.
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -176,11 +168,6 @@
 
 #pragma lifecycle methods
 
--(void)viewWillAppear:(BOOL)animated{
-
-    
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
@@ -190,8 +177,6 @@
 
 #pragma instantiation
 
-
-//This array holds UIImages. It's going to be set on segue in so that we'll already have an array of images to draw from for collectionViewCells.
 -(NSMutableArray *)albumAssets{
     if (!_albumAssets) {
         _albumAssets = [[NSMutableArray alloc]init];

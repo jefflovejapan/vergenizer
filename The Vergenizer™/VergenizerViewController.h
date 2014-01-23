@@ -19,7 +19,6 @@
 @property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) WatermarkHandler *handler;
 @property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
-//-(void) updateWM:(NSInteger)wmInt;
 @end
 
 @protocol WatermarkHandlerDelegate <NSObject>
@@ -27,16 +26,12 @@
 @end
 
 @interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
-//AssetBlockDelegate used to be in here, but don't think I need it anymore
 
-//properties declared in protocols
 @property (strong, nonatomic) PhotoHandler *handler;
 @property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
 @property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 
 -(void)addAssetObjectSet:(NSMutableSet *)objects;
-//-(void)reloadNextIndexPathWithAsset:(ALAsset*)asset;
-
 
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary;
 @property (strong, nonatomic) PickerViewController *picker;

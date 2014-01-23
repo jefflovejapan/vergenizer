@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, WatermarkTypes) {
 @property (strong, nonatomic) NSString *watermarkColor;
 @property (nonatomic) NSString *watermarkString;
 @property (strong, nonatomic) ALAsset *asset;
-@property (nonatomic) BOOL checkmarkHidden;
 - (AssetObject *)initWithAsset:(ALAsset *)asset;
 - (BOOL)isEqual:(id)object;
 @end
