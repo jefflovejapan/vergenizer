@@ -12,6 +12,7 @@
 #import "AssetObject.h"
 
 #define OFFSET_RATIO 0.016
+#define WM_ALPHA 0.2
 
 
 @interface VergenizerViewController ()
@@ -83,59 +84,58 @@
     NSLog(@"Watermarking photos into group");
     AssetObject *ao;
     for (ao in self.assetObjectSet) {
-            ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
-            ALAssetOrientation orientation = [thisRep orientation];
-            UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
-            
-            if (!sourceImage) {
-                [NSException raise:@"No source image" format:@"You tried to create a sourceImage from an ALAssetRepresentation but it didn't work"];
-            } else if (sourceImage){
-                NSLog(@"We have a sourceImage. It's %f by %f", sourceImage.size.width, sourceImage.size.height);
-            }
-            CGImageRef cgImage = [sourceImage CGImage];
-            if (!cgImage) {
-                [NSException raise:@"No CGImageRef" format:@"You tried to create a CGImageRef from a UIImage but it didn't work"];
-            } else if (cgImage) {
-                NSLog(@"We have a cgImage. It's %zu by %zu", CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
-            }
-            
-            CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
-            NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
-            CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
-            
-            //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
-            CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
-            
-            NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
-            
-            //Draw our image onto the context.
-            CGContextDrawImage(thisContext, targetRect, cgImage);
-
-            UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
-            if (!watermarkImage) {
-                [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
-            }
-            CGContextSaveGState(thisContext);
-            CGContextSetAlpha(thisContext, 0.2);
-            CGImageRef watermarkRef = [watermarkImage CGImage];
-            
-            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
-            CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
-            CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
-            
-            ALAssetsLibraryWriteImageCompletionBlock completionBlock = ^(NSURL *assetURL, NSError *error){
-                
-                NSLog(@"Success!");
-                
-                //Don't forget to release all your Core Graphics stuff
-                UIGraphicsEndImageContext();
-                CGContextRelease(thisContext);
-
-            };
-
-            [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
+        ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
+        ALAssetOrientation orientation = [thisRep orientation];
+        UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
+        
+        if (!sourceImage) {
+            [NSException raise:@"No source image" format:@"You tried to create a sourceImage from an ALAssetRepresentation but it didn't work"];
+        } else if (sourceImage){
+            NSLog(@"We have a sourceImage. It's %f by %f", sourceImage.size.width, sourceImage.size.height);
         }
+        CGImageRef cgImage = [sourceImage CGImage];
+        if (!cgImage) {
+            [NSException raise:@"No CGImageRef" format:@"You tried to create a CGImageRef from a UIImage but it didn't work"];
+        } else if (cgImage) {
+            NSLog(@"We have a cgImage. It's %zu by %zu", CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
+        }
+        
+        CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
+        NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
+        CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
+        
+        //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
+        CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
+        
+        NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
+        
+        //Draw our image onto the context.
+        CGContextDrawImage(thisContext, targetRect, cgImage);
+        
+        UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
+        if (!watermarkImage) {
+            [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
+        }
+        CGContextSaveGState(thisContext);
+        CGContextSetAlpha(thisContext, WM_ALPHA);
+        CGImageRef watermarkRef = [watermarkImage CGImage];
+        
+        CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
+        CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
+        CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
+        
+        void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
+            NSLog(@"Success!");
+        };
+        
+        [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
+        
+        //Don't forget to release all your Core Graphics stuff
+        UIGraphicsEndImageContext();
+        CGContextRelease(thisContext);
+        CGImageRelease(finalImage);
     }
+}
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -166,10 +166,6 @@
 - (IBAction)unwindToVergenizerViewController:(UIStoryboardSegue *)unwindSegue
 {
     NSLog(@"%@", [self class]);
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
 }
 
 

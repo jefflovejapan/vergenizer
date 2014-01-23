@@ -224,7 +224,7 @@
 }
 
 - (NSString *)detailViewWatermarkStringForString:(NSString *)string{
-    NSString *returnString = [[NSString alloc]init];
+    NSString *returnString;
     if ([string rangeOfString:@"logo_white"].location != NSNotFound) {
         returnString = @"logo_white_500";
     } else if ([string rangeOfString:@"logo_black"].location != NSNotFound){

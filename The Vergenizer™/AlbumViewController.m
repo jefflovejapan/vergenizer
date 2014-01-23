@@ -75,7 +75,6 @@
             if ([self.selectedItems[key] boolValue]) {
                 AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[key intValue]]];
                 [self.assetObjectSet addObject:ao];
-                NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
             }
         };
         [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
