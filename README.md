@@ -8,7 +8,7 @@ If you'd like to try it out, just clone the source
 
 `git clone https://github.com/jefflovejapan/vergenizer/git`
 
-plug in your phone, and build away. Tap the '+' button onscreen to start watermarking some photos.
+plug in your phone, and build away. Tap the 'Add' button onscreen to start watermarking some photos.
 
 #Status
 
