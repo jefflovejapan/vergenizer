@@ -17,7 +17,6 @@
 
 @protocol DetailDelegate <NSObject>
 @property (strong, nonatomic) AssetObject *assetObject;
-@property (strong, nonatomic) WatermarkHandler *handler;
 @property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
 @end
 

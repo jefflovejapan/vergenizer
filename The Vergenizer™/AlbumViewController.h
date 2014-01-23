@@ -9,14 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PhotoHandler.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "WatermarkHandler.h"
 #import "ImageViewController.h"
 
 
 @protocol VergenizerDelegate <NSObject>
 @property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
 -(void)addAssetObjectSet:(NSMutableOrderedSet *)objects;
-@property (strong, nonatomic) WatermarkHandler *wmHandler;
 @end
 
 

@@ -14,7 +14,6 @@
 
 @interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) AssetObject *assetObject;
-@property (strong, nonatomic) WatermarkHandler *handler;
 //-(void)updateWM:(NSInteger)wmInt;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
