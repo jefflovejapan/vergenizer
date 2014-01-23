@@ -167,6 +167,9 @@
                 
                 //Don't forget to release all your Core Graphics stuff
                 CGContextRelease(thisContext);
+                
+                //Shouldn't be necessary but get an error without -- don't delete
+                UIGraphicsEndImageContext();
             };
 
             [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
