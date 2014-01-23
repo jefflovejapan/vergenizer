@@ -8,7 +8,7 @@ If you'd like to try it out, just clone the source
 
 `git clone https://github.com/jefflovejapan/vergenizer/git`
 
-open `TheVergenizer™.xcodeproj`, plug in your phone, and build away. Tap the 'Add' button onscreen to start watermarking some photos.
+open `The Vergenizer™.xcodeproj`, plug in your phone, and build away. Tap the 'Add' button onscreen to start watermarking some photos.
 
 #Status
 
