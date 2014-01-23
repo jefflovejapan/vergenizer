@@ -87,19 +87,7 @@
         ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
         ALAssetOrientation orientation = [thisRep orientation];
         UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
-        
-        if (!sourceImage) {
-            [NSException raise:@"No source image" format:@"You tried to create a sourceImage from an ALAssetRepresentation but it didn't work"];
-        } else if (sourceImage){
-            NSLog(@"We have a sourceImage. It's %f by %f", sourceImage.size.width, sourceImage.size.height);
-        }
         CGImageRef cgImage = [sourceImage CGImage];
-        if (!cgImage) {
-            [NSException raise:@"No CGImageRef" format:@"You tried to create a CGImageRef from a UIImage but it didn't work"];
-        } else if (cgImage) {
-            NSLog(@"We have a cgImage. It's %zu by %zu", CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
-        }
-        
         CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
         NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
         CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
