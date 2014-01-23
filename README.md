@@ -8,7 +8,7 @@ If you'd like to try it out, just clone the source
 
 `git clone https://github.com/jefflovejapan/vergenizer/git`
 
-plug in your phone, and build away. Tap the 'Add' button onscreen to start watermarking some photos.
+open `TheVergenizer™.xcodeproj`, plug in your phone, and build away. Tap the 'Add' button onscreen to start watermarking some photos.
 
 #Status
 
@@ -17,3 +17,4 @@ Known issues with The Vergenizer™:
 - Watermark sometimes appears on wrong side of image (ALAssetOrientation / UIImageOrientation yay)
 - Memory management
 - Autorotated version of VDetailViewController broken
+- No iPad version
