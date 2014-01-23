@@ -72,20 +72,14 @@
         self.vergenizerDelegate = controllers[0];
         NSNumber *key;
         for (key in self.selectedItems.allKeys){
-            NSLog(@"Value for %@: %@", key, self.selectedItems[key]);
-            NSLog(@"AlbumAssets: %@", self.albumAssets);
             if ([self.selectedItems[key] boolValue]) {
                 AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[key intValue]]];
                 [self.assetObjectSet addObject:ao];
-                NSLog(@"AOS: %@", self.assetObjectSet);
                 NSLog(@"The length of self.assetObjectSet is %d", self.assetObjectSet.count);
-            } else {
-                NSLog(@"Bool value is false");
             }
         };
         [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
     }
-    NSLog(@"Popping to root");
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

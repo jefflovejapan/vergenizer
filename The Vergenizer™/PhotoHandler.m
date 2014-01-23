@@ -31,12 +31,9 @@
 }
 
 -(void)updateAssetGroups{
-    NSLog(@"Inside UAG");
     ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop) {
         if (group != nil) {
-            NSLog(@"self.groups contains %@: %d", group, [self.groups containsObject:group]);
             if (![self.groups containsObject:group]) {
-                NSLog(@"Adding group %@", group);
                 [self.groups addObject:group];
             }
         }

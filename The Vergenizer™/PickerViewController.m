@@ -34,7 +34,6 @@
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"Inside PFS in PVC");
     AlbumViewController *albumController;
     albumController = (AlbumViewController *)segue.destinationViewController;
     NSIndexPath *indexPath = [self.albumTable indexPathForSelectedRow];
@@ -42,7 +41,6 @@
     if (!self.handler) {
         NSLog(@"Handler doesn't exist");
     }
-    NSLog(@"The selected asset group is %@", [group description]);
     albumController.group = group;
     albumController.handler =self.handler;
     [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {

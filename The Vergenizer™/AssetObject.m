@@ -31,7 +31,6 @@
 - (BOOL)isEqual:(id)object{
     if ([object isKindOfClass:[self class]]) {
         AssetObject *assetObject = (AssetObject *)object;
-        NSLog(@"Inside isEqual \n self.URLString: %@ \n other.URLString: %@", self.URLString, assetObject.URLString);
         if ([self.URLString isEqualToString:assetObject.URLString]) {
             return YES;
         } else {
@@ -59,11 +58,9 @@
 }
 
 - (void)syncWatermarkString{
-    NSLog(@"Just called syncWatermarkString inside assetObject \n watermarkShape is %@ \n watermarkColor is %@ \n outputSize is %d", self.watermarkShape, self.watermarkColor, self.outputSize);
     int watermarkSize = 0;
     if (!self.watermarkShape || !self.watermarkColor || !self.outputSize) {
         self.watermarkString = nil;
-        NSLog(@"Just sent self.watermarkString = nil");
         return;
     } else if ([self.watermarkShape isEqualToString:@"logo"]) {
         if (self.outputSize == 560) {
@@ -87,8 +84,6 @@
     }
 }
     self.watermarkString = [NSString stringWithFormat:@"%@_%@_%d", self.watermarkShape, self.watermarkColor, watermarkSize];
-    NSLog(@"Just set self.watermarkString = %@", self.watermarkString);
-    
 }
 
 @end
