@@ -33,6 +33,7 @@
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
+		DFE6ED821890DF8D004D8E86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DFE6ED811890DF8D004D8E86 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
+		DFE6ED811890DF8D004D8E86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 		DF1E94B117ACAF5C0090E6BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DFE6ED811890DF8D004D8E86 /* README.md */,
 				DF1E94B917ACAF5C0090E6BD /* TheVergenizerAppDelegate.h */,
 				DF1E94BA17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m */,
 				DF1E94BF17ACAF5C0090E6BD /* Main_iPad.storyboard */,
@@ -316,6 +319,7 @@
 			files = (
 				DF1E94C117ACAF5C0090E6BD /* Main_iPad.storyboard in Resources */,
 				DF1E94C617ACAF5C0090E6BD /* Images.xcassets in Resources */,
+				DFE6ED821890DF8D004D8E86 /* README.md in Resources */,
 				DF1E94FD17ACAFAB0090E6BD /* Main_iPhone.storyboard in Resources */,
 				DF1E94B517ACAF5C0090E6BD /* InfoPlist.strings in Resources */,
 			);
