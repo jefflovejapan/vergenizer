@@ -54,7 +54,7 @@
             if (self.selectionMode) {
                 [self toggleIndexSelection:indexPath];
             } else {
-                [self goBig:indexPath];
+                [self goBig:indexPath.item];
             }
         }
     }
@@ -97,15 +97,10 @@
     }
 }
 
--(void) goBig:(NSIndexPath *)indexPath{
+-(void) goBig:(NSUInteger)index{
     [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:indexPath.item];
-    ALAssetsGroupEnumerationResultsBlock resultsBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop){
-        if (result != nil) {
-            [self setIVCAsset:result];
-        }
-    };
-    [self.group enumerateAssetsAtIndexes:indexSet options:0 usingBlock:resultsBlock];
+    NSUInteger reverseIndex = [self reverseAlbumIndexForIndex:index];
+    [self setIVCAsset:self.albumAssets[reverseIndex]];
 }
 
 -(void)setIVCAsset:(ALAsset *)asset{
