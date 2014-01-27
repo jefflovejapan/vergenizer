@@ -17,6 +17,8 @@
 
 @interface AlbumViewController ()
 
+- (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index;
+
 //Used in segue to ImageViewController
 @property (strong, nonatomic) UIImage *segueImage;
 @property (nonatomic) NSInteger *someInt;
@@ -73,7 +75,7 @@
         NSNumber *key;
         for (key in self.selectedItems.allKeys){
             if ([self.selectedItems[key] boolValue]) {
-                AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[key intValue]]];
+                AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[self reverseAlbumIndexForIndex:[key intValue]]]];
                 [self.assetObjectSet addObject:ao];
             }
         };
@@ -141,7 +143,11 @@
     
     NSInteger numCells = self.albumAssets.count;
     return numCells;
-    
+}
+
+//We want to return assets in reverse chronological order
+- (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index{
+    return self.albumAssets.count - index - 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -151,7 +157,7 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        albumCVC.albumImageView.image = [[UIImage alloc] initWithCGImage:[self.albumAssets[self.albumAssets.count - indexPath.item - 1] thumbnail]];
+        albumCVC.albumImageView.image = [[UIImage alloc] initWithCGImage:[self.albumAssets[[self reverseAlbumIndexForIndex:indexPath.item]] thumbnail]];
     }
     cell.alpha = [self alphaForSelected:self.selectedItems[@(indexPath.item)]];
     return cell;
