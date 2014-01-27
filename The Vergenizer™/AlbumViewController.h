@@ -13,8 +13,8 @@
 
 
 @protocol VergenizerDelegate <NSObject>
-@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
--(void)addAssetObjectSet:(NSMutableOrderedSet *)objects;
+@property (strong, nonatomic) NSMutableArray *assetObjects;
+-(void)addAssetObjects:(NSMutableArray *)objects;
 @end
 
 

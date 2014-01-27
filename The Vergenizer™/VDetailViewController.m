@@ -17,8 +17,6 @@
 
 @interface vergenizerDetailViewController ()
 @property (strong, nonatomic) NSArray *watermarkSizes;
-
-
 @end
 
 @implementation vergenizerDetailViewController
@@ -208,9 +206,9 @@
 }
 
 -(void)applyParamstoAll{
-    for (int i=0; i<self.assetObjectSet.count; i++) {
-        if ([self.assetObjectSet[i] isKindOfClass:[AssetObject class]]) {
-            AssetObject *thisObject = self.assetObjectSet[i];
+    for (int i=0; i<self.assetObjects.count; i++) {
+        if ([self.assetObjects[i] isKindOfClass:[AssetObject class]]) {
+            AssetObject *thisObject = self.assetObjects[i];
             thisObject.outputSize = self.assetObject.outputSize;
             thisObject.watermarkColor = self.assetObject.watermarkColor;
             thisObject.watermarkShape = self.assetObject.watermarkShape;
@@ -247,6 +245,13 @@
         _assetObject = [[AssetObject alloc]init];
     }
     return _assetObject;
+}
+
+- (NSMutableArray *)assetObjects{
+    if (!_assetObjects) {
+        _assetObjects = [[NSMutableArray alloc]init];
+    }
+    return _assetObjects;
 }
 
 

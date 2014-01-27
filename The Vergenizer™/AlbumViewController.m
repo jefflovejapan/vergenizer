@@ -26,7 +26,7 @@
 
 //Managing cell selections and the asset set to send back to VVC
 @property (strong, nonatomic) NSMutableDictionary *selectedItems;
-@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
+@property (strong, nonatomic) NSMutableArray *assetObjects;
 
 @property (nonatomic) BOOL selectionMode;
 
@@ -76,10 +76,10 @@
         for (key in self.selectedItems.allKeys){
             if ([self.selectedItems[key] boolValue]) {
                 AssetObject *ao = [[AssetObject alloc]initWithAsset:self.albumAssets[[self reverseAlbumIndexForIndex:[key intValue]]]];
-                [self.assetObjectSet addObject:ao];
+                [self.assetObjects addObject:ao];
             }
         };
-        [self.vergenizerDelegate addAssetObjectSet:self.assetObjectSet];
+        [self.vergenizerDelegate addAssetObjects:self.assetObjects];
     }
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -200,11 +200,11 @@
     return _ivc;
 }
 
--(NSMutableOrderedSet *) assetObjectSet {
-    if (!_assetObjectSet) {
-        _assetObjectSet = [[NSMutableOrderedSet alloc] init];
+-(NSMutableArray *) assetObjects {
+    if (!_assetObjects) {
+        _assetObjects = [[NSMutableArray alloc] init];
     }
-    return _assetObjectSet;
+    return _assetObjects;
 }
 
 

@@ -17,29 +17,23 @@
 
 @protocol DetailDelegate <NSObject>
 @property (strong, nonatomic) AssetObject *assetObject;
-@property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
+@property (strong, nonatomic) NSMutableArray *assetObjects;
 @end
 
-@protocol WatermarkHandlerDelegate <NSObject>
-@property (strong, nonatomic) WatermarkHandler *wmHandler;
-@end
 
 @interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) PhotoHandler *handler;
-@property (strong, nonatomic) NSMutableOrderedSet *assetObjectSet;
+@property (strong, nonatomic) NSMutableArray *assetObjects;
 @property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 
--(void)addAssetObjectSet:(NSMutableSet *)objects;
+-(void)addAssetObjects:(NSMutableArray *)objects;
 
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary;
 @property (strong, nonatomic) PickerViewController *picker;
 @property (strong, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *vergenizeButton;
-
-
-@property (strong, nonatomic) WatermarkHandler *wmHandler;
 
 @end
 

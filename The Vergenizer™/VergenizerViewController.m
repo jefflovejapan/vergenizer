@@ -39,15 +39,15 @@
 }
 
 
--(void)addAssetObjectSet:(NSMutableOrderedSet *)objects{
-    [self.assetObjectSet unionOrderedSet:objects];
+-(void)addAssetObjects:(NSMutableArray *)objects{
+    [self.assetObjects addObjectsFromArray:objects];
 }
 
 #pragma delegate methods
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSInteger numCells = self.assetObjectSet.count;
+    NSInteger numCells = self.assetObjects.count;
     return numCells;
 }
 
@@ -58,7 +58,7 @@
     
     if ([cell isKindOfClass:[VergenizerCVC class]]) {
         VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
-        AssetObject *assetObject = self.assetObjectSet[indexPath.item];
+        AssetObject *assetObject = self.assetObjects[indexPath.item];
         vergenizerCVC.assetObject = assetObject;
         [vergenizerCVC syncImage];
     }
@@ -71,7 +71,7 @@
 #pragma actions
 
 - (IBAction)clearButton:(id)sender {
-    [self.assetObjectSet removeAllObjects];
+    [self.assetObjects removeAllObjects];
     [self.collectionView reloadData];
     self.navigationItem.prompt = nil;
     [self checkHiddenVergenizeButton];
@@ -83,8 +83,9 @@
 
 -(void)waterMarkPhotos{
     NSLog(@"Watermarking photos into group");
+//    dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
-    for (ao in self.assetObjectSet) {
+    for (ao in self.assetObjects) {
         ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
         ALAssetOrientation orientation = [thisRep orientation];
         UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
@@ -136,7 +137,7 @@
 }
 
 - (void)checkHiddenVergenizeButton{
-    if (self.assetObjectSet.count == 0) {
+    if (self.assetObjects.count == 0) {
         self.vergenizeButton.hidden = YES;
     } else {
         self.vergenizeButton.hidden = NO;
@@ -155,7 +156,7 @@
         if ([segue.destinationViewController conformsToProtocol:@protocol(DetailDelegate)]) {
             self.detailDelegate = segue.destinationViewController;
             self.detailDelegate.assetObject = self.segueAssetObject;
-            self.detailDelegate.assetObjectSet = self.assetObjectSet;
+            self.detailDelegate.assetObjects = self.assetObjects;
         }
     }
 }
@@ -174,7 +175,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    if(self.assetObjectSet.count == 0){
+    if(self.assetObjects.count == 0){
         self.navigationItem.prompt = nil;
     } else {
         self.navigationItem.prompt = @"Tap photos to edit";
@@ -194,11 +195,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (NSMutableOrderedSet *)assetObjectSet{
-    if (!_assetObjectSet) {
-        _assetObjectSet = [[NSMutableOrderedSet alloc]init];
+- (NSMutableArray *)assetObjects{
+    if (!_assetObjects) {
+        _assetObjects = [[NSMutableArray alloc]init];
     }
-    return _assetObjectSet;
+    return _assetObjects;
 }
 
 - (PhotoHandler *)handler{

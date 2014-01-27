@@ -14,7 +14,7 @@
 
 @interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) AssetObject *assetObject;
-//-(void)updateWM:(NSInteger)wmInt;
+@property (strong, nonatomic) NSMutableArray *assetObjects;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) DetailView *detailView;
@@ -24,6 +24,6 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sizeControlOutlet;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *wmControlOutlet;
 @property (strong, nonatomic) UIImageView *imageView;
-@property (weak, nonatomic) NSMutableOrderedSet *assetObjectSet;
+
 
 @end
