@@ -1,6 +1,6 @@
 #The Vergenizer™
 
-![img_link](http://i.imgur.com/C9vBi2a.png)
+![Imgur](http://i.imgur.com/ZLFuB5C.png)
 
 This is a batch watermarking app that I started working on while I was still working as a reporter. I was convinced that we could be more nimble in the field if we could leave our laptops at home --- we just needed a good way to get photos off our cameras, watermarked, and on the site. 
 
