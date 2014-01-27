@@ -151,7 +151,7 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
         AlbumCVC *albumCVC = (AlbumCVC *)cell;
-        albumCVC.albumImageView.image = [[UIImage alloc] initWithCGImage:[self.albumAssets[indexPath.item] thumbnail]];
+        albumCVC.albumImageView.image = [[UIImage alloc] initWithCGImage:[self.albumAssets[self.albumAssets.count - indexPath.item - 1] thumbnail]];
     }
     cell.alpha = [self alphaForSelected:self.selectedItems[@(indexPath.item)]];
     return cell;
