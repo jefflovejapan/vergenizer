@@ -18,7 +18,7 @@
 @interface VergenizerViewController ()
 
 @property (strong, nonatomic) AssetObject *segueAssetObject;
-
+-(void) clearEditUI;
 @end
 
 @implementation VergenizerViewController
@@ -83,49 +83,61 @@
 
 -(void)waterMarkPhotos{
     NSLog(@"Watermarking photos into group");
-//    dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
+    dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
+    [self clearEditUI];
     for (ao in self.assetObjects) {
-        ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
-        ALAssetOrientation orientation = [thisRep orientation];
-        UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
-        CGImageRef cgImage = [sourceImage CGImage];
-        CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
-        NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
-        CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
-        
-        //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
-        CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
-        
-        NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
-        
-        //Draw our image onto the context.
-        CGContextDrawImage(thisContext, targetRect, cgImage);
-        
-        UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
-        if (!watermarkImage) {
-            [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
-        }
-        CGContextSaveGState(thisContext);
-        CGContextSetAlpha(thisContext, WM_ALPHA);
-        CGImageRef watermarkRef = [watermarkImage CGImage];
-        
-        CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
-        CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
-        CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
-        
-        void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
-            NSLog(@"Success!");
-        };
-        
-        [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
-        
-        //Don't forget to release all your Core Graphics stuff
-        UIGraphicsEndImageContext();
-        CGContextRelease(thisContext);
-        CGImageRelease(finalImage);
-    }
-}
+        dispatch_async(wmQ, ^{
+            ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
+            ALAssetOrientation orientation = [thisRep orientation];
+            UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
+            CGImageRef cgImage = [sourceImage CGImage];
+            CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
+            NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
+            CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
+            
+            //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
+            CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
+            
+            NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
+            
+            //Draw our image onto the context.
+            CGContextDrawImage(thisContext, targetRect, cgImage);
+            
+            UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
+            if (!watermarkImage) {
+                [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
+            }
+            CGContextSaveGState(thisContext);
+            CGContextSetAlpha(thisContext, WM_ALPHA);
+            CGImageRef watermarkRef = [watermarkImage CGImage];
+            
+            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
+            CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
+            CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
+            
+            void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
+                NSLog(@"Success!");
+            };
+            
+            [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
+            
+            //Don't forget to release all your Core Graphics stuff
+            UIGraphicsEndImageContext();
+            CGContextRelease(thisContext);
+            CGImageRelease(finalImage);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSIndexPath *removePath = [NSIndexPath indexPathForItem:0 inSection:0];
+                NSArray *removePathArray = [NSArray arrayWithObject:removePath];
+                if (ao != nil) {
+                    [self.assetObjects removeObject:ao];
+                    [self.collectionView deleteItemsAtIndexPaths:removePathArray];
+                    [self checkHiddenVergenizeButton];
+                }
+            });
+        });
+                       }
+                       }
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -142,6 +154,10 @@
     } else {
         self.vergenizeButton.hidden = NO;
     }
+}
+
+- (void)clearEditUI{
+    self.navigationItem.prompt = nil;
 }
 
 
