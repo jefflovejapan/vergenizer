@@ -2,7 +2,7 @@
 
 ![Imgur](http://i.imgur.com/ZLFuB5C.png)
 
-This is a batch watermarking app that I started working on while I was still working as a reporter. I was convinced that we could be more nimble in the field if we could leave our laptops at home --- we just needed a good way to get photos off our cameras, watermarked, and on the site. 
+This is a batch watermarking app inspired by my work as a reporter. I was convinced that we could be more nimble in the field if we could leave our laptops at home --- we just needed a good way to get photos off our cameras, watermarked, and online.
 
 #Running
 
@@ -17,6 +17,5 @@ open `The Vergenizer™.xcodeproj`, plug in your phone, and build away. Tap the 
 Known issues with The Vergenizer™:
 
 - Watermark sometimes appears on wrong side of image (ALAssetOrientation / UIImageOrientation yay)
-- Memory management
 - Autorotated version of VDetailViewController broken
 - No iPad version

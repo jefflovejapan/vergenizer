@@ -75,52 +75,44 @@
         default:
             break;
     }
+    [self setWMImageView];
+}
+
+- (void)setWMImageView {
+    NSLog(@"assetObject's wmString: %@", self.assetObject.watermarkString);
     if (self.assetObject.watermarkString == nil) {
+        NSLog(@"assetObject's wmString is nil so setting wmView.image = nil");
         self.detailView.wmView.image = nil;
     } else {
         self.detailView.wmView.image = [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
+        //        self.detailView.wmView.image = [UIImage imageNamed:self.assetObject.watermarkString];
     }
     [self redrawWMView];
 }
 
-
-
-
-
 - (void)viewWillAppear:(BOOL)animated{
-    
     //Sets up the scrollView and subviews
-    [self setViewsForImage:self.assetObject];
-    [self setParamsFromAssetObject:self.assetObject];
+    [self setViewsForAssetObject:self.assetObject];
+    [self setUIFromAssetObject:self.assetObject];
     [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
 }
 
 
 //The complicated image-setting stuff
-- (void)setViewsForImage:(AssetObject *)assetObject{
-    ALAssetRepresentation *rep = [self.assetObject.asset defaultRepresentation];
-    ALAssetOrientation orientation = [rep orientation];
-    
-    //Scale = 1 here means one point = one pixel.
-    UIImage *thisImage = [UIImage imageWithCGImage:[rep fullResolutionImage] scale:1 orientation:(UIImageOrientation)orientation];
-    
+- (void)setViewsForAssetObject:(AssetObject *)assetObject{
+    UIImage *thisImage = [self getUIImageForAssetObject:assetObject];
     //Want to lock contentSize.width at 2040 and resize height to maintain aspect ratio
     self.scrollView.contentSize = CGSizeMake(SV_CONTENT_SIZE, SV_CONTENT_SIZE * thisImage.size.height/thisImage.size.width);
-    
     self.detailView = [[DetailView alloc]initWithFrame:CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
-    
     [self.scrollView addSubview:self.detailView];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.detailView.frame];
     self.imageView = imageView;
     self.imageView.image = thisImage;
     
     //watermark stuff
-    NSString *detailViewWatermarkString = [self detailViewWatermarkStringForString:self.assetObject.watermarkString];
-    UIImage *watermark = [UIImage imageNamed:detailViewWatermarkString];
-    if (!watermark) {
-        [NSException raise:@"No watermark image" format:@"The string provided doesn't match any available image file"];
-    }
     CGFloat wmOffset = self.imageView.frame.size.width * WM_RATIO;
+    UIImage *watermark = [self wmImageForWMString:self.assetObject.watermarkString];
+
     CGRect wmRect = CGRectMake(self.imageView.frame.size.width - watermark.size.width - wmOffset, self.imageView.frame.size.height - watermark.size.height - wmOffset, watermark.size.width, watermark.size.height);
     UIImageView *wmView = [[UIImageView alloc]initWithImage:watermark];
     
@@ -132,15 +124,30 @@
     self.detailView.wmView.frame = wmRect;
     self.detailView.wmView.alpha = WM_ALPHA;
     [self.detailView addSubview:self.detailView.wmView];
-
-   
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
 }
 
+- (UIImage *)getUIImageForAssetObject:(AssetObject *)ao{
+    ALAssetRepresentation *rep = [self.assetObject.asset defaultRepresentation];
+    ALAssetOrientation orientation = [rep orientation];
+    
+    //Scale = 1 here means one point = one pixel.
+    UIImage *thisImage = [UIImage imageWithCGImage:[rep fullResolutionImage] scale:1 orientation:(UIImageOrientation)orientation];
+    return thisImage;
+}
+
+- (UIImage *)wmImageForWMString:(NSString *)wmString{
+    if (wmString != nil) {
+        return [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
+    } else {
+        return nil;
+    }
+}
+
 
 //reading in parameters from the asssetObject
-- (void)setParamsFromAssetObject:(AssetObject *)assetObject{
+- (void)setUIFromAssetObject:(AssetObject *)assetObject{
     NSLog(@"assetObject's watermarkSize is %d and its watermarkString is %@", assetObject.outputSize, assetObject.watermarkString);
     switch (assetObject.outputSize) {
         case 560:
@@ -194,7 +201,6 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    
     if(self.allSwitchState.isOn){
         NSLog(@"switchstate returned yes");
         [self applyParamstoAll];
@@ -206,14 +212,9 @@
 }
 
 -(void)applyParamstoAll{
-    for (int i=0; i<self.assetObjects.count; i++) {
-        if ([self.assetObjects[i] isKindOfClass:[AssetObject class]]) {
-            AssetObject *thisObject = self.assetObjects[i];
-            thisObject.outputSize = self.assetObject.outputSize;
-            thisObject.watermarkColor = self.assetObject.watermarkColor;
-            thisObject.watermarkShape = self.assetObject.watermarkShape;
-            // self.assetObject.watermarkString gets set automatically
-        }
+    AssetObject *ao;
+    for (ao in self.assetObjects) {
+        [ao setParamsFromAssetObject:self.assetObject];
     }
 }
 
@@ -236,7 +237,6 @@
         returnString = nil;
     }
     return returnString;
-
 }
 
 

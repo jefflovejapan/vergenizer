@@ -82,7 +82,6 @@
 }
 
 -(void)waterMarkPhotos{
-    NSLog(@"Watermarking photos into group");
     dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
     [self clearEditUI];
@@ -106,7 +105,7 @@
             
             UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
             if (!watermarkImage) {
-                [NSException raise:@"No watermark image" format:@"The watermark image you asked for doesn't exist"];
+                NSLog(@"The watermark image you asked for doesn't exist");
             }
             CGContextSaveGState(thisContext);
             CGContextSetAlpha(thisContext, WM_ALPHA);

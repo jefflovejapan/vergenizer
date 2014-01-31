@@ -14,7 +14,9 @@
 
 @implementation AssetObject
 
-//
+
+
+
 - (AssetObject *)initWithAsset:(ALAsset *)asset{
     self = [super init];
     NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
@@ -40,6 +42,13 @@
         NSLog(@"Inside isEqual and classes aren't equal");
         return [super isEqual:object];
     }
+}
+
+-(void)setParamsFromAssetObject:(AssetObject *)ao {
+    self.watermarkColor = ao.watermarkColor;
+    self.watermarkShape = ao.watermarkShape;
+    self.outputSize = ao.outputSize;
+    [self syncWatermarkString];
 }
 
 - (void)setWatermarkColor:(NSString *)watermarkColor{

@@ -26,5 +26,6 @@ typedef NS_ENUM(NSInteger, WatermarkTypes) {
 @property (nonatomic) NSString *watermarkString;
 @property (strong, nonatomic) ALAsset *asset;
 - (AssetObject *)initWithAsset:(ALAsset *)asset;
+-(void)setParamsFromAssetObject:(AssetObject *)ao;
 - (BOOL)isEqual:(id)object;
 @end
