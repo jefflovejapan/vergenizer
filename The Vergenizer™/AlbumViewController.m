@@ -84,9 +84,6 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-
-
-
 #pragma Private Methods
 
 -(CGFloat) alphaForSelected:(NSNumber *)selected{
