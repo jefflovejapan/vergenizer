@@ -36,7 +36,6 @@
 
 #pragma Actions
 
-//Gets triggered when tapping the "select" button. Should probably rename.
 - (IBAction)selectButtonTap:(id)sender {
     if (!self.selectionMode) {
         [self enterSelectionMode];
@@ -46,6 +45,7 @@
 }
 
 - (IBAction)albumCellTap:(id)sender {
+    NSLog(@"taptap");
     CGPoint tapLocation = [sender locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
@@ -59,6 +59,7 @@
         }
     }
 }
+
 
 
 -(void)toggleIndexSelection:(NSIndexPath *)indexPath {
@@ -111,7 +112,6 @@
         [self.ivc.scrollView setNeedsDisplay];
     }
 }
-
 
 
 -(void)enterSelectionMode{
