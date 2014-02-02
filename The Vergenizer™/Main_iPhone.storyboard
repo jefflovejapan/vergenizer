@@ -401,8 +401,10 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvg-c7-wvt">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="delegate" destination="jz0-mD-qy9" id="Xhp-Bc-1ee"/>
+                                    <outletCollection property="gestureRecognizers" destination="s4S-Oz-8kz" appends="YES" id="U7I-Ac-zig"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -421,6 +423,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPv-ws-jOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="s4S-Oz-8kz">
+                    <connections>
+                        <action selector="zoomDoubleTap:" destination="jz0-mD-qy9" id="4WZ-J2-mrN"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1352" y="77"/>
         </scene>
