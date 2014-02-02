@@ -46,7 +46,6 @@
 }
 
 - (IBAction)albumCellTap:(id)sender {
-    NSLog(@"taptap");
     CGPoint tapLocation = [sender locationInView:self.collectionView];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
     if ([self.collectionView cellForItemAtIndexPath:indexPath]) {

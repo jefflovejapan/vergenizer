@@ -299,7 +299,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="6dD-rI-Ibv"/>
+                                    <constraint firstAttribute="height" priority="710" constant="45" id="pYJ-Un-xZP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add Selected">
@@ -310,7 +310,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="goX-jR-gzU">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="459"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="ol2-OO-bW4">
@@ -327,14 +327,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGq-6X-ydA" customClass="AlbumImageView">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGq-6X-ydA" customClass="AlbumImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                                                    <gestureRecognizers/>
-                                                    <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="2UO-KZ-6u8" appends="YES" id="C0x-2A-GJT"/>
-                                                    </connections>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -352,13 +348,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="goX-jR-gzU" firstAttribute="top" secondItem="GGg-cV-Ic6" secondAttribute="bottom" id="ERA-DV-ev4"/>
-                            <constraint firstAttribute="trailing" secondItem="XKL-qN-UeY" secondAttribute="trailing" id="cSH-Gm-R6G"/>
-                            <constraint firstItem="goX-jR-gzU" firstAttribute="leading" secondItem="QeG-6T-LVA" secondAttribute="leading" id="i3L-e7-iPT"/>
-                            <constraint firstItem="pTb-AO-tWe" firstAttribute="top" secondItem="goX-jR-gzU" secondAttribute="bottom" id="j78-an-bzT"/>
-                            <constraint firstItem="pTb-AO-tWe" firstAttribute="top" secondItem="XKL-qN-UeY" secondAttribute="bottom" id="m0S-5H-b2L"/>
-                            <constraint firstItem="XKL-qN-UeY" firstAttribute="leading" secondItem="QeG-6T-LVA" secondAttribute="leading" id="r1k-Fc-oUg"/>
-                            <constraint firstAttribute="trailing" secondItem="goX-jR-gzU" secondAttribute="trailing" id="rHJ-S3-uVi"/>
+                            <constraint firstItem="XKL-qN-UeY" firstAttribute="leading" secondItem="QeG-6T-LVA" secondAttribute="leading" id="5O4-OX-NK6"/>
+                            <constraint firstAttribute="trailing" secondItem="goX-jR-gzU" secondAttribute="trailing" id="Cby-hp-Xll"/>
+                            <constraint firstItem="goX-jR-gzU" firstAttribute="leading" secondItem="QeG-6T-LVA" secondAttribute="leading" id="VwK-Vs-DVD"/>
+                            <constraint firstItem="XKL-qN-UeY" firstAttribute="top" secondItem="goX-jR-gzU" secondAttribute="bottom" id="dOU-Hj-6zK"/>
+                            <constraint firstItem="pTb-AO-tWe" firstAttribute="top" secondItem="XKL-qN-UeY" secondAttribute="bottom" id="l0d-Zx-jFf"/>
+                            <constraint firstItem="goX-jR-gzU" firstAttribute="top" secondItem="GGg-cV-Ic6" secondAttribute="bottom" id="mhq-tk-Wfm"/>
+                            <constraint firstAttribute="trailing" secondItem="XKL-qN-UeY" secondAttribute="trailing" id="rhD-uW-UCW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dGT-D6-Ute">
@@ -376,11 +372,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hng-au-ctJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="2UO-KZ-6u8">
-                    <connections>
-                        <action selector="albumCellTap:" destination="O7R-ee-Dt1" id="a3d-d8-87S"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="812" y="148"/>
         </scene>
