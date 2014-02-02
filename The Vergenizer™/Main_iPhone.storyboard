@@ -408,11 +408,8 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvg-c7-wvt" customClass="DblTapZoomScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outlet property="delegate" destination="jz0-mD-qy9" id="Xhp-Bc-1ee"/>
-                                    <outletCollection property="gestureRecognizers" destination="s4S-Oz-8kz" appends="YES" id="U7I-Ac-zig"/>
-                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -426,15 +423,11 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="czf-fy-0ZH"/>
                     <connections>
-                        <outlet property="scrollView" destination="pvg-c7-wvt" id="gen-Tn-mmx"/>
+                        <outlet property="scrollView" destination="pvg-c7-wvt" id="qZm-DN-Hdk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPv-ws-jOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="s4S-Oz-8kz">
-                    <connections>
-                        <action selector="zoomDoubleTap:" destination="jz0-mD-qy9" id="4WZ-J2-mrN"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="s4S-Oz-8kz"/>
             </objects>
             <point key="canvasLocation" x="1352" y="77"/>
         </scene>

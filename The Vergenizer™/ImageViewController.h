@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "AlbumViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "DblTapZoomScrollView.h"
 
-@interface ImageViewController : UIViewController <UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@interface ImageViewController : UIViewController
+//<UIScrollViewDelegate>
+@property (weak, nonatomic) IBOutlet DblTapZoomScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
 @end
