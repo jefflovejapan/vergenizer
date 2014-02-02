@@ -45,20 +45,7 @@
     }
 }
 
-- (IBAction)albumCellTap:(id)sender {
-    CGPoint tapLocation = [sender locationInView:self.collectionView];
-    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
-    if ([self.collectionView cellForItemAtIndexPath:indexPath]) {
-        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[AlbumCVC class]]) {
-            if (self.selectionMode) {
-                [self toggleIndexSelection:indexPath];
-            } else {
-                [self performSegueWithIdentifier:@"bigImageSegue" sender:sender];
-            }
-        }
-    }
-}
+
 
 
 -(void)toggleIndexSelection:(NSIndexPath *)indexPath {
