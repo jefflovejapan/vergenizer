@@ -34,6 +34,7 @@
 
 @implementation AlbumViewController
 
+
 #pragma Actions
 
 - (IBAction)selectButtonTap:(id)sender {
@@ -54,13 +55,11 @@
             if (self.selectionMode) {
                 [self toggleIndexSelection:indexPath];
             } else {
-                [self goBig:indexPath.item];
+                [self performSegueWithIdentifier:@"bigImageSegue" sender:sender];
             }
         }
     }
 }
-
-
 
 
 -(void)toggleIndexSelection:(NSIndexPath *)indexPath {
@@ -96,25 +95,6 @@
     }
 }
 
--(void) goBig:(NSUInteger)index{
-    [self performSegueWithIdentifier:@"bigImageSegue" sender:self];
-    NSUInteger reverseIndex = [self reverseAlbumIndexForIndex:index];
-    [self setIVCAsset:self.albumAssets[reverseIndex]];
-}
-
--(void)setIVCAsset:(ALAsset *)asset{
-    if (self.ivc) {
-        ALAssetRepresentation *rep = [asset defaultRepresentation];
-        ALAssetOrientation alo = [rep orientation];
-        CGImageRef ref = [[asset defaultRepresentation]fullResolutionImage];
-        UIImage *image = [UIImage imageWithCGImage:ref scale:1.0 orientation:(UIImageOrientation)alo];
-        self.ivc.image = image;
-        
-        [self.ivc.scrollView setNeedsDisplay];
-    }
-}
-
-
 -(void)enterSelectionMode{
     self.selectionMode = YES;
     self.addSelectedButton.hidden = YES;
@@ -138,11 +118,6 @@
     return numCells;
 }
 
-//We want to return assets in reverse chronological order
-- (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index{
-    return self.albumAssets.count - index - 1;
-}
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -156,6 +131,20 @@
     return cell;
 }
 
+#pragma helper methods
+
+//We want to return assets in reverse chronological order
+- (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index{
+    return self.albumAssets.count - index - 1;
+}
+
+-(UIImage *)IVCImageForAsset:(ALAsset *)asset{
+    ALAssetRepresentation *rep = [asset defaultRepresentation];
+    ALAssetOrientation alo = [rep orientation];
+    CGImageRef ref = [[asset defaultRepresentation]fullResolutionImage];
+    UIImage *image = [UIImage imageWithCGImage:ref scale:1.0 orientation:(UIImageOrientation)alo];
+    return image;
+}
 
 
 #pragma lifecycle methods
@@ -163,9 +152,13 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
+        CGPoint tapLocation = [sender locationInView:self.collectionView];
+        NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
+        ALAsset *asset = self.albumAssets[[self reverseAlbumIndexForIndex:indexPath.item]];
+        UIImage *image = [self IVCImageForAsset:asset];
+        self.ivc.image = image;
     }
 }
-
 
 #pragma instantiation
 
