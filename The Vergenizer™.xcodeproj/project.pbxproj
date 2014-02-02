@@ -33,6 +33,7 @@
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
+		DFC34F16189DEF510064BA0C /* DblTapZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */; };
 		DFE6ED841890E2F3004D8E86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DFE6ED831890E2F3004D8E86 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,8 @@
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
+		DFC34F14189DEF510064BA0C /* DblTapZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DblTapZoomScrollView.h; sourceTree = "<group>"; };
+		DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DblTapZoomScrollView.m; sourceTree = "<group>"; };
 		DFE6ED831890E2F3004D8E86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -233,6 +236,8 @@
 				DF1E94E817ACAFAB0090E6BD /* VergenizerImageView.m */,
 				DF1E94ED17ACAFAB0090E6BD /* VDetailView.h */,
 				DF1E94EE17ACAFAB0090E6BD /* VDetailView.m */,
+				DFC34F14189DEF510064BA0C /* DblTapZoomScrollView.h */,
+				DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */,
 				DF1E94B717ACAF5C0090E6BD /* main.m in Sources */,
 				DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */,
+				DFC34F16189DEF510064BA0C /* DblTapZoomScrollView.m in Sources */,
 				DF1E950317ACAFAB0090E6BD /* VDetailView.m in Sources */,
 				DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */,
 				DF1E94BB17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m in Sources */,
