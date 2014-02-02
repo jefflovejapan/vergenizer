@@ -62,6 +62,7 @@
 
 
 
+
 -(void)toggleIndexSelection:(NSIndexPath *)indexPath {
     NSNumber *selection = @(indexPath.item);
     NSNumber *newValue = @(![self.selectedItems[selection] boolValue]);
