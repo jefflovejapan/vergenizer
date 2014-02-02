@@ -9,8 +9,8 @@
 #import "VDetailViewController.h"
 #import "AssetObject.h"
 
-#define MIN_ZOOM_SCALE 0.01
-#define MAX_ZOOM_SCALE 2.0
+#define MIN_ZOOM_SCALE 0.1
+#define MAX_ZOOM_SCALE 1.0
 #define WM_ALPHA 0.2
 #define WM_RATIO 0.016
 #define SV_CONTENT_SIZE 2040
@@ -77,6 +77,22 @@
     }
     [self setWMImageView];
 }
+
+- (IBAction)zoomDoubleTap:(id)sender {
+    CGPoint tapLocation = [sender locationInView:[self viewForZoomingInScrollView:self.scrollView]];
+    if (self.scrollView.zoomScale < self.scrollView.maximumZoomScale) {
+        CGSize currentRectSize = self.scrollView.bounds.size;
+        CGRect zoomRect = CGRectMake(tapLocation.x - (currentRectSize.width / 2.0), tapLocation.y - (currentRectSize.height / 2.0), (currentRectSize.width / 2.0), (currentRectSize.height / 2.0));
+        [self.scrollView zoomToRect:zoomRect animated:YES];
+    } else {
+        [self.scrollView zoomToRect:self.imageView.bounds animated:YES
+         ];
+    }
+}
+
+
+
+
 
 - (void)setWMImageView {
     NSLog(@"assetObject's wmString: %@", self.assetObject.watermarkString);
