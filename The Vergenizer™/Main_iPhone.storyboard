@@ -327,14 +327,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGq-6X-ydA" customClass="AlbumImageView">
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGq-6X-ydA" customClass="AlbumImageView">
                                                     <rect key="frame" x="0.0" y="0.0" width="78" height="78"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                                     <gestureRecognizers/>
                                                     <connections>
-                                                        <outletCollection property="gestureRecognizers" destination="mOc-wh-12c" appends="YES" id="QuY-hJ-8Jb"/>
-                                                        <outletCollection property="gestureRecognizers" destination="uSN-AT-3oK" appends="YES" id="NKu-Nz-ONJ"/>
+                                                        <outletCollection property="gestureRecognizers" destination="FVs-Yh-9K4" appends="YES" id="85e-Bg-PTl"/>
                                                     </connections>
                                                 </imageView>
                                             </subviews>
@@ -353,6 +352,7 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="XKL-qN-UeY" firstAttribute="leading" secondItem="QeG-6T-LVA" secondAttribute="leading" id="5O4-OX-NK6"/>
                             <constraint firstAttribute="trailing" secondItem="goX-jR-gzU" secondAttribute="trailing" id="Cby-hp-Xll"/>
@@ -378,14 +378,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hng-au-ctJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="mOc-wh-12c">
+                <tapGestureRecognizer id="FVs-Yh-9K4">
                     <connections>
-                        <action selector="albumCellTap:" destination="O7R-ee-Dt1" id="1Ch-4B-608"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="uSN-AT-3oK">
-                    <connections>
-                        <action selector="albumCellTap:" destination="O7R-ee-Dt1" id="qa5-pw-Unl"/>
+                        <action selector="albumCellTap:" destination="O7R-ee-Dt1" id="n3D-cz-S9x"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
