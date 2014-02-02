@@ -53,7 +53,7 @@
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-
+    [self.scrollView zoomToRect:self.imageView.bounds animated:YES];
 }
 
 #pragma helper methods
