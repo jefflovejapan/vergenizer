@@ -11,12 +11,13 @@
 #import "WatermarkHandler.h"
 #import "AssetObject.h"
 #import "VDetailView.h"
+#import "DblTapZoomScrollView.h"
 
 @interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
 
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet DblTapZoomScrollView *scrollView;
 @property (strong, nonatomic) DetailView *detailView;
 
 @property (weak, nonatomic) IBOutlet UILabel *allSwitchLabel;
