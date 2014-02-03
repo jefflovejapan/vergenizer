@@ -152,6 +152,7 @@
 #pragma lifecycle methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"inside pfs");
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
         CGPoint tapLocation = [sender locationInView:self.collectionView];
@@ -159,6 +160,7 @@
         ALAsset *asset = self.albumAssets[[self reverseAlbumIndexForIndex:indexPath.item]];
         UIImage *image = [self IVCImageForAsset:asset];
         self.ivc.image = image;
+        NSLog(@"zoom scale: %f", self.ivc.scrollView.zoomScale);
     }
 }
 

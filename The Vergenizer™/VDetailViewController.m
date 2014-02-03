@@ -101,7 +101,6 @@
         self.detailView.wmView.image = nil;
     } else {
         self.detailView.wmView.image = [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
-        //        self.detailView.wmView.image = [UIImage imageNamed:self.assetObject.watermarkString];
     }
     [self redrawWMView];
 }

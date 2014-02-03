@@ -15,9 +15,6 @@
 
 @implementation DblTapZoomScrollView
 
-#define MAX_ZOOM_SCALE 1.0
-#define MIN_ZOOM_SCALE 0.1
-
 
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -37,39 +34,32 @@
 }
 
 -(void)addDblTapGesture{
-    NSLog(@"addDblTapGesture getting called");
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomDoubleTap)];
     [doubleTap setNumberOfTapsRequired:2];
     [self addGestureRecognizer:doubleTap];
-    self.maximumZoomScale = MAX_ZOOM_SCALE;
-    self.minimumZoomScale = MIN_ZOOM_SCALE;
     self.userInteractionEnabled = YES;
-    self.viewToScroll.userInteractionEnabled = YES;
-    for (UIGestureRecognizer *recog in self.gestureRecognizers){
-        NSLog(@"recognizer: %@", recog);
-    }
 }
 
-//-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-//    self.touch = touch;
-//    return YES;
-//}
-
-//-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-//    return self.viewToScroll;
-//}
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    self.touch = touch;
+    return YES;
+}
 
 -(void)zoomDoubleTap{
     NSLog(@"taptap");
-//    CGPoint tapLoc = [self.touch locationInView:self.viewToScroll];
-//    if (self.zoomScale < self.maximumZoomScale) {
-//        CGSize currentRectSize = self.bounds.size;
-//        CGRect zoomRect = CGRectMake(tapLoc.x - (currentRectSize.width / 2.0), tapLoc.y - (currentRectSize.height / 2.0), (currentRectSize.width / 2.0), (currentRectSize.height / 2.0));
-//        [self zoomToRect:zoomRect animated:YES];
-//    } else {
-//        [self zoomToRect:self.viewToScroll.bounds animated:YES
-//         ];
-//    }
+    NSLog(@"min/max zoom scales: %f, %f", self.minimumZoomScale, self.maximumZoomScale);
+    NSLog(@"current zoom scale: %f", self.zoomScale);
+    CGPoint tapLoc = [self.touch locationInView:[self.delegate viewForZoomingInScrollView:self]];
+    NSLog(@"taploc: %@", NSStringFromCGPoint(tapLoc));
+    if (self.zoomScale < self.maximumZoomScale) {
+        CGSize currentRectSize = self.bounds.size;
+        NSLog(@"currentRectSize: %@", NSStringFromCGSize(currentRectSize));
+        CGRect zoomRect = CGRectMake(tapLoc.x - (currentRectSize.width / 2.0), tapLoc.y - (currentRectSize.height / 2.0), (currentRectSize.width / 2.0), (currentRectSize.height / 2.0));
+        [self zoomToRect:zoomRect animated:YES];
+    } else {
+        NSLog(@"inside else clause, trying to zoom to vts bounds");
+        [self setZoomScale:self.minimumZoomScale animated:YES];
+    }
 }
 
 

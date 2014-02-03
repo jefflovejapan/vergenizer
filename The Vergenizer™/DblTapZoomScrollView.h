@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DblTapZoomScrollView : UIScrollView<UIGestureRecognizerDelegate, UIScrollViewDelegate>
-@property (strong, nonatomic) UIView *viewToScroll;
+@interface DblTapZoomScrollView : UIScrollView
+//<UIGestureRecognizerDelegate,
 
 @end

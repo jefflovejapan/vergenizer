@@ -11,8 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "DblTapZoomScrollView.h"
 
-@interface ImageViewController : UIViewController
-//<UIScrollViewDelegate>
+@interface ImageViewController : UIViewController<UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet DblTapZoomScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;

@@ -38,13 +38,14 @@
 
 - (void)viewDidLoad{
     [self.scrollView addSubview:self.imageView];
-    self.scrollView.viewToScroll = self.imageView;
+    self.scrollView.delegate = self;
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
+    [self.scrollView setUserInteractionEnabled:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-//    [self resetImage];
+    [self resetImage];
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,37 +60,41 @@
 
 #pragma helper methods
 
-//- (void)resetImage{
-//    NSLog(@"In resetimage");
-//    if (self.scrollView) {
-//        self.scrollView.contentSize = CGSizeZero;
-//        self.imageView.image = nil;
-//        if (self.image) {
-//            self.imageView.image = self.image;
-//            self.imageView.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
+- (void)resetImage{
+    NSLog(@"In resetimage");
+    if (self.scrollView) {
+        NSLog(@"zoomscale: %f", self.scrollView.zoomScale);
+        self.scrollView.contentSize = CGSizeZero;
+        self.imageView.image = nil;
+        if (self.image) {
+            self.imageView.image = self.image;
+            NSLog(@"Inside resetImage, IVC.image: %@", self.image);
+            self.imageView.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
 //            self.scrollView.zoomScale = 1.0;
-//            self.scrollView.contentSize = self.image.size;
-//            NSLog(@"scrollview: %@", self.scrollView);
-//            NSLog(@"subviews: %@", self.scrollView.subviews);
-//            NSLog(@"viewtoscroll: %@", self.scrollView.viewToScroll);
-//            NSLog(@"vts is self.imageview: %d", self.scrollView.viewToScroll == self.imageView);
-//            for (UITapGestureRecognizer *recognizer in self.scrollView.gestureRecognizers) {
-//                NSLog(@"Gesture recognizer: %@", recognizer);
-//            }
-//            NSLog(@"View for scrolling: %@", [self.scrollView viewForZoomingInScrollView:self.scrollView]);
-//            NSLog(@"User interaction enabled for scrollview: %d", self.scrollView.userInteractionEnabled);
-//            NSLog(@"User interaction enabled for vts: %d", self.scrollView.viewToScroll.userInteractionEnabled);
-//            [self.scrollView zoomToRect:self.imageView.bounds animated:NO];
-//            [self.scrollView setNeedsDisplay];
-//        }
-//    }
-//}
+            self.scrollView.contentSize = self.image.size;
+            NSLog(@"scrollview: %@", self.scrollView);
+            NSLog(@"subviews: %@", self.scrollView.subviews);
+            NSLog(@"viewforscrolling: %@", [self viewForZoomingInScrollView:self.scrollView]);
+            NSLog(@"vfs is self.imageview: %d", [self viewForZoomingInScrollView:self.scrollView] == self.imageView);
+            NSLog(@"scrollview scale: %f", self.scrollView.zoomScale);
+            NSLog(@"imageview bounds: %@", NSStringFromCGRect(self.imageView.bounds));
+            NSLog(@"self.imageview is vts: %d", self.imageView == [self viewForZoomingInScrollView:self.scrollView]);
+            self.scrollView.minimumZoomScale = 0.1;
+            NSLog(@"scrollview scale: %f", self.scrollView.zoomScale);
+            CGRect zoomRect = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height);
+            [self.scrollView zoomToRect:zoomRect animated:YES];
+            NSLog(@"min / max zoom scale: %f / %f", self.scrollView.minimumZoomScale, self.scrollView.maximumZoomScale);
+            [self.scrollView setNeedsDisplay];
+            NSLog(@"scrollview's delegate: %@", self.scrollView.delegate);
+        }
+    }
+}
 
 #pragma instantiation
 
-//- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-//    return self.imageView;
-//}
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+    return self.imageView;
+}
 
 - (UIImageView *)imageView{
     if (!_imageView) {
