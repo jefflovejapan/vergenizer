@@ -30,20 +30,6 @@
     return self;
 }
 
-- (BOOL)isEqual:(id)object{
-    if ([object isKindOfClass:[self class]]) {
-        AssetObject *assetObject = (AssetObject *)object;
-        if ([self.URLString isEqualToString:assetObject.URLString]) {
-            return YES;
-        } else {
-            return NO;
-        }
-    } else {
-        NSLog(@"Inside isEqual and classes aren't equal");
-        return [super isEqual:object];
-    }
-}
-
 -(void)setParamsFromAssetObject:(AssetObject *)ao {
     self.watermarkColor = ao.watermarkColor;
     self.watermarkShape = ao.watermarkShape;

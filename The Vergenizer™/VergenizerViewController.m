@@ -107,7 +107,7 @@
             
             UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
             if (!watermarkImage) {
-                NSLog(@"The watermark image you asked for doesn't exist");
+                NSLog(@"No watermark");
             }
             CGContextSaveGState(thisContext);
             CGContextSetAlpha(thisContext, WM_ALPHA);
@@ -142,9 +142,9 @@
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
-    bytes = (int)(bits*4*width);
-    if (bytes%16 != 0) {
-        bytes = bytes+15 - (bytes+15)%16;   //gets bytes up over the next highest multiple of 16 and subtracts the unused part
+    bytes = bits * 4 * width;
+    if (bytes % 16 != 0) {
+        bytes = bytes + 15 - (bytes + 15) % 16;   //gets bytes up over the next highest multiple of 16 and subtracts the unused part
     }
     return bytes;
 }
