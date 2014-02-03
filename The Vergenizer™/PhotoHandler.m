@@ -25,7 +25,7 @@
 }
 
 -(void)updateAssetGroups{
-    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop) {
+    void (^listGroupBlock)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *group, BOOL *stop) {
         if (group != nil) {
             if (![self.groups containsObject:group]) {
                 [self.groups addObject:group];
@@ -33,7 +33,7 @@
         }
     };
     
-    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
+    void (^failureBlock)(NSError *) = ^(NSError *error) {
         [NSException raise:@"Hit failure block insidePhotoHandler" format:@"%@", [error description]];
     };
     
