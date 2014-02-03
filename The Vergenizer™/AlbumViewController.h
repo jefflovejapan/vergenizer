@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *addSelectedButton;
 
 
-@property (nonatomic) NSInteger albumIndex;
 @property (nonatomic, strong) NSMutableArray *albumAssets;
 @property (nonatomic, strong) ALAssetsGroup *group;
 @property (nonatomic, strong) PhotoHandler *handler;

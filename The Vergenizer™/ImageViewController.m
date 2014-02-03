@@ -32,11 +32,6 @@
     [self resetImage];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     [self.scrollView zoomToRect:self.imageView.bounds animated:YES];
@@ -58,11 +53,13 @@
     }
 }
 
-#pragma instantiation
+#pragma delegate methods
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return self.imageView;
 }
+
+#pragma instantiation
 
 - (UIImageView *)imageView{
     if (!_imageView) {
