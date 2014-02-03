@@ -58,7 +58,8 @@
         [self zoomToRect:zoomRect animated:YES];
     } else {
         NSLog(@"inside else clause, trying to zoom to vts bounds");
-        [self setZoomScale:self.minimumZoomScale animated:YES];
+        CGRect minRect = [self.delegate viewForZoomingInScrollView:self].bounds;
+        [self zoomToRect:minRect animated:YES];
     }
 }
 
