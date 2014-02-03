@@ -20,7 +20,7 @@
 
 
 
-@interface AlbumViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface AlbumViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, IvcDelegate>
 @property (strong, nonatomic) id<VergenizerDelegate> vergenizerDelegate;
 
 //outlets

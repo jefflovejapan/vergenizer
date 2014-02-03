@@ -17,8 +17,6 @@
 
 @interface AlbumViewController ()
 
-- (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index;
-
 //Used in segue to ImageViewController
 @property (strong, nonatomic) UIImage *segueImage;
 @property (nonatomic) NSInteger *someInt;
@@ -136,9 +134,18 @@
     return cell;
 }
 
+-(void)toggleCurrentSelection{
+    [self toggleIndexSelection:self.selectedCellIndexPath];
+}
+
+-(NSNumber *)currentSelectionState{
+    return self.selectedItems[@(self.selectedCellIndexPath.item)];
+}
+
 #pragma helper methods
 
-//We want to return assets in reverse chronological order
+//We want to return items in albumAssets in reverse chronological order
+//*Only* necessary when pulling stuff directly out of albumAssets
 - (NSUInteger)reverseAlbumIndexForIndex:(NSUInteger)index{
     return self.albumAssets.count - index - 1;
 }
@@ -163,7 +170,7 @@
         ALAsset *asset = self.albumAssets[[self reverseAlbumIndexForIndex:indexPath.item]];
         UIImage *image = [self IVCImageForAsset:asset];
         self.ivc.image = image;
-        self.ivc.selectedCellIndexPath = self.selectedCellIndexPath;
+        self.ivc.delegate = self;
     }
 }
 

@@ -22,7 +22,8 @@
 #pragma actions
 
 - (IBAction)addButtonTap:(id)sender {
-    [self togglePhotoSelection];
+    [self.delegate toggleCurrentSelection];
+    [self updateAddButton];
 }
 
 
@@ -70,7 +71,8 @@
 }
 
 -(void)updateAddButton{
-    if ([self.selectedItems[self.selectedPhotoKey] boolValue]) {
+    NSLog(@"currentSelectionState: %@" ,[self.delegate currentSelectionState]);
+    if ([[self.delegate currentSelectionState]boolValue]) {
         self.addButton.title = @"Remove";
     } else {
         self.addButton.title = @"Add";
