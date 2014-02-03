@@ -16,7 +16,6 @@
 
 
 @interface VergenizerViewController ()
-
 @property (strong, nonatomic) AssetObject *segueAssetObject;
 @end
 
@@ -86,7 +85,7 @@
 -(void)waterMarkPhotos{
     dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
-    [self clearEditUI];
+    [self clearEditPrompt];
     for (ao in self.assetObjects) {
         dispatch_async(wmQ, ^{
             ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
@@ -157,7 +156,7 @@
     }
 }
 
-- (void)clearEditUI{
+- (void)clearEditPrompt{
     self.navigationItem.prompt = nil;
 }
 
@@ -166,7 +165,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
-        [self clearEditUI];  // Animation screws up otherwise
+        [self clearEditPrompt];  // Animation screws up otherwise
         PickerViewController *pvc;
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
