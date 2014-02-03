@@ -18,6 +18,14 @@
 #define MAX_ZOOM_SCALE 1.0
 #define MIN_ZOOM_SCALE 0.1
 
+
+#pragma actions
+
+- (IBAction)addButtonTap:(id)sender {
+    [self togglePhotoSelection];
+}
+
+
 #pragma lifecycle
 
 - (void)viewDidLoad{
@@ -26,6 +34,10 @@
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self updateAddButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -54,6 +66,14 @@
             [self.scrollView zoomToRect:zoomRect animated:NO];
             self.scrollView.minimumZoomScale = self.scrollView.zoomScale;
         }
+    }
+}
+
+-(void)updateAddButton{
+    if ([self.selectedItems[self.selectedPhotoKey] boolValue]) {
+        self.addButton.title = @"Remove";
+    } else {
+        self.addButton.title = @"Add";
     }
 }
 

@@ -25,11 +25,11 @@
 @property (strong, nonatomic) ImageViewController *ivc;
 
 //Managing cell selections and the asset set to send back to VVC
-@property (strong, nonatomic) NSMutableDictionary *selectedItems;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
+@property (strong, nonatomic) NSMutableDictionary *selectedItems;
 
 @property (nonatomic) BOOL selectionMode;
-
+@property (nonatomic, strong) NSIndexPath *selectedCellIndexPath;
 @end
 
 @implementation AlbumViewController
@@ -54,6 +54,7 @@
     self.selectedItems[selection] = newValue;
     [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
 }
+
 
 - (IBAction)addSelectedButton:(id)sender {
     NSArray *controllers = [self.navigationController viewControllers];
@@ -111,6 +112,9 @@
     [self.addSelectedButton setNeedsDisplay];
 }
 
+#pragma public methods
+
+
 #pragma delegate methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -122,7 +126,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
     UICollectionViewCell *cell;
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"albumPhotoCell" forIndexPath:indexPath];
     if ([cell isKindOfClass:[AlbumCVC class]]) {
@@ -152,15 +155,15 @@
 #pragma lifecycle methods
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    NSLog(@"inside pfs");
     if ([segue.identifier isEqualToString:@"bigImageSegue"]) {
         self.ivc = segue.destinationViewController;
         CGPoint tapLocation = [sender locationInView:self.collectionView];
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
+        self.selectedCellIndexPath = indexPath;
         ALAsset *asset = self.albumAssets[[self reverseAlbumIndexForIndex:indexPath.item]];
         UIImage *image = [self IVCImageForAsset:asset];
         self.ivc.image = image;
-        NSLog(@"zoom scale: %f", self.ivc.scrollView.zoomScale);
+        self.ivc.selectedCellIndexPath = self.selectedCellIndexPath;
     }
 }
 

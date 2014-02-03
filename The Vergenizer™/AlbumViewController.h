@@ -28,10 +28,9 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *addSelectedButton;
 
-
 @property (nonatomic, strong) NSMutableArray *albumAssets;
 @property (nonatomic, strong) ALAssetsGroup *group;
 @property (nonatomic, strong) PhotoHandler *handler;
-
+-(void) toggleIndexSelection:(NSIndexPath *) indexPath;
 
 @end

@@ -424,8 +424,15 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="czf-fy-0ZH"/>
+                    <navigationItem key="navigationItem" id="czf-fy-0ZH">
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="o46-YQ-b17">
+                            <connections>
+                                <action selector="addButtonTap:" destination="jz0-mD-qy9" id="qhq-Ir-pk7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="o46-YQ-b17" id="6p8-Ha-UCI"/>
                         <outlet property="scrollView" destination="pvg-c7-wvt" id="qZm-DN-Hdk"/>
                     </connections>
                 </viewController>
