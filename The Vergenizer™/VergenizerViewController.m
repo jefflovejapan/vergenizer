@@ -18,12 +18,12 @@
 @interface VergenizerViewController ()
 
 @property (strong, nonatomic) AssetObject *segueAssetObject;
--(void) clearEditUI;
 @end
 
 @implementation VergenizerViewController
 
-//Returns when collectionViewCell is tapped
+#pragma actions
+
 - (IBAction)vergenizerCellTap:(id)sender {
     CGPoint tapLocation = [sender locationInView:self.view];
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:tapLocation];
@@ -38,10 +38,17 @@
     
 }
 
-
--(void)addAssetObjects:(NSMutableArray *)objects{
-    [self.assetObjects addObjectsFromArray:objects];
+- (IBAction)clearButton:(id)sender {
+    [self.assetObjects removeAllObjects];
+    [self.collectionView reloadData];
+    self.navigationItem.prompt = nil;
+    [self checkHiddenVergenizeButton];
 }
+
+- (IBAction)vergenizeButton:(id)sender {
+    [self waterMarkPhotos];
+}
+
 
 #pragma delegate methods
 
@@ -63,22 +70,17 @@
         [vergenizerCVC syncImage];
     }
     return cell;
-    
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    [self.collectionView layoutIfNeeded];
 }
 
 
+#pragma helper methods
 
-#pragma actions
-
-- (IBAction)clearButton:(id)sender {
-    [self.assetObjects removeAllObjects];
-    [self.collectionView reloadData];
-    self.navigationItem.prompt = nil;
-    [self checkHiddenVergenizeButton];
-}
-
-- (IBAction)vergenizeButton:(id)sender {
-    [self waterMarkPhotos];
+-(void)addAssetObjects:(NSMutableArray *)objects{
+    [self.assetObjects addObjectsFromArray:objects];
 }
 
 -(void)waterMarkPhotos{
@@ -135,8 +137,8 @@
                 }
             });
         });
-                       }
-                       }
+    }
+}
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -161,8 +163,10 @@
 
 
 #pragma lifecycle methods
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
+        [self clearEditUI];  // Animation screws up otherwise
         PickerViewController *pvc;
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
@@ -197,18 +201,7 @@
     }
 }
 
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    [self.collectionView layoutIfNeeded];
-}
-
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma instantiation
 
 - (NSMutableArray *)assetObjects{
     if (!_assetObjects) {
