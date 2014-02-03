@@ -10,7 +10,7 @@
 #import "AlbumCVC.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-#define ALPHA_FOR_SELECTED 0.2
+#define ALPHA_FOR_SELECTED 0.35
 #define ALPHA_FOR_UNSELECTED 1
 #define IPHONE_WIDTH 320
 

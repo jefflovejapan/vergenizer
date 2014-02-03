@@ -78,8 +78,6 @@
     [self setWMImageView];
 }
 
-
-
 - (void)setWMImageView {
     NSLog(@"assetObject's wmString: %@", self.assetObject.watermarkString);
     if (self.assetObject.watermarkString == nil) {
@@ -98,8 +96,15 @@
     [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
 }
 
+- (void)viewDidLoad{
+    [self.scrollView addSubview:self.imageView];
+    self.scrollView.delegate = self;
+    self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
+    self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
+    [self.scrollView setUserInteractionEnabled:YES];
+}
 
-//The complicated image-setting stuff
+
 - (void)setViewsForAssetObject:(AssetObject *)assetObject{
     UIImage *thisImage = [self getUIImageForAssetObject:assetObject];
     //Want to lock contentSize.width at 2040 and resize height to maintain aspect ratio
