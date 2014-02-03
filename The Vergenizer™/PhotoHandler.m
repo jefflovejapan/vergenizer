@@ -17,12 +17,6 @@
 @implementation PhotoHandler
 
 
-- (CGImageRef)posterImageForAssetsGroup:(ALAssetsGroup *)assetsGroup{
-    CGImageRef posterImage;
-    posterImage = assetsGroup.posterImage;
-    return posterImage;
-}
-
 -(PhotoHandler *)init{
     self = [super init];
     [self.groups removeAllObjects];

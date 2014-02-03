@@ -14,7 +14,4 @@
 @interface PhotoHandler : NSObject
 @property (strong, nonatomic)NSMutableArray *groups;
 @property (strong, nonatomic) ALAssetsLibrary *library;
-- (PhotoHandler *)init;
-- (CGImageRef)posterImageForAssetsGroup:(ALAssetsGroup *)assetsGroup;
-- (void)updateAssetGroups;
 @end
