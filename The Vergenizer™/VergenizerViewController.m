@@ -18,7 +18,6 @@
 @interface VergenizerViewController ()
 
 @property (strong, nonatomic) AssetObject *segueAssetObject;
-@property (strong, nonatomic) UITableView *tableView;
 @end
 
 @implementation VergenizerViewController
