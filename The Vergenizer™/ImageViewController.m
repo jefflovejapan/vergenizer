@@ -34,7 +34,9 @@
 
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    [self.scrollView zoomToRect:self.imageView.bounds animated:YES];
+    self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;  // To enable zooming out past previous MZS
+    [self.scrollView zoomToRect:[self viewForZoomingInScrollView:self.scrollView].bounds animated:YES];
+    self.scrollView.minimumZoomScale = self.scrollView.zoomScale;
 }
 
 #pragma helper methods
@@ -48,7 +50,9 @@
             self.imageView.frame = CGRectMake(0, 0, self.image.size.width, self.image.size.height);
             self.scrollView.contentSize = self.image.size;
             CGRect zoomRect = CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height);
+            self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;  // To enable zooming out past previous MZS
             [self.scrollView zoomToRect:zoomRect animated:NO];
+            self.scrollView.minimumZoomScale = self.scrollView.zoomScale;
         }
     }
 }

@@ -46,18 +46,12 @@
 }
 
 -(void)zoomDoubleTap{
-    NSLog(@"taptap");
-    NSLog(@"min/max zoom scales: %f, %f", self.minimumZoomScale, self.maximumZoomScale);
-    NSLog(@"current zoom scale: %f", self.zoomScale);
     CGPoint tapLoc = [self.touch locationInView:[self.delegate viewForZoomingInScrollView:self]];
-    NSLog(@"taploc: %@", NSStringFromCGPoint(tapLoc));
     if (self.zoomScale < self.maximumZoomScale) {
         CGSize currentRectSize = self.bounds.size;
-        NSLog(@"currentRectSize: %@", NSStringFromCGSize(currentRectSize));
         CGRect zoomRect = CGRectMake(tapLoc.x - (currentRectSize.width / 2.0), tapLoc.y - (currentRectSize.height / 2.0), (currentRectSize.width / 2.0), (currentRectSize.height / 2.0));
         [self zoomToRect:zoomRect animated:YES];
     } else {
-        NSLog(@"inside else clause, trying to zoom to vts bounds");
         CGRect minRect = [self.delegate viewForZoomingInScrollView:self].bounds;
         [self zoomToRect:minRect animated:YES];
     }
