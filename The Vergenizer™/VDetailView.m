@@ -10,15 +10,6 @@
 
 @implementation DetailView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 -(UIImageView *)imageView{
     if (!_imageView) {
         _imageView = [[UIImageView alloc]init];

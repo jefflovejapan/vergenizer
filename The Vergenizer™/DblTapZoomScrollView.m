@@ -17,6 +17,7 @@
 
 
 - (id)initWithFrame:(CGRect)frame{
+    NSLog(@"inside iwf");
     self = [super initWithFrame:frame];
 
     if (self) {
@@ -25,12 +26,10 @@
     return self;
 }
 
--(id)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self addDblTapGesture];
-    }
-    return self;
+-(void)awakeFromNib{
+    NSLog(@"inside awake from nib");
+    [super awakeFromNib];
+    [self addDblTapGesture];
 }
 
 -(void)addDblTapGesture{
