@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface VDLandscapeViewController : UIViewController
 #import <UIKit/UIKit.h>
-#import "VergenizerViewController.h"
 #import "AssetObject.h"
-#import "VDetailView.h"
 #import "DblTapZoomScrollView.h"
+#import "VergenizerViewController.h"
+#import "VDetailView.h"
 
-@interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
+@interface VDLandscapeViewController : UIViewController<DetailDelegate, UIScrollViewDelegate>
+
+
 @property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
 
@@ -28,6 +28,4 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *wmControlOutlet;
 @property (strong, nonatomic) UIImageView *imageView;
 
-
-@end
 @end

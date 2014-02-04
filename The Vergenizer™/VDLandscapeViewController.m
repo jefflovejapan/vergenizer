@@ -14,11 +14,11 @@
 #define WM_RATIO 0.016
 #define SV_CONTENT_SIZE 2040
 
-@interface vergenizerDetailViewController ()
+@interface VDLandscapeViewController ()
 @property (strong, nonatomic) NSArray *watermarkSizes;
 @end
 
-@implementation vergenizerDetailViewController
+@implementation VDLandscapeViewController
 
 
 - (IBAction)allSwitch:(UISwitch *)sender {
