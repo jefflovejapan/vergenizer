@@ -17,13 +17,10 @@
 -(void)addAssetObjects:(NSMutableArray *)objects;
 @end
 
-
-
-
 @interface AlbumViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, IvcDelegate>
 @property (strong, nonatomic) id<VergenizerDelegate> vergenizerDelegate;
 
-//outlets
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *addSelectedButton;

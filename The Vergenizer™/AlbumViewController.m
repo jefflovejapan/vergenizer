@@ -8,6 +8,7 @@
 
 #import "AlbumViewController.h"
 #import "AlbumCVC.h"
+#import "AssetObject.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #define ALPHA_FOR_SELECTED 0.35

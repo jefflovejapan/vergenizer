@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AssetView.h"
-#import "AssetObject.h"
 #import "AlbumImageView.h"
 
 @interface AlbumCVC : UICollectionViewCell

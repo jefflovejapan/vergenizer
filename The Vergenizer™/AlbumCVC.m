@@ -7,8 +7,6 @@
 //
 
 #import "AlbumCVC.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-#import "AlbumImageView.h"
 
 @interface AlbumCVC ()
 @end
