@@ -71,7 +71,6 @@
 }
 
 -(void)updateAddButton{
-    NSLog(@"currentSelectionState: %@" ,[self.delegate currentSelectionState]);
     if ([[self.delegate currentSelectionState]boolValue]) {
         self.addButton.title = @"Remove";
     } else {

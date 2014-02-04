@@ -208,12 +208,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if(self.allSwitchState.isOn){
-        NSLog(@"switchstate returned yes");
         [self applyParamstoAll];
-    } else if(!self.allSwitchState.isOn) {
-        NSLog(@"switchstate returned no");
-    } else{
-        NSLog(@"switchstate returned nil");
     }
 }
 
@@ -244,21 +239,5 @@
     }
     return returnString;
 }
-
-
-- (AssetObject *)assetObject{
-    if (!_assetObject) {
-        _assetObject = [[AssetObject alloc]init];
-    }
-    return _assetObject;
-}
-
-- (NSMutableArray *)assetObjects{
-    if (!_assetObjects) {
-        _assetObjects = [[NSMutableArray alloc]init];
-    }
-    return _assetObjects;
-}
-
 
 @end
