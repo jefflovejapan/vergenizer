@@ -7,7 +7,6 @@
 //
 
 #import "VDetailViewController.h"
-#import "AssetObject.h"
 
 #define MIN_ZOOM_SCALE 0.1
 #define MAX_ZOOM_SCALE 1.0

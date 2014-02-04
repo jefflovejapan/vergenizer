@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "VergenizerImageView.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "AssetObject.h"
 
 @interface VergenizerCVC : UICollectionViewCell

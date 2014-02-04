@@ -8,9 +8,6 @@
 
 #import "AlbumCVC.h"
 
-@interface AlbumCVC ()
-@end
-
 
 @implementation AlbumCVC
 

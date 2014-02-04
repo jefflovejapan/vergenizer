@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "DblTapZoomScrollView.h"
 
 @protocol IvcDelegate <NSObject>

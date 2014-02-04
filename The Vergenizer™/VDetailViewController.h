@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "VergenizerViewController.h"
-#import "WatermarkHandler.h"
 #import "AssetObject.h"
 #import "VDetailView.h"
 #import "DblTapZoomScrollView.h"

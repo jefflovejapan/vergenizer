@@ -7,11 +7,6 @@
 //
 
 #import "ImageViewController.h"
-#import <AssetsLibrary/AssetsLibrary.h>
-
-@interface ImageViewController ()
-
-@end
 
 @implementation ImageViewController
 
