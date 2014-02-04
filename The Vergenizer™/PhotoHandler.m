@@ -16,12 +16,7 @@
 @implementation PhotoHandler
 
 
--(PhotoHandler *)init{
-    self = [super init];
-    [self.groups removeAllObjects];
-    [self updateAssetGroups];
-    return self;
-}
+
 
 -(void)updateAssetGroups{
     void (^listGroupBlock)(ALAssetsGroup *, BOOL *) = ^(ALAssetsGroup *group, BOOL *stop) {
@@ -40,6 +35,14 @@
     [self.library enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
 }
 
+#pragma initialization
+
+-(PhotoHandler *)init{
+    self = [super init];
+    [self.groups removeAllObjects];
+    [self updateAssetGroups];
+    return self;
+}
 
 - (ALAssetsLibrary *) library{
     if (!_library) {

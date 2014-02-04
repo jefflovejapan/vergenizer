@@ -193,12 +193,6 @@
     return _selectedItems;
 }
 
--(ImageViewController *)ivc{
-    if (!_ivc) {
-        _ivc = [[ImageViewController alloc]init];
-    }
-    return _ivc;
-}
 
 -(NSMutableArray *) assetObjects {
     if (!_assetObjects) {

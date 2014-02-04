@@ -179,7 +179,6 @@
 
 - (IBAction)unwindToVergenizerViewController:(UIStoryboardSegue *)unwindSegue
 {
-    NSLog(@"%@", [self class]);
 }
 
 
