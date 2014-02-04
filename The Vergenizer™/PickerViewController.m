@@ -6,14 +6,8 @@
 //  Copyright (c) 2013 Blagdon Jeffrey. All rights reserved.
 //
 
-
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "PickerViewController.h"
-#import "PhotoHandler.h"
-#import "AlbumViewController.h"
 
-@interface PickerViewController ()
-@end
 
 @implementation PickerViewController
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import "PhotoHandler.h"
 #import "AlbumViewController.h"
-#import "AssetObject.h"
 
 
 @interface PickerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
