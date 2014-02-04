@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DblTapZoomScrollView : UIScrollView
-//<UIGestureRecognizerDelegate,
 
 @end

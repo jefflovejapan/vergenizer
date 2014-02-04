@@ -7,7 +7,6 @@
 //
 
 #import "PhotoHandler.h"
-#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface PhotoHandler ()
 @property (strong, nonatomic) ALAsset *returnAsset;

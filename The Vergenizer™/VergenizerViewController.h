@@ -11,9 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "PickerViewController.h"
 #import "PhotoHandler.h"
-#import "AlbumViewController.h"
 #import "VergenizerCVC.h"
-#import "WatermarkHandler.h"
 
 @protocol DetailDelegate <NSObject>
 @property (strong, nonatomic) AssetObject *assetObject;

@@ -7,8 +7,6 @@
 //
 
 #import "VergenizerViewController.h"
-#import "PickerViewController.h"
-#import "VergenizerCVC.h"
 #import "AssetObject.h"
 
 #define OFFSET_RATIO 0.016
