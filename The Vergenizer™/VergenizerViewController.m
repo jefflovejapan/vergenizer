@@ -86,6 +86,7 @@
     [self clearEditPrompt];
     for (ao in self.assetObjects) {
         dispatch_async(wmQ, ^{
+            //Get the objects we'll need
             ALAssetOrientation orientation = [[ao.asset valueForProperty:@"ALAssetPropertyOrientation"]intValue];
             ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
             UIImageOrientation UIOrientation = (UIImageOrientation)orientation;
@@ -94,45 +95,51 @@
             CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
             CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
             
-            //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
+            //Create the context where our drawing happens
             CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
             
-            //Draw our image onto the context.
+            //Draw our image onto the context
             CGContextDrawImage(thisContext, targetRect, cgImage);
-            
+            [self pushContext:thisContext andRotateForSize:targetSize AndOrientation:UIOrientation];
+            CGContextSetAlpha(thisContext, WM_ALPHA);
             UIImage *watermarkImage = [UIImage imageNamed:ao.watermarkString];
             if (!watermarkImage) {
                 NSLog(@"No watermark");
             }
-            [self pushContext:thisContext andRotateForSize:targetSize AndOrientation:UIOrientation];
-            CGContextSetAlpha(thisContext, WM_ALPHA);
             CGImageRef watermarkRef = [watermarkImage CGImage];
-            
             CGRect watermarkRect = [self rectForTargetSize:targetSize wmSize:watermarkImage.size andOrientation:UIOrientation];
             CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
             CGContextRestoreGState(thisContext);
             CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
             
-            void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
-                NSLog(@"Success!");
-            };
-            
-            [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
-            
-            //Don't forget to release all the Core Graphics stuff
+            //Finish up
+            [self writeOutImage:finalImage WithOrientation:orientation];
             [self releaseCGContext:thisContext andImage:finalImage];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSIndexPath *removePath = [NSIndexPath indexPathForItem:0 inSection:0];
-                NSArray *removePathArray = [NSArray arrayWithObject:removePath];
-                if (ao != nil) {
-                    [self.assetObjects removeObject:ao];
-                    [self.collectionView deleteItemsAtIndexPaths:removePathArray];
-                    [self checkHiddenVergenizeButton];
-                }
-            });
+            [self updateCollectionViewForAssetObject:ao];
         });
     }
 }
+
+-(void)updateCollectionViewForAssetObject:(AssetObject *)ao{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSIndexPath *removePath = [NSIndexPath indexPathForItem:0 inSection:0];
+        NSArray *removePathArray = [NSArray arrayWithObject:removePath];
+        if (ao != nil) {
+            [self.assetObjects removeObject:ao];
+            [self.collectionView deleteItemsAtIndexPaths:removePathArray];
+            [self checkHiddenVergenizeButton];
+        }
+    });
+    
+}
+
+-(void)writeOutImage:(CGImageRef)image WithOrientation:(ALAssetOrientation)orientation{
+    void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
+        NSLog(@"Success!");
+    };
+    [self.handler.library writeImageToSavedPhotosAlbum:image orientation:orientation completionBlock:completionBlock];
+}
+
 
 -(void)releaseCGContext:(CGContextRef)thisContext andImage:(CGImageRef)finalImage{
     UIGraphicsEndImageContext();
