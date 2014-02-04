@@ -86,18 +86,16 @@
     [self clearEditPrompt];
     for (ao in self.assetObjects) {
         dispatch_async(wmQ, ^{
+            ALAssetOrientation orientation = [[ao.asset valueForProperty:@"ALAssetPropertyOrientation"]intValue];
             ALAssetRepresentation *thisRep = [ao.asset defaultRepresentation];
-            ALAssetOrientation orientation = [thisRep orientation];
-            UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:(UIImageOrientation)orientation];
+            UIImageOrientation UIOrientation = (UIImageOrientation)orientation;
+            UIImage *sourceImage = [UIImage imageWithCGImage:[thisRep fullResolutionImage] scale:1.0 orientation:UIOrientation];
             CGImageRef cgImage = [sourceImage CGImage];
             CGSize targetSize = CGSizeMake(ao.outputSize, ao.outputSize * CGImageGetHeight(cgImage) / CGImageGetWidth(cgImage));
-            NSLog(@"Our targetSize is %f by %f", targetSize.width, targetSize.height);
             CGRect targetRect = CGRectMake(0.0, 0.0, targetSize.width, targetSize.height);
             
             //Creating the "context" -- the opaque data type where our drawing happens. Ugh, Core Graphics.
             CGContextRef thisContext = CGBitmapContextCreate(NULL, targetSize.width, targetSize.height, CGImageGetBitsPerComponent(cgImage), [self bytesPerRowForWidth:targetSize.width WithBitsPerPixel:CGImageGetBitsPerPixel(cgImage)], CGImageGetColorSpace(cgImage), CGImageGetBitmapInfo(cgImage));
-            
-            NSLog(@"The context is %zu by %zu \n sourceImage is %f by %f \n targetSize is %f by %f", CGBitmapContextGetWidth(thisContext), CGBitmapContextGetHeight(thisContext), sourceImage.size.width, sourceImage.size.height, targetSize.width, targetSize.height);
             
             //Draw our image onto the context.
             CGContextDrawImage(thisContext, targetRect, cgImage);
@@ -106,12 +104,13 @@
             if (!watermarkImage) {
                 NSLog(@"No watermark");
             }
-            CGContextSaveGState(thisContext);
+            [self pushContext:thisContext andRotateForSize:targetSize AndOrientation:UIOrientation];
             CGContextSetAlpha(thisContext, WM_ALPHA);
             CGImageRef watermarkRef = [watermarkImage CGImage];
             
-            CGRect watermarkRect = CGRectMake(targetSize.width - watermarkImage.size.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, watermarkImage.size.width, watermarkImage.size.height);
+            CGRect watermarkRect = [self rectForTargetSize:targetSize wmSize:watermarkImage.size andOrientation:UIOrientation];
             CGContextDrawImage(thisContext, watermarkRect, watermarkRef);
+            CGContextRestoreGState(thisContext);
             CGImageRef finalImage = CGBitmapContextCreateImage(thisContext);
             
             void (^completionBlock)(NSURL *, NSError *) = ^(NSURL *assetURL, NSError *error){
@@ -120,10 +119,8 @@
             
             [self.handler.library writeImageToSavedPhotosAlbum:finalImage orientation:orientation completionBlock:completionBlock];
             
-            //Don't forget to release all your Core Graphics stuff
-            UIGraphicsEndImageContext();
-            CGContextRelease(thisContext);
-            CGImageRelease(finalImage);
+            //Don't forget to release all the Core Graphics stuff
+            [self releaseCGContext:thisContext andImage:finalImage];
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSIndexPath *removePath = [NSIndexPath indexPathForItem:0 inSection:0];
                 NSArray *removePathArray = [NSArray arrayWithObject:removePath];
@@ -136,6 +133,49 @@
         });
     }
 }
+
+-(void)releaseCGContext:(CGContextRef)thisContext andImage:(CGImageRef)finalImage{
+    UIGraphicsEndImageContext();
+    CGContextRelease(thisContext);
+    CGImageRelease(finalImage);
+}
+
+-(void)pushContext:(CGContextRef)context andRotateForSize:(CGSize)size AndOrientation:(UIImageOrientation)orientation{
+    CGContextSaveGState(context);
+    switch (orientation) {
+        case UIImageOrientationUp:
+            // No need to do anything
+            break;
+        case UIImageOrientationRight:
+            CGContextTranslateCTM(context, size.width / 2, size.height / 2);
+            CGContextRotateCTM(context, 0.5 * M_PI);
+            CGContextTranslateCTM(context, -size.height / 2, -size.width / 2);
+            break;
+        case UIImageOrientationDown:
+            CGContextTranslateCTM(context, size.width, size.height);
+            CGContextRotateCTM(context, M_PI);
+            break;
+        case UIImageOrientationLeft:
+            CGContextTranslateCTM(context, size.width / 2, size.height / 2);
+            CGContextRotateCTM(context, 1.5 * M_PI);
+            CGContextTranslateCTM(context, -size.height / 2, -size.width / 2);
+        default:
+            break;
+    }
+}
+
+-(CGRect)rectForTargetSize:(CGSize)targetSize wmSize:(CGSize)wmSize andOrientation:(UIImageOrientation)orientation{
+    if (orientation == UIImageOrientationLeft || orientation == UIImageOrientationRight) {
+        return CGRectMake(targetSize.height - wmSize.width - targetSize.height * OFFSET_RATIO, targetSize.height * OFFSET_RATIO, wmSize.width, wmSize.height);
+    } else {
+        return CGRectMake(targetSize.width - wmSize.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, wmSize.width, wmSize.height);
+    }
+    }
+
+    
+
+
+
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
