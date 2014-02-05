@@ -92,6 +92,7 @@
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
 		DFC34F14189DEF510064BA0C /* DblTapZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DblTapZoomScrollView.h; sourceTree = "<group>"; };
 		DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DblTapZoomScrollView.m; sourceTree = "<group>"; };
+		DFD8424718A1C107003FE028 /* DetailDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailDelegate.h; sourceTree = "<group>"; };
 		DFE6ED831890E2F3004D8E86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -202,6 +203,7 @@
 				DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */,
 				DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */,
 				DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */,
+				DFD8424718A1C107003FE028 /* DetailDelegate.h */,
 			);
 			name = Model;
 			sourceTree = "<group>";

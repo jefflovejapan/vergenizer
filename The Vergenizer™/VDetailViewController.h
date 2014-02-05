@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "VergenizerViewController.h"
 #import "AssetObject.h"
 #import "VDetailView.h"
 #import "DblTapZoomScrollView.h"
+#import "DetailDelegate.h"
 
-@interface vergenizerDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
+@interface VDetailViewController : UIViewController <DetailDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) AssetObject *assetObject;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
 

@@ -123,7 +123,6 @@
                     <connections>
                         <outlet property="collectionView" destination="AzM-CB-Eui" id="YQh-p2-lC4"/>
                         <outlet property="vergenizeButton" destination="dDN-0x-KeQ" id="anU-BD-vCG"/>
-                        <segue destination="03y-UO-xFV" kind="modal" identifier="vergenizerDetailSegue" modalTransitionStyle="coverVertical" id="43L-F9-QeK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KlF-zA-6oR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -135,10 +134,10 @@
             </objects>
             <point key="canvasLocation" x="-66" y="-181"/>
         </scene>
-        <!--Vergenizer Detail View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="OJl-FP-fvf">
             <objects>
-                <viewController id="03y-UO-xFV" customClass="vergenizerDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailController" id="03y-UO-xFV" customClass="VDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Je-gM-jqY"/>
                         <viewControllerLayoutGuide type="bottom" id="bB9-b4-MBj"/>
@@ -159,6 +158,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="doneButton:" destination="03y-UO-xFV" eventType="touchUpInside" id="ian-kg-Irn"/>
                                     <segue destination="zMZ-Vt-RYI" kind="unwind" unwindAction="unwindToVergenizerViewController:" id="wGG-qU-jcd"/>
                                 </connections>
                             </button>

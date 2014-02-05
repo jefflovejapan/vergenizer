@@ -14,7 +14,9 @@
 
 
 @interface VergenizerViewController ()
-@property (strong, nonatomic) AssetObject *segueAssetObject;
+@property (strong, nonatomic) AssetObject *detailAssetObject;
+@property (strong, nonatomic) VDetailViewController *detailController;
+@property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 @end
 
 @implementation VergenizerViewController
@@ -28,9 +30,9 @@
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if (cell && [cell isKindOfClass:[VergenizerCVC class]]) {
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
-            self.segueAssetObject = vergenizerCVC.assetObject;
+            self.detailAssetObject = vergenizerCVC.assetObject;
         }
-        [self performSegueWithIdentifier:@"vergenizerDetailSegue" sender:self];
+        [self pushDetailView];
     }
     
 }
@@ -44,6 +46,29 @@
 
 - (IBAction)vergenizeButton:(id)sender {
     [self waterMarkPhotos];
+}
+
+-(void)pushDetailView{
+    self.detailController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailController"];
+    if ([self.detailController conformsToProtocol:@protocol(DetailDelegate)]) {
+        self.detailDelegate = (id)self.detailController;
+        self.detailDelegate.assetObject = self.detailAssetObject;
+        self.detailDelegate.assetObjects = self.assetObjects;
+    }
+    CATransition* transition = [self getPushAnimation];
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:self.detailController animated:YES];
+}
+
+-(CATransition *)getPushAnimation{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionMoveIn;
+    //kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom;
+    //kCATransitionFromTop//kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    return transition;
 }
 
 
@@ -71,6 +96,14 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     [self.collectionView layoutIfNeeded];
+}
+
+-(BOOL)shouldAutorotate{
+    if ([self.navigationController.topViewController isKindOfClass:[VDetailViewController class]]) {
+        return NO;
+    } else {
+        return YES;
+    }
 }
 
 
@@ -215,25 +248,20 @@
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
     }
-    if ([segue.identifier isEqualToString:@"vergenizerDetailSegue"]) {
-        if ([segue.destinationViewController conformsToProtocol:@protocol(DetailDelegate)]) {
-            self.detailDelegate = segue.destinationViewController;
-            self.detailDelegate.assetObject = self.segueAssetObject;
-            self.detailDelegate.assetObjects = self.assetObjects;
-        }
-    }
 }
-
-- (IBAction)unwindToVergenizerViewController:(UIStoryboardSegue *)unwindSegue
-{
-}
-
 
 - (void)viewWillAppear:(BOOL)animated{
+    [self checkHiddenNavController];
     [self checkHiddenVergenizeButton];
     [self.view layoutIfNeeded];
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
+}
+
+-(void)checkHiddenNavController{
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{

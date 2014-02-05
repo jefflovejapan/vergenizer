@@ -14,11 +14,11 @@
 #define WM_RATIO 0.016
 #define SV_CONTENT_SIZE 2040
 
-@interface vergenizerDetailViewController ()
+@interface VDetailViewController ()
 @property (strong, nonatomic) NSArray *watermarkSizes;
 @end
 
-@implementation vergenizerDetailViewController
+@implementation VDetailViewController
 
 
 - (IBAction)allSwitch:(UISwitch *)sender {
@@ -77,6 +77,28 @@
     [self setWMImageView];
 }
 
+- (IBAction)doneButton:(id)sender {
+    if(self.allSwitchState.isOn){
+        [self applyParamstoAll];
+    }
+    CATransition *transition = [self getPopAnimation];
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(CATransition *)getPopAnimation{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionReveal;
+    //kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromTop;
+    //kCATransitionFromTop//kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    return transition;
+}
+
+
+
 - (void)setWMImageView {
     NSLog(@"assetObject's wmString: %@", self.assetObject.watermarkString);
     if (self.assetObject.watermarkString == nil) {
@@ -90,6 +112,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     //Sets up the scrollView and subviews
+    [self checkNavigationBarHidden];
     [self setViewsForAssetObject:self.assetObject];
     [self setUIFromAssetObject:self.assetObject];
     [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
@@ -101,6 +124,16 @@
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
+}
+
+-(void)checkNavigationBarHidden{
+    if (!self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+    }
+}
+
+-(BOOL)shouldAutorotate{
+    return NO;
 }
 
 
@@ -205,11 +238,6 @@
     [self.detailView.wmView setNeedsDisplay];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if(self.allSwitchState.isOn){
-        [self applyParamstoAll];
-    }
-}
 
 -(void)applyParamstoAll{
     AssetObject *ao;
