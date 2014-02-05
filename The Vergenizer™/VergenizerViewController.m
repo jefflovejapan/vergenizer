@@ -17,6 +17,7 @@
 @property (strong, nonatomic) AssetObject *detailAssetObject;
 @property (strong, nonatomic) VDetailViewController *detailController;
 @property (strong, nonatomic) id<DetailDelegate> detailDelegate;
+@property (strong, nonatomic) NSMutableArray *toolbarButtons;
 @end
 
 @implementation VergenizerViewController
@@ -40,7 +41,7 @@
 - (IBAction)clearButton:(id)sender {
     [self.assetObjects removeAllObjects];
     [self.collectionView reloadData];
-    self.navigationItem.prompt = nil;
+    [self clearNavPrompt];
     [self checkHiddenVergenizeButton];
 }
 
@@ -55,6 +56,8 @@
         self.detailDelegate.assetObject = self.detailAssetObject;
         self.detailDelegate.assetObjects = self.assetObjects;
     }
+    [self hideToolbar];
+    [self hideNavBar];
     CATransition* transition = [self getPushAnimation];
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self.navigationController pushViewController:self.detailController animated:YES];
@@ -73,7 +76,6 @@
 
 
 #pragma delegate methods
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSInteger numCells = self.assetObjects.count;
@@ -98,14 +100,6 @@
     [self.collectionView layoutIfNeeded];
 }
 
--(BOOL)shouldAutorotate{
-    if ([self.navigationController.topViewController isKindOfClass:[VDetailViewController class]]) {
-        return NO;
-    } else {
-        return YES;
-    }
-}
-
 
 #pragma helper methods
 
@@ -116,7 +110,7 @@
 -(void)waterMarkPhotos{
     dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
-    [self clearEditPrompt];
+    [self clearNavPrompt];
     for (ao in self.assetObjects) {
         dispatch_async(wmQ, ^{
             //Get the objects we'll need
@@ -210,12 +204,7 @@
     } else {
         return CGRectMake(targetSize.width - wmSize.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, wmSize.width, wmSize.height);
     }
-    }
-
-    
-
-
-
+}
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -228,14 +217,22 @@
 
 - (void)checkHiddenVergenizeButton{
     if (self.assetObjects.count == 0) {
-        self.vergenizeButton.hidden = YES;
+        [self.navigationController setToolbarHidden:YES animated:YES];
     } else {
-        self.vergenizeButton.hidden = NO;
+        [self.navigationController setToolbarHidden:NO animated:YES];
     }
 }
 
-- (void)clearEditPrompt{
+- (void)clearNavPrompt{
     self.navigationItem.prompt = nil;
+}
+
+-(void)hideToolbar{
+    [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
+-(void)hideNavBar{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 
@@ -243,7 +240,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
-        [self clearEditPrompt];  // Animation screws up otherwise
+        [self clearNavPrompt];  // Animation screws up otherwise
+        [self hideToolbar];
         PickerViewController *pvc;
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
@@ -270,6 +268,10 @@
     } else {
         self.navigationItem.prompt = @"Tap photos to edit";
     }
+}
+
+-(void)viewDidLoad{
+    self.toolbarButtons = self.navigationController.toolbarItems.mutableCopy;
 }
 
 #pragma instantiation

@@ -110,30 +110,18 @@
     [self redrawWMView];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    //Sets up the scrollView and subviews
-    [self checkNavigationBarHidden];
+
+-(void)viewWillAppear:(BOOL)animated{
     [self setViewsForAssetObject:self.assetObject];
     [self setUIFromAssetObject:self.assetObject];
     [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
 }
 
 - (void)viewDidLoad{
-    [self.scrollView addSubview:self.imageView];
     self.scrollView.delegate = self;
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
-}
-
--(void)checkNavigationBarHidden{
-    if (!self.navigationController.navigationBarHidden) {
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
-    }
-}
-
--(BOOL)shouldAutorotate{
-    return NO;
 }
 
 

@@ -25,7 +25,7 @@
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary;
 @property (strong, nonatomic) PickerViewController *picker;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *vergenizeButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *vergenizeButton;
 
 @end
 
