@@ -66,6 +66,7 @@
 -(CATransition *)getPushAnimation{
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5;
+    transition.startProgress = 0.1;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type = kCATransitionMoveIn;
     //kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
@@ -268,10 +269,6 @@
     } else {
         self.navigationItem.prompt = @"Tap photos to edit";
     }
-}
-
--(void)viewDidLoad{
-    self.view.window.tintColor = [UIColor purpleColor];
 }
 
 #pragma instantiation
