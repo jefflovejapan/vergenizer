@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDN-0x-KeQ">
+                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDN-0x-KeQ">
                                 <rect key="frame" x="0.0" y="458" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
@@ -54,8 +54,8 @@
                                     <action selector="vergenizeButton:" destination="gFq-c8-k1g" eventType="touchUpInside" id="dfk-m1-JzQ"/>
                                 </connections>
                             </button>
-                            <collectionView autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="24" verticalCompressionResistancePriority="31" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AzM-CB-Eui">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                            <collectionView autoresizesSubviews="NO" opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="24" verticalCompressionResistancePriority="31" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="AzM-CB-Eui">
+                                <rect key="frame" x="0.0" y="1" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="ZeW-fQ-QNj">
@@ -123,7 +123,6 @@
                     <connections>
                         <outlet property="collectionView" destination="AzM-CB-Eui" id="YQh-p2-lC4"/>
                         <outlet property="vergenizeButton" destination="dDN-0x-KeQ" id="anU-BD-vCG"/>
-                        <segue destination="03y-UO-xFV" kind="modal" identifier="vergenizerDetailSegue" modalTransitionStyle="coverVertical" id="43L-F9-QeK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KlF-zA-6oR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -138,7 +137,7 @@
         <!--Vergenizer Detail View Controller-->
         <scene sceneID="OJl-FP-fvf">
             <objects>
-                <viewController id="03y-UO-xFV" customClass="vergenizerDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PortraitController" id="03y-UO-xFV" customClass="vergenizerDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5Je-gM-jqY"/>
                         <viewControllerLayoutGuide type="bottom" id="bB9-b4-MBj"/>
@@ -215,6 +214,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="allSwitchLabel" destination="0YS-US-3Zc" id="q3i-wX-3qx"/>
                         <outlet property="allSwitchState" destination="jcg-cV-RIX" id="stR-Vf-vH2"/>
@@ -233,10 +233,10 @@
             </objects>
             <point key="canvasLocation" x="425" y="-504"/>
         </scene>
-        <!--Landscape View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="oLr-Ax-5AJ">
             <objects>
-                <viewController storyboardIdentifier="LandscapeController" id="xYs-VM-r8I" customClass="VDLandscapeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LandscapeController" id="xYs-VM-r8I" customClass="VDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s7H-Fj-mUo"/>
                         <viewControllerLayoutGuide type="bottom" id="DeY-lD-oEF"/>
@@ -321,6 +321,7 @@
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="allSwitchLabel" destination="qtv-ve-hQI" id="q1d-9C-yWJ"/>
@@ -416,7 +417,7 @@
                                     <action selector="addSelectedButton:" destination="O7R-ee-Dt1" eventType="touchUpInside" id="wzA-ge-LoU"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="goX-jR-gzU">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="goX-jR-gzU">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>

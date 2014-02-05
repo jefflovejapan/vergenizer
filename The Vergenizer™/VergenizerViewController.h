@@ -12,6 +12,7 @@
 #import "PickerViewController.h"
 #import "PhotoHandler.h"
 #import "VergenizerCVC.h"
+#import "VDetailViewController.h"
 
 @protocol DetailDelegate <NSObject>
 @property (strong, nonatomic) AssetObject *assetObject;

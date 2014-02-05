@@ -8,6 +8,7 @@
 
 #import "VergenizerViewController.h"
 #import "AssetObject.h"
+#import "VDetailViewController.h"
 
 #define OFFSET_RATIO 0.016
 #define WM_ALPHA 0.2
@@ -15,6 +16,7 @@
 
 @interface VergenizerViewController ()
 @property (strong, nonatomic) AssetObject *segueAssetObject;
+@property (strong, nonatomic) UIViewController *detailController;
 @end
 
 @implementation VergenizerViewController
@@ -30,10 +32,11 @@
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
             self.segueAssetObject = vergenizerCVC.assetObject;
         }
-        [self performSegueWithIdentifier:@"vergenizerDetailSegue" sender:self];
+        [self pushDetailController];
     }
-    
 }
+
+
 
 - (IBAction)clearButton:(id)sender {
     [self.assetObjects removeAllObjects];
@@ -241,6 +244,15 @@
         self.navigationItem.prompt = nil;
     } else {
         self.navigationItem.prompt = @"Tap photos to edit";
+    }
+}
+
+-(BOOL)shouldAutorotate{
+    id currentViewController = self.navigationController.topViewController;
+    if ([currentViewController isKindOfClass:[VDetailViewController class]]) {
+        return NO;
+    } else {
+        return YES;
     }
 }
 

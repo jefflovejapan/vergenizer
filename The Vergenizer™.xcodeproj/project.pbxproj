@@ -33,7 +33,6 @@
 		DF1E950717ACAFAB0090E6BD /* VergenizerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94F617ACAFAB0090E6BD /* VergenizerViewController.m */; };
 		DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */; };
 		DF1E950A17ACAFAB0090E6BD /* PhotoHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */; };
-		DFB46A2018A19AB4002C8BBE /* VDLandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DFB46A1F18A19AB4002C8BBE /* VDLandscapeViewController.m */; };
 		DFC34F16189DEF510064BA0C /* DblTapZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */; };
 		DFE6ED841890E2F3004D8E86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DFE6ED831890E2F3004D8E86 /* README.md */; };
 /* End PBXBuildFile section */
@@ -91,8 +90,6 @@
 		DF1E94FA17ACAFAB0090E6BD /* AssetObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetObject.m; sourceTree = "<group>"; };
 		DF1E94FB17ACAFAB0090E6BD /* PhotoHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoHandler.h; sourceTree = "<group>"; };
 		DF1E94FC17ACAFAB0090E6BD /* PhotoHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoHandler.m; sourceTree = "<group>"; };
-		DFB46A1E18A19AB4002C8BBE /* VDLandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDLandscapeViewController.h; sourceTree = "<group>"; };
-		DFB46A1F18A19AB4002C8BBE /* VDLandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDLandscapeViewController.m; sourceTree = "<group>"; };
 		DFC34F14189DEF510064BA0C /* DblTapZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DblTapZoomScrollView.h; sourceTree = "<group>"; };
 		DFC34F15189DEF510064BA0C /* DblTapZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DblTapZoomScrollView.m; sourceTree = "<group>"; };
 		DFE6ED831890E2F3004D8E86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
@@ -216,8 +213,6 @@
 				DF1E94E417ACAFAB0090E6BD /* VergenizerCVC.m */,
 				DF1E94E517ACAFAB0090E6BD /* AlbumCVC.h */,
 				DF1E94E617ACAFAB0090E6BD /* AlbumCVC.m */,
-				DFB46A1E18A19AB4002C8BBE /* VDLandscapeViewController.h */,
-				DFB46A1F18A19AB4002C8BBE /* VDLandscapeViewController.m */,
 				DF1E94EB17ACAFAB0090E6BD /* VDetailViewController.h */,
 				DF1E94EC17ACAFAB0090E6BD /* VDetailViewController.m */,
 				DF1E94EF17ACAFAB0090E6BD /* ImageViewController.h */,
@@ -360,7 +355,6 @@
 				DF1E950917ACAFAB0090E6BD /* AssetObject.m in Sources */,
 				DF1E94BB17ACAF5C0090E6BD /* TheVergenizerAppDelegate.m in Sources */,
 				DF1E950217ACAFAB0090E6BD /* VDetailViewController.m in Sources */,
-				DFB46A2018A19AB4002C8BBE /* VDLandscapeViewController.m in Sources */,
 				DF1E950017ACAFAB0090E6BD /* VergenizerImageView.m in Sources */,
 				DF1E94FF17ACAFAB0090E6BD /* AlbumCVC.m in Sources */,
 				DF1E950517ACAFAB0090E6BD /* AlbumViewController.m in Sources */,

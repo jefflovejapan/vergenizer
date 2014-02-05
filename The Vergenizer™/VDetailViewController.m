@@ -96,11 +96,16 @@
 }
 
 - (void)viewDidLoad{
+    [self.navigationController setNavigationBarHidden:YES];
     [self.scrollView addSubview:self.imageView];
     self.scrollView.delegate = self;
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
+}
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    NSLog(@"Willrotate got called");
 }
 
 
@@ -117,7 +122,7 @@
     //watermark stuff
     CGFloat wmOffset = self.imageView.frame.size.width * WM_RATIO;
     UIImage *watermark = [self wmImageForWMString:self.assetObject.watermarkString];
-
+    
     CGRect wmRect = CGRectMake(self.imageView.frame.size.width - watermark.size.width - wmOffset, self.imageView.frame.size.height - watermark.size.height - wmOffset, watermark.size.width, watermark.size.height);
     UIImageView *wmView = [[UIImageView alloc]initWithImage:watermark];
     
