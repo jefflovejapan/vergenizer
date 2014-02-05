@@ -271,7 +271,7 @@
 }
 
 -(void)viewDidLoad{
-    self.toolbarButtons = self.navigationController.toolbarItems.mutableCopy;
+    self.view.window.tintColor = [UIColor purpleColor];
 }
 
 #pragma instantiation
