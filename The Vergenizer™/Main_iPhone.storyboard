@@ -354,6 +354,7 @@
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="6R5-u3-0VZ"/>
                         <barButtonItem title="Add Selected" id="wMB-fL-mx4">
+                            <color key="tintColor" red="0.41520584820000001" green="0.01400454269" blue="0.85113790759999997" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addSelectedButton:" destination="O7R-ee-Dt1" id="UNS-AX-KB0"/>
                             </connections>
@@ -400,8 +401,10 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
+                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="delegate" destination="jz0-mD-qy9" id="YMC-LC-qsL"/>
+                                    <outletCollection property="gestureRecognizers" destination="rfG-Mp-ocV" appends="YES" id="s4s-3H-hZc"/>
                                 </connections>
                             </scrollView>
                         </subviews>
@@ -427,7 +430,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPv-ws-jOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="s4S-Oz-8kz"/>
+                <tapGestureRecognizer id="rfG-Mp-ocV">
+                    <connections>
+                        <action selector="scrollViewTap:" destination="jz0-mD-qy9" id="oda-r5-dF0"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1352" y="77"/>
         </scene>

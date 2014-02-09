@@ -21,8 +21,15 @@
     [self updateAddButton];
 }
 
+- (IBAction)scrollViewTap:(id)sender {
+    [self toggleNavBarVisible];
+}
 
 #pragma lifecycle
+
+-(void)toggleNavBarVisible{
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBarHidden animated:YES];
+}
 
 - (void)viewDidLoad{
     [self.scrollView addSubview:self.imageView];
@@ -34,6 +41,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self updateAddButton];
+    [self.navigationController setToolbarHidden:YES animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

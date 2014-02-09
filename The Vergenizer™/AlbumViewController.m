@@ -36,11 +36,7 @@
 #pragma Actions
 
 - (IBAction)selectButtonTap:(id)sender {
-    if (!self.selectionMode) {
-        [self enterSelectionMode];
-    } else {
-        [self exitSelectionMode];
-    }
+    [self toggleSelectionMode];
 }
 
 
@@ -96,16 +92,18 @@
     }
 }
 
--(void)enterSelectionMode{
-    self.selectionMode = YES;
-    [self.navigationController setToolbarHidden:YES animated:YES];
-    self.selectButton.title = @"Done";
+-(void)toggleSelectionMode{
+    self.selectionMode = !self.selectionMode;
+    [self updateUICuesAnimated:YES];
 }
 
--(void)exitSelectionMode{
-    self.selectionMode = NO;
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    self.selectButton.title = @"Select";
+-(void)updateUICuesAnimated:(BOOL)animated{
+    [self.navigationController setToolbarHidden:self.selectionMode animated:animated];
+    if (self.selectionMode) {
+        self.selectButton.title=@"Done";
+    } else {
+        self.selectButton.title = @"Select";
+    }
 }
 
 #pragma public methods
@@ -170,6 +168,10 @@
         self.ivc.image = image;
         self.ivc.delegate = self;
     }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self updateUICuesAnimated:NO];
 }
 
 #pragma instantiation
