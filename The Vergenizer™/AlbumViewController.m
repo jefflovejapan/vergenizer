@@ -98,16 +98,14 @@
 
 -(void)enterSelectionMode{
     self.selectionMode = YES;
-    self.addSelectedButton.hidden = YES;
+    [self.navigationController setToolbarHidden:YES animated:YES];
     self.selectButton.title = @"Done";
-    [self.addSelectedButton setNeedsDisplay];
 }
 
 -(void)exitSelectionMode{
     self.selectionMode = NO;
-    self.addSelectedButton.hidden = NO;
+    [self.navigationController setToolbarHidden:NO animated:YES];
     self.selectButton.title = @"Select";
-    [self.addSelectedButton setNeedsDisplay];
 }
 
 #pragma public methods
