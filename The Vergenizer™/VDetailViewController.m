@@ -225,11 +225,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self setViewsForAssetObject:self.assetObject];
     [self setUIFromAssetObject:self.assetObject];
-    [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self.scrollView zoomToRect:self.detailView.bounds animated:YES];
 }
 
 - (void)viewDidLoad{
-    self.scrollView.delegate = self;
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
