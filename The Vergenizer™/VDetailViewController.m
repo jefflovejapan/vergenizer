@@ -75,7 +75,7 @@
         default:
             break;
     }
-    [self setViewsForAssetObject:self.assetObject];
+    [self updateDetailViewWmImage];
 }
 
 - (IBAction)doneButton:(id)sender {
@@ -109,26 +109,26 @@
 #pragma view setting
 
 - (void)setViewsForAssetObject:(AssetObject *)assetObject{
-    NSLog(@"inside svfao");
     UIImage *thisImage = [self getUIImageForAssetObject:assetObject];
+
     //Want to lock contentSize.width at 2040 and resize height to maintain aspect ratio
     self.scrollView.contentSize = CGSizeMake(SV_CONTENT_SIZE, SV_CONTENT_SIZE * thisImage.size.height/thisImage.size.width);
+    [self setDetailViewPhotoImage:thisImage];
+    [self updateDetailViewWmImage];
+}
+
+-(void)setDetailViewPhotoImage:(UIImage *)image{
     [self.detailView setFrame:CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
+    self.detailView.photoImage = image;
+}
 
-    NSLog(@"Before setting image:\nself.detailview.frame: %@\n self.detailview.imageview.frame: %@\n self.detailview.imageview.image.size: %@", NSStringFromCGRect(self.detailView.frame), NSStringFromCGRect([self.detailView getPhotoFrame]), NSStringFromCGSize([self.detailView getImageSize]));
-
-    self.detailView.photoImage = thisImage;
-    
-    NSLog(@"After setting image:\nself.detailview.frame: %@\n self.detailview.imageview.frame: %@\n self.detailview.imageview.image.size: %@", NSStringFromCGRect(self.detailView.frame), NSStringFromCGRect([self.detailView getPhotoFrame]), NSStringFromCGSize([self.detailView getImageSize]));
-
+-(void)updateDetailViewWmImage{
     self.detailView.wmImage = [self getDetailViewWmImage];
 }
 
 
 - (UIImage *)getDetailViewWmImage {
-    NSLog(@"assetObject's wmString: %@", self.assetObject.watermarkString);
     if (self.assetObject.watermarkString == nil) {
-        NSLog(@"assetObject's wmString is nil so setting wmView.image = nil");
         return nil;
     } else {
         return [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
@@ -145,17 +145,16 @@
 }
 
 - (UIImage *)wmImageForWMString:(NSString *)wmString{
-    if (wmString != nil) {
-        return [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
-    } else {
+    if (wmString == nil) {
         return nil;
+    } else {
+        return [UIImage imageNamed:[self detailViewWatermarkStringForString:self.assetObject.watermarkString]];
     }
 }
 
 
 //reading in parameters from the asssetObject
 - (void)setUIFromAssetObject:(AssetObject *)assetObject{
-    NSLog(@"assetObject's watermarkSize is %d and its watermarkString is %@", assetObject.outputSize, assetObject.watermarkString);
     switch (assetObject.outputSize) {
         case 560:
             self.sizeControlOutlet.selectedSegmentIndex = 0;

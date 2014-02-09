@@ -62,18 +62,12 @@
 }
 
 -(void)setPhotoImage:(UIImage *)photoImage{
-    NSLog(@"inside setPhotoImage");
     self.imageView.image = photoImage;
-    NSLog(@"dv.imageview frame: %@, bounds: %@", NSStringFromCGRect(self.imageView.frame), NSStringFromCGRect(self.imageView.bounds));
     [self setFrame:self.imageView.frame];
-    NSLog(@"dv frame: %@, dv bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds));
-    NSLog(@"dv subviews: %@", self.subviews);
     [self.imageView setFrame:self.frame];
 }
 
 -(void)setWmImage:(UIImage *)wmImage{
-    NSLog(@"inside setwmimage");
-    NSLog(@"%@", self.subviews);
     self.wmView.image = wmImage;
     [self.wmView sizeToFit];
     [self setWmViewFrame];
@@ -81,11 +75,11 @@
 }
 
 -(void)setWmViewFrame{
-    NSLog(@"inside setwmviewframe");
     CGFloat wmOffset = self.imageView.frame.size.width * WM_RATIO;
-    CGRect wmRect = CGRectMake(self.imageView.frame.size.width - self.wmView.frame.size.width - wmOffset, self.imageView.frame.size.height - self.wmView.frame.size.height - wmOffset, self.wmView.frame.size.width, self.wmView.frame.size.height);
+    CGSize ivSize = self.imageView.frame.size;
+    CGSize wmvSize = self.wmView.frame.size;
+    CGRect wmRect = CGRectMake(ivSize.width - wmvSize.width - wmOffset, ivSize.height - wmvSize.height - wmOffset, wmvSize.width, wmvSize.height);
     [self.wmView setFrame:wmRect];
-    NSLog(@"%@", self.subviews);
 }
 
 -(void)setFrame:(CGRect)frame{
