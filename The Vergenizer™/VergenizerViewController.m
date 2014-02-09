@@ -242,7 +242,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
         [self clearNavPrompt];  // Animation screws up otherwise
-        [self hideToolbar];
         PickerViewController *pvc;
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
