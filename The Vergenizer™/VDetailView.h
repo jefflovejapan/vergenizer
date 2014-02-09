@@ -11,4 +11,8 @@
 @interface DetailView : UIView
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImageView *wmView;
+
+//New stuff
+@property (strong, nonatomic) UIImage *photoImage;
+@property (strong, nonatomic) UIImage *wmImage;
 @end

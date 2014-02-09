@@ -12,16 +12,27 @@
 
 -(UIImageView *)imageView{
     if (!_imageView) {
-        _imageView = [[UIImageView alloc]init];
+        _imageView = [[UIImageView alloc]initWithFrame:CGRectZero];
     }
     return _imageView;
 }
 
 -(UIImageView *)wmView{
     if (!_wmView) {
-        _wmView = [[UIImageView alloc]init];
+        _wmView = [[UIImageView alloc]initWithFrame:CGRectZero];
     }
     return _wmView;
+}
+
+-(void)setPhotoImage:(UIImage *)photoImage{
+    self.imageView.image = photoImage;
+    [self.imageView sizeToFit];
+}
+
+-(void)setWmImage:(UIImage *)wmImage{
+    self.wmView.image = wmImage;
+    
+    
 }
 
 @end
