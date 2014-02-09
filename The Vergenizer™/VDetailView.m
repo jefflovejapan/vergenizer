@@ -8,6 +8,11 @@
 
 #import "VDetailView.h"
 
+@interface DetailView()
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIImageView *wmView;
+@end
+
 @implementation DetailView
 
 #define WM_ALPHA 0.2
@@ -15,11 +20,20 @@
 
 -(DetailView *)initWithFrame:(CGRect)frame{
     if ((self = [super initWithFrame:frame])) {
-        [self addSubview:self.imageView];
-        [self addSubview:self.wmView];
+        [self setup];
     }
     return self;
 }
+
+-(void)awakeFromNib{
+    [self setup];
+}
+
+-(void)setup{
+    [self addSubview:self.imageView];
+    [self addSubview:self.wmView];
+}
+
 
 -(UIImageView *)imageView{
     if (!_imageView) {
@@ -40,6 +54,10 @@
     NSLog(@"inside setPhotoImage");
     self.imageView.image = photoImage;
     [self.imageView sizeToFit];
+    NSLog(@"dv.imageview frame: %@, bounds: %@", NSStringFromCGRect(self.imageView.frame), NSStringFromCGRect(self.imageView.bounds));
+    [self setFrame:self.imageView.frame];
+    NSLog(@"dv frame: %@, dv bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds));
+    NSLog(@"dv subviews: %@", self.subviews);
 }
 
 -(void)setWmImage:(UIImage *)wmImage{

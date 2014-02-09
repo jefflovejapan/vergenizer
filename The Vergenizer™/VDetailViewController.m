@@ -189,7 +189,7 @@
 //    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.detailView.frame];
 //    self.imageView = imageView;
     self.detailView.photoImage = thisImage;
-    NSLog(@"scrollview: %@\n detailView: %@\n viewforscrolling: %@\n scrollview.subviews: %@\n detailview.photoimageview: %@\n detailview.wmview: %@", self.scrollView, self.detailView, [self.scrollView.delegate viewForZoomingInScrollView:self.scrollView], self.scrollView.subviews, self.detailView.imageView, self.detailView.wmView);
+//    NSLog(@"scrollview: %@\n detailView: %@\n viewforscrolling: %@\n scrollview.subviews: %@\n detailview.photoimageview: %@\n detailview.wmview: %@\n thisimage: %@", self.scrollView, self.detailView, [self.scrollView.delegate viewForZoomingInScrollView:self.scrollView], self.scrollView.subviews, self.detailView.imageView, self.detailView.wmView, thisImage);
 //    [self.scrollView sizeToFit];
     
     //watermark stuff
@@ -211,16 +211,16 @@
     //    self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
 }
 
--(void)redrawWMView{
-    UIImage *image = self.detailView.wmView.image;
-    NSLog(@"image is %f by %f", image.size.width, image.size.height);
-    CGFloat wmOffset = self.detailView.imageView.frame.size.width * WM_RATIO;
-    NSLog(@"wmoffset is %f", wmOffset);
-    CGRect wmRect = CGRectMake(self.detailView.imageView.frame.size.width - image.size.width - wmOffset, self.detailView.imageView.frame.size.height - image.size.height - wmOffset, image.size.width, image.size.height);
-    self.detailView.wmView.frame = wmRect;
-    [self.scrollView setNeedsDisplay];
-    [self.detailView.wmView setNeedsDisplay];
-}
+//-(void)redrawWMView{
+//    UIImage *image = self.detailView.wmView.image;
+//    NSLog(@"image is %f by %f", image.size.width, image.size.height);
+//    CGFloat wmOffset = self.detailView.imageView.frame.size.width * WM_RATIO;
+//    NSLog(@"wmoffset is %f", wmOffset);
+//    CGRect wmRect = CGRectMake(self.detailView.imageView.frame.size.width - image.size.width - wmOffset, self.detailView.imageView.frame.size.height - image.size.height - wmOffset, image.size.width, image.size.height);
+//    self.detailView.wmView.frame = wmRect;
+//    [self.scrollView setNeedsDisplay];
+//    [self.detailView.wmView setNeedsDisplay];
+//}
 
 
 -(void)applyParamstoAll{
@@ -261,6 +261,7 @@
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
+    [self.scrollView addSubview:self.detailView];
 }
 
 #pragma instantiation
