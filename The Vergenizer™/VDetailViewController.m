@@ -113,7 +113,14 @@
     UIImage *thisImage = [self getUIImageForAssetObject:assetObject];
     //Want to lock contentSize.width at 2040 and resize height to maintain aspect ratio
     self.scrollView.contentSize = CGSizeMake(SV_CONTENT_SIZE, SV_CONTENT_SIZE * thisImage.size.height/thisImage.size.width);
+    [self.detailView setFrame:CGRectMake(0, 0, self.scrollView.contentSize.width, self.scrollView.contentSize.height)];
+
+    NSLog(@"Before setting image:\nself.detailview.frame: %@\n self.detailview.imageview.frame: %@\n self.detailview.imageview.image.size: %@", NSStringFromCGRect(self.detailView.frame), NSStringFromCGRect([self.detailView getPhotoFrame]), NSStringFromCGSize([self.detailView getImageSize]));
+
     self.detailView.photoImage = thisImage;
+    
+    NSLog(@"After setting image:\nself.detailview.frame: %@\n self.detailview.imageview.frame: %@\n self.detailview.imageview.image.size: %@", NSStringFromCGRect(self.detailView.frame), NSStringFromCGRect([self.detailView getPhotoFrame]), NSStringFromCGSize([self.detailView getImageSize]));
+
     self.detailView.wmImage = [self getDetailViewWmImage];
 }
 

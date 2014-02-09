@@ -15,4 +15,6 @@
 //New stuff
 @property (strong, nonatomic) UIImage *photoImage;
 @property (strong, nonatomic) UIImage *wmImage;
+-(CGRect)getPhotoFrame;
+-(CGSize)getImageSize;
 @end

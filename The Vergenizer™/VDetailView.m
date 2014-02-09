@@ -32,6 +32,7 @@
 -(void)setup{
     [self addSubview:self.imageView];
     [self addSubview:self.wmView];
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
 }
 
 
@@ -40,6 +41,16 @@
         _imageView = [[UIImageView alloc]initWithFrame:CGRectZero];
     }
     return _imageView;
+}
+
+-(CGRect)getPhotoFrame{
+    return self.imageView.frame;
+}
+
+
+-(CGSize)getImageSize{
+    return self.imageView.image.size;
+    
 }
 
 -(UIImageView *)wmView{
@@ -53,11 +64,11 @@
 -(void)setPhotoImage:(UIImage *)photoImage{
     NSLog(@"inside setPhotoImage");
     self.imageView.image = photoImage;
-    [self.imageView sizeToFit];
     NSLog(@"dv.imageview frame: %@, bounds: %@", NSStringFromCGRect(self.imageView.frame), NSStringFromCGRect(self.imageView.bounds));
     [self setFrame:self.imageView.frame];
     NSLog(@"dv frame: %@, dv bounds: %@", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds));
     NSLog(@"dv subviews: %@", self.subviews);
+    [self.imageView setFrame:self.frame];
 }
 
 -(void)setWmImage:(UIImage *)wmImage{
@@ -75,6 +86,11 @@
     CGRect wmRect = CGRectMake(self.imageView.frame.size.width - self.wmView.frame.size.width - wmOffset, self.imageView.frame.size.height - self.wmView.frame.size.height - wmOffset, self.wmView.frame.size.width, self.wmView.frame.size.height);
     [self.wmView setFrame:wmRect];
     NSLog(@"%@", self.subviews);
+}
+
+-(void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+    [self.imageView setFrame:self.frame];
 }
 
 @end
