@@ -8,6 +8,9 @@
 
 #import "ImageViewController.h"
 
+@interface ImageViewController ()
+@end
+
 @implementation ImageViewController
 
 #define MAX_ZOOM_SCALE 1.0
@@ -21,9 +24,6 @@
     [self updateAddButton];
 }
 
-- (IBAction)scrollViewTap:(id)sender {
-    [self toggleNavBarVisible];
-}
 
 #pragma lifecycle
 
@@ -37,11 +37,16 @@
     self.scrollView.maximumZoomScale = MAX_ZOOM_SCALE;
     self.scrollView.minimumZoomScale = MIN_ZOOM_SCALE;
     [self.scrollView setUserInteractionEnabled:YES];
+    [self.scrollView setDelaysContentTouches:YES];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(toggleNavBarVisible)];
+    [singleTap requireGestureRecognizerToFail:self.scrollView.doubleTap];
+    [self.scrollView addGestureRecognizer:singleTap];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [self updateAddButton];
     [self.navigationController setToolbarHidden:YES animated:NO];
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated{

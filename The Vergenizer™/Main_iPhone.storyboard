@@ -387,54 +387,49 @@
         <!--Image View Controller-->
         <scene sceneID="uk7-b9-hGj">
             <objects>
-                <viewController id="jz0-mD-qy9" customClass="ImageViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="jz0-mD-qy9" customClass="ImageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aww-Ys-D3q"/>
                         <viewControllerLayoutGuide type="bottom" id="OFu-OR-rDZ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mVS-Mg-VZq">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvg-c7-wvt" customClass="DblTapZoomScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
-                                <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="delegate" destination="jz0-mD-qy9" id="YMC-LC-qsL"/>
-                                    <outletCollection property="gestureRecognizers" destination="rfG-Mp-ocV" appends="YES" id="s4s-3H-hZc"/>
                                 </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pvg-c7-wvt" firstAttribute="top" secondItem="aww-Ys-D3q" secondAttribute="bottom" id="Olc-YX-WWd"/>
-                            <constraint firstItem="OFu-OR-rDZ" firstAttribute="top" secondItem="pvg-c7-wvt" secondAttribute="bottom" id="eJs-A6-bqD"/>
-                            <constraint firstItem="pvg-c7-wvt" firstAttribute="leading" secondItem="mVS-Mg-VZq" secondAttribute="leading" id="hJd-wo-Bso"/>
-                            <constraint firstAttribute="trailing" secondItem="pvg-c7-wvt" secondAttribute="trailing" id="j8D-Xf-Y3W"/>
+                            <constraint firstAttribute="trailing" secondItem="pvg-c7-wvt" secondAttribute="trailing" id="UeA-CG-1wM"/>
+                            <constraint firstItem="OFu-OR-rDZ" firstAttribute="top" secondItem="pvg-c7-wvt" secondAttribute="bottom" id="oF6-E9-epG"/>
+                            <constraint firstItem="pvg-c7-wvt" firstAttribute="leading" secondItem="mVS-Mg-VZq" secondAttribute="leading" id="wpQ-KG-3gl"/>
+                            <constraint firstItem="pvg-c7-wvt" firstAttribute="top" secondItem="mVS-Mg-VZq" secondAttribute="top" id="zMM-QE-Re5"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="czf-fy-0ZH">
                         <barButtonItem key="rightBarButtonItem" title="Select" id="o46-YQ-b17">
+                            <color key="tintColor" red="0.41520584820000001" green="0.01400454269" blue="0.85113790759999997" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addButtonTap:" destination="jz0-mD-qy9" id="qhq-Ir-pk7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addButton" destination="o46-YQ-b17" id="6p8-Ha-UCI"/>
                         <outlet property="scrollView" destination="pvg-c7-wvt" id="qZm-DN-Hdk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LPv-ws-jOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="rfG-Mp-ocV">
-                    <connections>
-                        <action selector="scrollViewTap:" destination="jz0-mD-qy9" id="oda-r5-dF0"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1352" y="77"/>
         </scene>

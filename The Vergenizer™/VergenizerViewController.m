@@ -270,6 +270,10 @@
     }
 }
 
+-(void)viewDidLoad{
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
+
 #pragma instantiation
 
 - (NSMutableArray *)assetObjects{

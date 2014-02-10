@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DblTapZoomScrollView : UIScrollView
-
+@property (strong, nonatomic)UITapGestureRecognizer *doubleTap;
 @end
