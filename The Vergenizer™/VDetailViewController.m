@@ -94,6 +94,19 @@
     return self.detailView;
 }
 
+-(void)scrollViewDidZoom:(UIScrollView *)scrollView{
+    UIView *subView = [scrollView.subviews objectAtIndex:0];
+    
+    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
+    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
+    
+    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
+    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
+    
+    subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
+                                 scrollView.contentSize.height * 0.5 + offsetY);
+}
+
 -(CATransition *)getPopAnimation{
     CATransition *transition = [CATransition animation];
     transition.duration = 0.5;
@@ -222,6 +235,8 @@
     }
     return returnString;
 }
+
+
 
 
 #pragma lifecycle methods
