@@ -13,25 +13,19 @@
 #import "PhotoHandler.h"
 #import "VergenizerCVC.h"
 #import "VDetailViewController.h"
-
-@protocol DetailDelegate <NSObject>
-@property (strong, nonatomic) AssetObject *assetObject;
-@property (strong, nonatomic) NSMutableArray *assetObjects;
-@end
-
+#import "DetailDelegate.h"
 
 @interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) PhotoHandler *handler;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
-@property (strong, nonatomic) id<DetailDelegate> detailDelegate;
 
 -(void)addAssetObjects:(NSMutableArray *)objects;
 
 @property (strong, nonatomic) ALAssetsLibrary *assetsLibrary;
 @property (strong, nonatomic) PickerViewController *picker;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *vergenizeButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *vergenizeButton;
 
 @end
 

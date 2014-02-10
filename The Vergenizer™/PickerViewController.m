@@ -32,9 +32,6 @@
     albumController = (AlbumViewController *)segue.destinationViewController;
     NSIndexPath *indexPath = [self.albumTable indexPathForSelectedRow];
     ALAssetsGroup *group = self.handler.groups[indexPath.item];
-    if (!self.handler) {
-        NSLog(@"Handler doesn't exist");
-    }
     albumController.group = group;
     albumController.handler =self.handler;
     [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
@@ -44,5 +41,8 @@
     }];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:NO];
+}
 
 @end

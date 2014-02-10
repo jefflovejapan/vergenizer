@@ -15,8 +15,10 @@
 
 
 @interface VergenizerViewController ()
-@property (strong, nonatomic) AssetObject *segueAssetObject;
-@property (strong, nonatomic) UIViewController *detailController;
+@property (strong, nonatomic) AssetObject *detailAssetObject;
+@property (strong, nonatomic) VDetailViewController *detailController;
+@property (strong, nonatomic) id<DetailDelegate> detailDelegate;
+@property (strong, nonatomic) NSMutableArray *toolbarButtons;
 @end
 
 @implementation VergenizerViewController
@@ -30,9 +32,9 @@
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if (cell && [cell isKindOfClass:[VergenizerCVC class]]) {
             VergenizerCVC *vergenizerCVC = (VergenizerCVC *)cell;
-            self.segueAssetObject = vergenizerCVC.assetObject;
+            self.detailAssetObject = vergenizerCVC.assetObject;
         }
-        [self pushDetailController];
+        [self pushDetailView];
     }
 }
 
@@ -41,7 +43,7 @@
 - (IBAction)clearButton:(id)sender {
     [self.assetObjects removeAllObjects];
     [self.collectionView reloadData];
-    self.navigationItem.prompt = nil;
+    [self clearNavPrompt];
     [self checkHiddenVergenizeButton];
 }
 
@@ -49,9 +51,34 @@
     [self waterMarkPhotos];
 }
 
+-(void)pushDetailView{
+    self.detailController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailController"];
+    if ([self.detailController conformsToProtocol:@protocol(DetailDelegate)]) {
+        self.detailDelegate = (id)self.detailController;
+        self.detailDelegate.assetObject = self.detailAssetObject;
+        self.detailDelegate.assetObjects = self.assetObjects;
+    }
+    [self hideToolbar];
+    [self hideNavBar];
+    CATransition* transition = [self getPushAnimation];
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:self.detailController animated:YES];
+}
+
+-(CATransition *)getPushAnimation{
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.startProgress = 0.1;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionMoveIn;
+    //kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom;
+    //kCATransitionFromTop//kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    return transition;
+}
+
 
 #pragma delegate methods
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     NSInteger numCells = self.assetObjects.count;
@@ -86,7 +113,7 @@
 -(void)waterMarkPhotos{
     dispatch_queue_t wmQ = dispatch_queue_create("watermarking queue", NULL);
     AssetObject *ao;
-    [self clearEditPrompt];
+    [self clearNavPrompt];
     for (ao in self.assetObjects) {
         dispatch_async(wmQ, ^{
             //Get the objects we'll need
@@ -180,12 +207,7 @@
     } else {
         return CGRectMake(targetSize.width - wmSize.width - targetSize.width * OFFSET_RATIO, targetSize.width * OFFSET_RATIO, wmSize.width, wmSize.height);
     }
-    }
-
-    
-
-
-
+}
 
 - (int)bytesPerRowForWidth:(int)width WithBitsPerPixel:(int)bits{
     int bytes;
@@ -198,14 +220,22 @@
 
 - (void)checkHiddenVergenizeButton{
     if (self.assetObjects.count == 0) {
-        self.vergenizeButton.hidden = YES;
+        [self.navigationController setToolbarHidden:YES animated:YES];
     } else {
-        self.vergenizeButton.hidden = NO;
+        [self.navigationController setToolbarHidden:NO animated:YES];
     }
 }
 
-- (void)clearEditPrompt{
+- (void)clearNavPrompt{
     self.navigationItem.prompt = nil;
+}
+
+-(void)hideToolbar{
+    [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
+-(void)hideNavBar{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 
@@ -213,30 +243,25 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"pickerSegue"]) {
-        [self clearEditPrompt];  // Animation screws up otherwise
+        [self clearNavPrompt];  // Animation screws up otherwise
         PickerViewController *pvc;
         pvc = segue.destinationViewController;
         pvc.handler = self.handler;
     }
-    if ([segue.identifier isEqualToString:@"vergenizerDetailSegue"]) {
-        if ([segue.destinationViewController conformsToProtocol:@protocol(DetailDelegate)]) {
-            self.detailDelegate = segue.destinationViewController;
-            self.detailDelegate.assetObject = self.segueAssetObject;
-            self.detailDelegate.assetObjects = self.assetObjects;
-        }
-    }
 }
-
-- (IBAction)unwindToVergenizerViewController:(UIStoryboardSegue *)unwindSegue
-{
-}
-
 
 - (void)viewWillAppear:(BOOL)animated{
+    [self checkHiddenNavController];
     [self checkHiddenVergenizeButton];
     [self.view layoutIfNeeded];
     [self.collectionView reloadData];
     [self.collectionView layoutIfNeeded];
+}
+
+-(void)checkHiddenNavController{
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -247,13 +272,8 @@
     }
 }
 
--(BOOL)shouldAutorotate{
-    id currentViewController = self.navigationController.topViewController;
-    if ([currentViewController isKindOfClass:[VDetailViewController class]]) {
-        return NO;
-    } else {
-        return YES;
-    }
+-(void)viewDidLoad{
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 #pragma instantiation

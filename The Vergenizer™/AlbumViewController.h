@@ -23,7 +23,9 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *addSelectedButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addSelectedButton;
+
+
 
 @property (nonatomic, strong) NSMutableArray *albumAssets;
 @property (nonatomic, strong) ALAssetsGroup *group;

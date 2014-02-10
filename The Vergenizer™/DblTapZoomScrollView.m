@@ -9,7 +9,6 @@
 #import "DblTapZoomScrollView.h"
 
 @interface DblTapZoomScrollView()
-@property UITapGestureRecognizer *doubleTap;
 @property UITouch *touch;
 @end
 
@@ -30,11 +29,12 @@
     [self addDblTapGesture];
 }
 
+
 -(void)addDblTapGesture{
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomDoubleTap)];
-    [doubleTap setNumberOfTapsRequired:2];
-    [self addGestureRecognizer:doubleTap];
-    self.userInteractionEnabled = YES;
+    self.doubleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomDoubleTap)];
+    [self.doubleTap setNumberOfTapsRequired:2];
+    [self addGestureRecognizer:self.doubleTap];
+    [self setUserInteractionEnabled:YES];
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
