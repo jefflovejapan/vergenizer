@@ -93,7 +93,7 @@
 }
 
 -(void)scrollViewDidZoom:(UIScrollView *)scrollView{
-    UIView *subView = [scrollView.subviews objectAtIndex:0];
+    UIView *subView = [self viewForZoomingInScrollView:self.scrollView];
     
     CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
     (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;

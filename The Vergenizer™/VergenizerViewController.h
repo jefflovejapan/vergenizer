@@ -14,8 +14,9 @@
 #import "VergenizerCVC.h"
 #import "VDetailViewController.h"
 #import "DetailDelegate.h"
+#import "WaterMarker.h"
 
-@interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate>
+@interface VergenizerViewController : UIViewController <VergenizerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, WaterMarkerDelegate>
 
 @property (strong, nonatomic) PhotoHandler *handler;
 @property (strong, nonatomic) NSMutableArray *assetObjects;
