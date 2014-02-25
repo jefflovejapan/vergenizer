@@ -244,10 +244,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self setViewsForAssetObject:self.assetObject];
     [self setUIFromAssetObject:self.assetObject];
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [self.scrollView zoomToRect:self.detailView.bounds animated:YES];
+    [self.scrollView zoomToRect:self.detailView.bounds animated:NO];
 }
 
 - (void)viewDidLoad{
