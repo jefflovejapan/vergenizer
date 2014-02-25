@@ -16,6 +16,5 @@ open `The Vergenizer™.xcodeproj`, plug in your phone, and build away. Tap the 
 
 Known issues with The Vergenizer™:
 
-- Watermark sometimes appears on wrong side of image (ALAssetOrientation / UIImageOrientation yay)
 - Autorotated version of VDetailViewController broken
 - No iPad version
